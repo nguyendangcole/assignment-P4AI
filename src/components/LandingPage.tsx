@@ -118,7 +118,7 @@ export default function LandingPage() {
               title: "Image Data",
               icon: <ImageIcon className="text-primary" />,
               desc: "Initial computer vision analysis involving pixel intensity distributions, RGB channel histograms, and basic shape/edge detection techniques.",
-              img: "https://images.unsplash.com/photo-1527430253228-e903248512bf?auto=format&fit=crop&q=80&w=800"
+              img: "assets/images/image/image-data.png"
             }
           ].map((item, idx) => (
             <motion.div
