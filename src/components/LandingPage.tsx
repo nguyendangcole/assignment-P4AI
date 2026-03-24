@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon } from "lucide-react";
-import aviationImg from '../assets/images/aviation/aviation.png';
+import aviation from '../assets/images/aviation/aviation.png';
 
 export default function LandingPage() {
   return (
@@ -29,7 +29,7 @@ export default function LandingPage() {
           <img
             alt="Aviation image"
             className="w-full h-full object-cover mix-blend-multiply opacity-80"
-            src={aviationImg}
+            src={aviation}
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 academic-gradient opacity-10"></div>
