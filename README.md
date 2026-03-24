@@ -8,7 +8,6 @@
 
 This repository contains everything you need to run your app locally.
 
-View your app in AI Studio: https://ai.studio/apps/2cb9675c-6034-4d0c-bc38-49ee1513b003
 
 ## Run Locally
 
