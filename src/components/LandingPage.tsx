@@ -1,12 +1,13 @@
 import { motion } from "motion/react";
 import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon } from "lucide-react";
+import aviationImg from '../assets/images/aviation/aviation.png';
 
 export default function LandingPage() {
   return (
     <div className="max-w-[1200px] mx-auto px-8 py-16">
       {/* Hero Section */}
       <section className="mb-24 flex flex-col md:flex-row items-center gap-12">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="w-full md:w-3/5"
@@ -19,15 +20,16 @@ export default function LandingPage() {
             Assignment portfolio for Exploratory Data Analysis project. A systematic investigation into data patterns and insights.
           </p>
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           className="w-full md:w-2/5 aspect-square bg-surface-container-low rounded-xl overflow-hidden relative"
         >
-          <img 
-            alt="Data analysis visualization" 
-            className="w-full h-full object-cover mix-blend-multiply opacity-80" 
-            src="https://images.unsplash.com/photo-1518186239717-2e9c13673034?auto=format&fit=crop&q=80&w=800"
+          {/* 👇 HƯỚNG DẪN THÊM ẢNH AVIATION 👇 */}
+          <img
+            alt="Aviation image"
+            className="w-full h-full object-cover mix-blend-multiply opacity-80"
+            src={aviationImg}
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 academic-gradient opacity-10"></div>
@@ -48,7 +50,7 @@ export default function LandingPage() {
             { name: "TRẦN QUỐC	THẮNG", id: "2353125" },
             { name: "LÊ MINH	HÀO", id: "2310846" }
           ].map((member, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               whileHover={{ y: -5 }}
               className="bg-white paper-shadow p-6 rounded-xl border border-transparent hover:border-primary/20 transition-all"
@@ -86,9 +88,9 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="absolute right-[-10%] top-[-20%] w-[50%] h-[150%] opacity-10 pointer-events-none rotate-12">
-          <img 
-            alt="Abstract data waves" 
-            className="w-full h-full object-cover" 
+          <img
+            alt="Abstract data waves"
+            className="w-full h-full object-cover"
             src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
             referrerPolicy="no-referrer"
           />
@@ -119,15 +121,15 @@ export default function LandingPage() {
               img: "https://images.unsplash.com/photo-1527430253228-e903248512bf?auto=format&fit=crop&q=80&w=800"
             }
           ].map((item, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               whileHover={{ y: -10 }}
               className="group cursor-pointer"
             >
               <div className="h-64 mb-6 rounded-xl overflow-hidden bg-surface-container-highest">
-                <img 
-                  alt={item.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                <img
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   src={item.img}
                   referrerPolicy="no-referrer"
                 />
