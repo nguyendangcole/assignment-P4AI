@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon } from "lucide-react";
 import aviation from '../assets/images/aviation/aviation.png';
+import imageData from '../assets/images/image/image-data.png';
 
 export default function LandingPage() {
   return (
@@ -118,7 +119,7 @@ export default function LandingPage() {
               title: "Image Data",
               icon: <ImageIcon className="text-primary" />,
               desc: "Initial computer vision analysis involving pixel intensity distributions, RGB channel histograms, and basic shape/edge detection techniques.",
-              img: "assets/images/image/image-data.png"
+              img: imageData
             }
           ].map((item, idx) => (
             <motion.div
