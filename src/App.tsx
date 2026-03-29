@@ -6,8 +6,9 @@ import DatasetsPage from './components/DatasetsPage';
 import AssignmentDetails from './components/AssignmentDetails';
 import ArtAnalysis from './components/ArtAnalysis';
 import TabularEDA from './components/TabularEDA';
+import TextEDA from './components/TextEDA';
 
-type Page = 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda';
+type Page = 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('overview');
@@ -23,6 +24,7 @@ export default function App() {
       case 'assignments': return <AssignmentDetails />;
       case 'art-analysis': return <ArtAnalysis onBack={() => setCurrentPage('overview')} title={selectedDataset} />;
       case 'tabular-eda': return <TabularEDA onBack={() => setCurrentPage('overview')} />;
+      case 'text-eda': return <TextEDA onBack={() => setCurrentPage('overview')} />;
       default: return <LandingPage onNavigate={(page: Page, dataset?: string) => {
         setCurrentPage(page);
         if (dataset) setSelectedDataset(dataset);

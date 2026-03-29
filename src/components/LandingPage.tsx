@@ -4,7 +4,7 @@ import aviation from '../assets/images/aviation/aviation.png';
 import imageData from '../assets/images/image/image-data.png';
 
 interface LandingPageProps {
-  onNavigate: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis', dataset?: string) => void;
+  onNavigate: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda', dataset?: string) => void;
 }
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
@@ -138,7 +138,9 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               className="group cursor-pointer"
               onClick={() => {
                 if (item.title === "Tabular Data") {
-                  onNavigate('tabular-eda' as any);
+                  onNavigate('tabular-eda');
+                } else if (item.title === "Text Data") {
+                  onNavigate('text-eda');
                 } else {
                   onNavigate('art-analysis', item.title);
                 }
