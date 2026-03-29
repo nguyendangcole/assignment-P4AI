@@ -372,6 +372,10 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                                             <CheckCircle2 size={14} />
                                             Language: Multi
                                         </div>
+                                        <div className="flex items-center gap-2 px-5 py-2.5 bg-surface-container-low rounded-xl border border-outline-variant/10 text-[10px] font-black uppercase tracking-widest text-secondary">
+                                            <Info size={14} />
+                                            Synthetic Content
+                                        </div>
                                     </div>
                                 </motion.div>
 
@@ -390,6 +394,9 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                                                 { label: "Temporal Depth", val: "2026 Archive" },
                                                 { label: "Primary Field", val: "short_text" },
                                                 { label: "Category Field", val: "topic_category" },
+                                                { label: "Kaggle Usability", val: "10.00" },
+                                                { label: "Updates", val: "Annually" },
+                                                { label: "Data Tags", val: "Text, NLP" }
                                             ].map((item, i) => (
                                                 <div key={i} className="flex justify-between items-center">
                                                     <span className="text-xs font-semibold text-on-surface-variant opacity-60 uppercase tracking-tight font-headline">{item.label}</span>
@@ -412,6 +419,31 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                     </section>
 
                     <div className="max-w-[1240px] mx-auto pb-40">
+                        {/* Dataset Ethics Notice */}
+                        <div className="bg-surface-container-low/30 p-8 rounded-[2.5rem] border border-outline-variant/10 mb-12 flex flex-col md:flex-row gap-8 items-center md:items-start group transition-all hover:bg-white hover:shadow-xl hover:shadow-on-surface/5">
+                            <div className="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform">
+                                <AlertTriangle size={24} />
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-black text-on-surface uppercase tracking-[0.1em] mb-3">Dataset Ethics & Origin</h3>
+                                <p className="text-sm text-on-surface-variant leading-relaxed opacity-70 font-medium">
+                                    This report utilizes the <strong className="text-secondary">Global Trending Topics 2026 – Multi-Source Synthetic Dataset</strong>. 
+                                    The data comprises ~2,500 records of artificially generated trending topics for February 2026. 
+                                    With a <strong className="text-primary font-bold">10.00 Usability Score</strong> on Kaggle, this analysis ensure absolute privacy compliance and zero-risk exploration of NLP patterns. 
+                                    Licensed under <span className="font-bold">CC0 1.0 (Public Domain)</span>.
+                                </p>
+                                <a 
+                                    href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-on-surface text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary hover:shadow-lg hover:-translate-y-0.5 group"
+                                >
+                                    <Link size={14} className="group-hover:rotate-45 transition-transform" />
+                                    Source Repository (Kaggle)
+                                </a>
+                            </div>
+                        </div>
+
                         {/* Methodology Section */}
                         <section className="py-20 scroll-mt-24" id="methodology">
                             <div className="bg-white rounded-[2.5rem] border border-outline-variant/10 shadow-sm p-12 group">
