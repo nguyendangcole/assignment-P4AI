@@ -1,12 +1,16 @@
 import { motion } from "motion/react";
-import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon } from "lucide-react";
+import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon, Layers } from "lucide-react";
 import aviation from '../assets/images/aviation/aviation.png';
 import imageData from '../assets/images/image/image-data.png';
 
-export default function LandingPage() {
+interface LandingPageProps {
+  onNavigate: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis', dataset?: string) => void;
+}
+
+export default function LandingPage({ onNavigate }: LandingPageProps) {
   return (
     <div className="max-w-[1200px] mx-auto px-8 py-16">
-      {/* Hero Section */}
+      {/* ... (rest of the component) ... */}
       <section className="mb-24 flex flex-col md:flex-row items-center gap-12">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -101,7 +105,7 @@ export default function LandingPage() {
       {/* Datasets Overview */}
       <section className="mb-24">
         <h2 className="text-3xl font-headline font-bold text-on-surface mb-10 text-center">Datasets Overview</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
             {
               title: "Tabular Data",
@@ -120,12 +124,25 @@ export default function LandingPage() {
               icon: <ImageIcon className="text-primary" />,
               desc: "Initial computer vision analysis involving pixel intensity distributions, RGB channel histograms, and basic shape/edge detection techniques.",
               img: imageData
+            },
+            {
+              title: "Multimodal Data",
+              icon: <Layers className="text-primary" />,
+              desc: "Integrative analysis of text-image pairs, investigating cross-modal semantic mapping and combined feature space distributions for complex data understanding.",
+              img: "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=800"
             }
           ].map((item, idx) => (
             <motion.div
               key={idx}
               whileHover={{ y: -10 }}
               className="group cursor-pointer"
+              onClick={() => {
+                if (item.title === "Tabular Data") {
+                  onNavigate('tabular-eda' as any);
+                } else {
+                  onNavigate('art-analysis', item.title);
+                }
+              }}
             >
               <div className="h-64 mb-6 rounded-xl overflow-hidden bg-surface-container-highest">
                 <img
@@ -139,7 +156,7 @@ export default function LandingPage() {
                 {item.icon}
                 <h3 className="text-xl font-headline font-bold">{item.title}</h3>
               </div>
-              <p className="text-on-surface-variant leading-relaxed">
+              <p className="text-on-surface-variant leading-relaxed text-sm">
                 {item.desc}
               </p>
             </motion.div>

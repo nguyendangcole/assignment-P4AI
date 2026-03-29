@@ -1,16 +1,16 @@
 import { motion } from "motion/react";
-import { Table, FileText, ImageIcon, Download, CloudDownload, Eraser, Share2, ShieldCheck, ArrowRight, Info, History } from "lucide-react";
+import { Table, FileText, ImageIcon, Download, CloudDownload, Eraser, Share2, ShieldCheck, ArrowRight, Info, History, Layers } from "lucide-react";
 
 export default function DatasetsPage() {
   return (
     <div className="max-w-[1200px] mx-auto px-8 py-12">
-      {/* Hero Editorial Section */}
+      {/* ... (Hero Editorial Section) ... */}
       <section className="mb-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
           <div className="md:col-span-8">
             <span className="text-primary font-semibold tracking-widest text-xs uppercase mb-4 block">Archive 02 // Research Data</span>
             <h1 className="text-5xl md:text-6xl font-headline font-extrabold tracking-tighter text-on-surface mb-6 leading-[1.1]">
-              Curated Research <br/><span className="text-primary-container">Datasets</span>
+              Curated <span className="text-primary-container">Datasets</span>
             </h1>
           </div>
           <div className="md:col-span-4 pb-2">
@@ -23,133 +23,176 @@ export default function DatasetsPage() {
 
       {/* Bento Grid Datasets */}
       <section className="mb-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Tabular Dataset Card */}
-          <motion.div 
+          <motion.div
             whileHover={{ y: -5 }}
-            className="bg-white p-8 rounded-xl shadow-sm flex flex-col h-full group transition-all duration-300 border border-on-surface-variant/5"
+            className="bg-white p-6 rounded-xl shadow-sm flex flex-col h-full group transition-all duration-300 border border-on-surface-variant/5"
           >
             <div className="flex justify-between items-start mb-6">
               <div className="bg-primary/10 p-3 rounded-lg">
                 <Table className="text-primary w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-on-surface-variant/60 uppercase tracking-widest">Type: Tabular</span>
+              <span className="text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-widest">Type: Tabular</span>
             </div>
             <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
-              <img 
-                src="https://images.unsplash.com/photo-1551288049-bbda38a5f85d?auto=format&fit=crop&q=80&w=400" 
-                alt="Tabular data" 
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bbda38a5f85d?auto=format&fit=crop&q=80&w=400"
+                alt="Tabular data"
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                 referrerPolicy="no-referrer"
               />
             </div>
-            <h3 className="text-2xl font-headline font-bold text-on-surface mb-2">Sociodemographic Longitudinal</h3>
-            <p className="text-sm text-on-surface-variant mb-6">Cleaned census-derived metrics for urban development modeling.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Sociodemographic Longitudinal</h3>
+            <p className="text-xs text-on-surface-variant mb-6">Cleaned census-derived metrics for urban development modeling.</p>
             <div className="space-y-4 mb-8">
-              <div className="flex justify-between text-xs py-2 border-b border-on-surface-variant/10">
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
                 <span className="text-on-surface font-medium">Urban Studies Dept.</span>
               </div>
-              <div className="flex justify-between text-xs py-2 border-b border-on-surface-variant/10">
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
                 <span className="text-on-surface font-medium">10k rows / 4.2MB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
-              <span className="text-[10px] uppercase font-bold text-primary mb-2 block">Structure Preview</span>
-              <code className="text-[11px] font-mono text-on-surface-variant leading-tight block">
+              <span className="text-[9px] uppercase font-bold text-primary mb-2 block">Structure Preview</span>
+              <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
                 {`{ id: int, age: int, income: float, zip: str, educ_level: enum }`}
               </code>
             </div>
-            <button className="mt-auto w-full py-3 academic-gradient text-white font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all cursor-pointer">
-              <Download size={16} />
+            <button className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all cursor-pointer">
+              <Download size={14} />
               Download CSV
             </button>
           </motion.div>
 
           {/* Text Dataset Card */}
-          <motion.div 
+          <motion.div
             whileHover={{ y: -5 }}
-            className="bg-white p-8 rounded-xl shadow-sm flex flex-col h-full group transition-all duration-300 border border-on-surface-variant/5"
+            className="bg-white p-6 rounded-xl shadow-sm flex flex-col h-full group transition-all duration-300 border border-on-surface-variant/5"
           >
             <div className="flex justify-between items-start mb-6">
               <div className="bg-secondary/10 p-3 rounded-lg">
                 <FileText className="text-secondary w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-on-surface-variant/60 uppercase tracking-widest">Type: Textual</span>
+              <span className="text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-widest">Type: Textual</span>
             </div>
             <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
-              <img 
-                src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400" 
-                alt="Textual data" 
+              <img
+                src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400"
+                alt="Textual data"
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                 referrerPolicy="no-referrer"
               />
             </div>
-            <h3 className="text-2xl font-headline font-bold text-on-surface mb-2">Academic Abstracts Corpus</h3>
-            <p className="text-sm text-on-surface-variant mb-6">Cross-discipline research summaries for NLP and topic modeling.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Academic Abstracts Corpus</h3>
+            <p className="text-xs text-on-surface-variant mb-6">Cross-discipline research summaries for NLP and topic modeling.</p>
             <div className="space-y-4 mb-8">
-              <div className="flex justify-between text-xs py-2 border-b border-on-surface-variant/10">
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
                 <span className="text-on-surface font-medium">OpenScience API</span>
               </div>
-              <div className="flex justify-between text-xs py-2 border-b border-on-surface-variant/10">
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
                 <span className="text-on-surface font-medium">25k docs / 185MB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
-              <span className="text-[10px] uppercase font-bold text-secondary mb-2 block">Structure Preview</span>
-              <code className="text-[11px] font-mono text-on-surface-variant leading-tight block">
+              <span className="text-[9px] uppercase font-bold text-secondary mb-2 block">Structure Preview</span>
+              <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
                 {`{ doc_id: str, text: longtext, tags: list, date: datetime }`}
               </code>
             </div>
-            <button className="mt-auto w-full py-3 bg-surface-container-high text-on-surface font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
-              <Download size={16} />
+            <button className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
+              <Download size={14} />
               Download JSONL
             </button>
           </motion.div>
 
           {/* Image Dataset Card */}
-          <motion.div 
+          <motion.div
             whileHover={{ y: -5 }}
-            className="bg-white p-8 rounded-xl shadow-sm flex flex-col h-full group transition-all duration-300 border border-on-surface-variant/5"
+            className="bg-white p-6 rounded-xl shadow-sm flex flex-col h-full group transition-all duration-300 border border-on-surface-variant/5"
           >
             <div className="flex justify-between items-start mb-6">
               <div className="bg-tertiary/10 p-3 rounded-lg">
                 <ImageIcon className="text-tertiary w-6 h-6" />
               </div>
-              <span className="text-xs font-bold text-on-surface-variant/60 uppercase tracking-widest">Type: Visual</span>
+              <span className="text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-widest">Type: Visual</span>
             </div>
             <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
-              <img 
-                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=400" 
-                alt="Visual data" 
+              <img
+                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=400"
+                alt="Visual data"
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                 referrerPolicy="no-referrer"
               />
             </div>
-            <h3 className="text-2xl font-headline font-bold text-on-surface mb-2">Microscopic Pathogens</h3>
-            <p className="text-sm text-on-surface-variant mb-6">High-resolution labeled imagery for classification algorithms.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Microscopic Pathogens</h3>
+            <p className="text-xs text-on-surface-variant mb-6">High-resolution labeled imagery for classification algorithms.</p>
             <div className="space-y-4 mb-8">
-              <div className="flex justify-between text-xs py-2 border-b border-on-surface-variant/10">
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
                 <span className="text-on-surface font-medium">Bio-Tech Lab S3</span>
               </div>
-              <div className="flex justify-between text-xs py-2 border-b border-on-surface-variant/10">
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
                 <span className="text-on-surface font-medium">5k imgs / 2.1GB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
-              <span className="text-[10px] uppercase font-bold text-tertiary mb-2 block">Structure Preview</span>
-              <code className="text-[11px] font-mono text-on-surface-variant leading-tight block">
+              <span className="text-[9px] uppercase font-bold text-tertiary mb-2 block">Structure Preview</span>
+              <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
                 /train/ {`{ class_a: *.jpg, class_b: *.jpg }`} /metadata.csv
               </code>
             </div>
-            <button className="mt-auto w-full py-3 bg-surface-container-high text-on-surface font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
-              <Download size={16} />
+            <button className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
+              <Download size={14} />
               Download TAR.GZ
+            </button>
+          </motion.div>
+
+          {/* Multimodal Dataset Card */}
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="bg-white p-6 rounded-xl shadow-sm flex flex-col h-full group transition-all duration-300 border border-on-surface-variant/5"
+          >
+            <div className="flex justify-between items-start mb-6">
+              <div className="bg-primary/10 p-3 rounded-lg">
+                <Layers className="text-primary w-6 h-6" />
+              </div>
+              <span className="text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-widest">Type: Multimodal</span>
+            </div>
+            <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
+              <img
+                src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=400"
+                alt="Multimodal data"
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Cognitive Text-Image Pairs</h3>
+            <p className="text-xs text-on-surface-variant mb-6">Complex scene descriptions mapped to high-fidelity imagery for multimodal grounding.</p>
+            <div className="space-y-4 mb-8">
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
+                <span className="text-on-surface-variant/60">Source</span>
+                <span className="text-on-surface font-medium">Vision-Language Lab</span>
+              </div>
+              <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
+                <span className="text-on-surface-variant/60">Size</span>
+                <span className="text-on-surface font-medium">100k pairs / 12.4GB</span>
+              </div>
+            </div>
+            <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
+              <span className="text-[9px] uppercase font-bold text-primary mb-2 block">Structure Preview</span>
+              <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
+                /images/ *.jpg {`{ doc_id: str, prompt: text, clip_score: float }`} /metadata.parquet
+              </code>
+            </div>
+            <button className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
+              <Download size={14} />
+              Download PARQUET
             </button>
           </motion.div>
         </div>
@@ -162,7 +205,7 @@ export default function DatasetsPage() {
             <h2 className="text-3xl font-headline font-bold text-on-surface mb-4">Data Processing Pipeline</h2>
             <p className="text-on-surface-variant opacity-80">Our rigorous multi-stage pipeline ensures the integrity and reproducibility of every dataset provided in the curator.</p>
           </div>
-          
+
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
             {[
               { title: "Raw Acquisition", icon: <CloudDownload />, desc: "Unfiltered extraction from source APIs" },

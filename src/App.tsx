@@ -1,21 +1,32 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Menu } from 'lucide-react';
+import { BookOpen, Menu, ChevronRight, ArrowLeft } from 'lucide-react';
 import LandingPage from './components/LandingPage';
 import DatasetsPage from './components/DatasetsPage';
 import AssignmentDetails from './components/AssignmentDetails';
+import ArtAnalysis from './components/ArtAnalysis';
+import TabularEDA from './components/TabularEDA';
 
-type Page = 'overview' | 'assignments' | 'datasets';
+type Page = 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('overview');
+  const [selectedDataset, setSelectedDataset] = useState<string>('');
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'overview': return <LandingPage />;
+      case 'overview': return <LandingPage onNavigate={(page: Page, dataset?: string) => {
+        setCurrentPage(page);
+        if (dataset) setSelectedDataset(dataset);
+      }} />;
       case 'datasets': return <DatasetsPage />;
       case 'assignments': return <AssignmentDetails />;
-      default: return <LandingPage />;
+      case 'art-analysis': return <ArtAnalysis onBack={() => setCurrentPage('overview')} title={selectedDataset} />;
+      case 'tabular-eda': return <TabularEDA onBack={() => setCurrentPage('overview')} />;
+      default: return <LandingPage onNavigate={(page: Page, dataset?: string) => {
+        setCurrentPage(page);
+        if (dataset) setSelectedDataset(dataset);
+      }} />;
     }
   };
 
@@ -24,27 +35,27 @@ export default function App() {
       {/* Header */}
       <header className="bg-surface sticky top-0 z-50 border-b border-on-surface-variant/5">
         <nav className="flex justify-between items-center w-full px-8 py-4 max-w-[1200px] mx-auto">
-          <div 
+          <div
             className="text-2xl font-bold tracking-tighter text-primary font-headline cursor-pointer"
             onClick={() => setCurrentPage('overview')}
           >
             Academic Curator
           </div>
-          
+
           <div className="hidden md:flex items-center gap-8 font-headline tracking-tight">
-            <button 
+            <button
               onClick={() => setCurrentPage('overview')}
               className={`text-sm font-semibold transition-colors cursor-pointer ${currentPage === 'overview' ? 'text-primary border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-primary'}`}
             >
               Overview
             </button>
-            <button 
+            <button
               onClick={() => setCurrentPage('assignments')}
               className={`text-sm font-semibold transition-colors cursor-pointer ${currentPage === 'assignments' ? 'text-primary border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-primary'}`}
             >
               Assignments
             </button>
-            <button 
+            <button
               onClick={() => setCurrentPage('datasets')}
               className={`text-sm font-semibold transition-colors cursor-pointer ${currentPage === 'datasets' ? 'text-primary border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-primary'}`}
             >
@@ -61,6 +72,27 @@ export default function App() {
             </button>
           </div>
         </nav>
+
+        {/* Breadcrumbs */}
+        <div className="bg-surface-container-low/50 border-t border-on-surface-variant/5">
+          <div className="max-w-[1200px] mx-auto px-8 py-2 flex items-center gap-2 text-xs font-medium">
+            <button
+              onClick={() => setCurrentPage('overview')}
+              className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer flex items-center gap-1"
+            >
+              Academic Curator
+            </button>
+
+            {currentPage !== 'overview' && (
+              <>
+                <ChevronRight size={14} className="text-on-surface-variant/40" />
+                <span className="text-primary capitalize">
+                  {currentPage.replace('-', ' ')}
+                </span>
+              </>
+            )}
+          </div>
+        </div>
       </header>
 
       {/* Main Content */}
@@ -86,13 +118,13 @@ export default function App() {
             <div className="text-sm text-on-surface-variant">HCMUT – VNU-HCM | 2026</div>
             <div className="text-xs text-on-surface-variant/60 mt-4">© 2026 The Academic Curator. All rights reserved.</div>
           </div>
-          
+
           <div className="flex flex-wrap justify-center gap-8 text-sm">
             <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Ethics Policy</a>
             <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Data Privacy</a>
             <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Faculty</a>
           </div>
-          
+
           <div className="text-sm text-on-surface-variant/60">
             © 2026 HCMUT - VNU-HCM.
           </div>
