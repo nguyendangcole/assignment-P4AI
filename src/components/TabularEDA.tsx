@@ -242,7 +242,11 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
     const [noRows, setNoRows] = useState([]);
     const [isRolling, setIsRolling] = useState(false);
 
+
     useEffect(() => {
+        // Reset scroll position to top whenever component mounts
+        window.scrollTo(0, 0);
+
         rollDice();
 
         const observerOptions = {
