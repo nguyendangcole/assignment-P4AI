@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import heroTextImage from "../assets/images/image/text.jpg";
 import { motion, AnimatePresence } from "motion/react";
 import trendingSamples from "../assets/data/textEDA/trending_samples.json";
 import Plot from "react-plotly.js";
@@ -63,6 +64,26 @@ const StatCard = ({ label, value, icon: Icon, variant = "ghost" }: { label: stri
         {Icon && <div className={`absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity ${variant === "primary" ? "text-white" : "text-primary"}`}><Icon size={120} /></div>}
         <div className={`${variant === "primary" ? "text-primary-container" : "text-on-surface-variant"} text-[10px] font-black uppercase tracking-[0.2em] mb-4`}>{label}</div>
         <div className="text-4xl font-sans font-bold tracking-tight">{value}</div>
+    </div>
+);
+
+const ImagePlaceholder = ({ className = "", label = "Topic Image Placeholder", src }: { className?: string, label?: string, src?: string }) => (
+    <div className={`relative overflow-hidden group/img ${className}`}>
+        {src ? (
+            <img 
+                src={src} 
+                alt={label}
+                className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover/img:scale-110" 
+            />
+        ) : (
+            <div className={`bg-white/5 border-2 border-dashed border-outline-variant/10 rounded-[2.5rem] flex items-center justify-center p-8 transition-all hover:bg-primary/5 hover:border-primary/20 min-h-[200px]`}>
+                <div className="flex flex-col items-center gap-4 opacity-10 group-hover/img:opacity-30 transition-opacity">
+                    <Layout size={40} />
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-center leading-relaxed">{label}</span>
+                </div>
+            </div>
+        )}
+        <div className="absolute inset-0 bg-linear-to-t from-on-surface/20 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-500 rounded-[2.5rem]" />
     </div>
 );
 
@@ -458,29 +479,32 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                                 <motion.div
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    className="w-full lg:w-[420px] bg-white rounded-[2.5rem] p-10 border border-outline-variant/10 shadow-2xl shadow-on-surface/5"
+                                    className="w-full lg:w-[420px] space-y-8"
                                 >
-                                    <div className="space-y-8">
-                                        <div className="flex justify-between items-center pb-6 border-b border-outline-variant/10">
-                                            <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Study Metadata</span>
-                                            <span className="px-3 py-1 bg-surface-container-high rounded-full text-[9px] font-bold uppercase tracking-tight">V2.0.0</span>
-                                        </div>
-                                        <div className="space-y-5">
-                                            {[
-                                                { label: "Temporal Depth", val: "2026 Archive" },
-                                                { label: "Primary Field", val: "short_text" },
-                                                { label: "Category Field", val: "topic_category" },
-                                                { label: "Kaggle Usability", val: "10.00" },
-                                                { label: "Updates", val: "Annually" },
-                                                { label: "Data Tags", val: "Text, NLP" }
-                                            ].map((item, i) => (
-                                                <div key={i} className="flex justify-between items-center">
-                                                    <span className="text-xs font-semibold text-on-surface-variant opacity-60 uppercase tracking-tight font-headline">{item.label}</span>
-                                                    <span className="text-on-surface font-black text-sm">{item.val}</span>
-                                                </div>
-                                            ))}
+                                    <div className="bg-white rounded-[2.5rem] p-10 border border-outline-variant/10 shadow-2xl shadow-on-surface/5">
+                                        <div className="space-y-8">
+                                            <div className="flex justify-between items-center pb-6 border-b border-outline-variant/10">
+                                                <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Study Metadata</span>
+                                                <span className="px-3 py-1 bg-surface-container-high rounded-full text-[9px] font-bold uppercase tracking-tight">V2.0.0</span>
+                                            </div>
+                                            <div className="space-y-5">
+                                                {[
+                                                    { label: "Temporal Depth", val: "2026 Archive" },
+                                                    { label: "Primary Field", val: "short_text" },
+                                                    { label: "Category Field", val: "topic_category" },
+                                                    { label: "Kaggle Usability", val: "10.00" },
+                                                    { label: "Updates", val: "Annually" },
+                                                    { label: "Data Tags", val: "Text, NLP" }
+                                                ].map((item, i) => (
+                                                    <div key={i} className="flex justify-between items-center">
+                                                        <span className="text-xs font-semibold text-on-surface-variant opacity-60 uppercase tracking-tight font-headline">{item.label}</span>
+                                                        <span className="text-on-surface font-black text-sm">{item.val}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
+                                    <ImagePlaceholder label="Editorial Scene" src={heroTextImage} className="min-h-[280px]" />
                                 </motion.div>
                             </div>
 
