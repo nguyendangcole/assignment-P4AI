@@ -114,7 +114,7 @@ export default function DatasetsPage() {
               href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all no-underline cursor-pointer"
+              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
             >
               <ExternalLink size={14} />
               View on Kaggle
@@ -161,7 +161,7 @@ export default function DatasetsPage() {
               href="https://www.kaggle.com/datasets/faldoae/padangfood"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all no-underline cursor-pointer"
+              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
             >
               <ExternalLink size={14} />
               View on Kaggle
@@ -205,10 +205,13 @@ export default function DatasetsPage() {
                 /images/ *.jpg {`{ doc_id: str, prompt: text, clip_score: float }`} /metadata.parquet
               </code>
             </div>
-            <button className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
-              <Download size={14} />
-              Download PARQUET
-            </button>
+            <a 
+              href="#"
+              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
+            >
+              <ExternalLink size={14} />
+              View on Kaggle
+            </a>
           </motion.div>
         </div>
       </section>
