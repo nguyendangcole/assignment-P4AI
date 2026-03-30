@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon, Layers } from "lucide-react";
 import aviation from '../assets/images/aviation/aviation.png';
-import tabularPreview from '../assets/images/image/tabular_preview.jpg';
 import textPreview from '../assets/images/image/text_preview.jpg';
 import imagePreview from '../assets/images/image/image_preview.jpg';
 import multimodalPreview from '../assets/images/image/multimodal_preview.jpg';
@@ -114,7 +113,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               title: "Tabular Data",
               icon: <Table className="text-primary" />,
               desc: "Exploration of structured datasets focusing on feature engineering, correlation matrices, and statistical distributions of numerical and categorical variables.",
-              img: tabularPreview
+              img: "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800"
             },
             {
               title: "Text Data",
