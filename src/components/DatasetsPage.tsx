@@ -1,11 +1,15 @@
 import { motion } from "motion/react";
-import { Table, FileText, ImageIcon, ExternalLink, Download, CloudDownload, Eraser, Share2, ShieldCheck, ArrowRight, Info, History, Layers } from "lucide-react";
+import { Table, FileText, ImageIcon, ExternalLink, Download, CloudDownload, Eraser, Share2, ShieldCheck, ArrowRight, Info, History, Layers, BarChart3 } from "lucide-react";
 import tabularHero from "../assets/images/image/ảnh.jpg";
 import textHero from "../assets/images/image/text.jpg";
 import imageHero from "../assets/images/image/padang_food.png";
 import multimodalHero from "../assets/images/image/artemis_multimodal.png";
 
-export default function DatasetsPage() {
+interface DatasetsPageProps {
+  onNavigate?: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda' | 'image-eda', dataset?: string) => void;
+}
+
+export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
   return (
     <div className="max-w-[1200px] mx-auto px-8 py-12">
       {/* ... (Hero Editorial Section) ... */}
@@ -64,15 +68,25 @@ export default function DatasetsPage() {
                 {`{ Date: str, Location: str, MinTemp: float, MaxTemp: float, RainTomorrow: bool }`}
               </code>
             </div>
-            <a 
-              href="https://www.kaggle.com/datasets/jsphyg/weather-dataset-rattle-package?select=weatherAUS.csv"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
-            >
-              <ExternalLink size={14} />
-              View on Kaggle
-            </a>
+            <div className="flex gap-3 mt-auto">
+              <a 
+                href="https://www.kaggle.com/datasets/jsphyg/weather-dataset-rattle-package?select=weatherAUS.csv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all no-underline cursor-pointer"
+              >
+                <ExternalLink size={14} />
+                Kaggle
+              </a>
+              <button
+                onClick={() => onNavigate?.('tabular-eda')}
+                className="flex-1 py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+              >
+                <BarChart3 size={14} />
+                Analysis
+              </button>
+            </div>
+
           </motion.div>
 
           {/* Text Dataset Card */}
@@ -111,15 +125,25 @@ export default function DatasetsPage() {
                 {`{ article_id: str, short_text: longtext, topic_category: enum }`}
               </code>
             </div>
-            <a 
-              href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
-            >
-              <ExternalLink size={14} />
-              View on Kaggle
-            </a>
+            <div className="flex gap-3 mt-auto">
+              <a 
+                href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all no-underline cursor-pointer"
+              >
+                <ExternalLink size={14} />
+                Kaggle
+              </a>
+              <button
+                onClick={() => onNavigate?.('text-eda')}
+                className="flex-1 py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+              >
+                <BarChart3 size={14} />
+                Analysis
+              </button>
+            </div>
+
           </motion.div>
 
           {/* Image Dataset Card */}
@@ -158,15 +182,25 @@ export default function DatasetsPage() {
                 /train/ {`{ ayam_pop, rendang, gulai_tunjang, ... }`}
               </code>
             </div>
-            <a 
-              href="https://www.kaggle.com/datasets/faldoae/padangfood"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
-            >
-              <ExternalLink size={14} />
-              View on Kaggle
-            </a>
+            <div className="flex gap-3 mt-auto">
+              <a 
+                href="https://www.kaggle.com/datasets/faldoae/padangfood"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all no-underline cursor-pointer"
+              >
+                <ExternalLink size={14} />
+                Kaggle
+              </a>
+              <button
+                onClick={() => onNavigate?.('image-eda')}
+                className="flex-1 py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+              >
+                <BarChart3 size={14} />
+                Analysis
+              </button>
+            </div>
+
           </motion.div>
 
           {/* Multimodal Dataset Card */}
@@ -205,15 +239,25 @@ export default function DatasetsPage() {
                 /images/ *.jpg {`{ art_style, emotion, utterance }`} /metadata.csv
               </code>
             </div>
-            <a 
-              href="https://www.kaggle.com/datasets/rollas/artemis-dataset-including-10k-images"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
-            >
-              <ExternalLink size={14} />
-              View on Kaggle
-            </a>
+            <div className="flex gap-3 mt-auto">
+              <a 
+                href="https://www.kaggle.com/datasets/rollas/artemis-dataset-including-10k-images"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all no-underline cursor-pointer"
+              >
+                <ExternalLink size={14} />
+                Kaggle
+              </a>
+              <button
+                onClick={() => onNavigate?.('art-analysis', 'Artemis')}
+                className="flex-1 py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+              >
+                <BarChart3 size={14} />
+                Analysis
+              </button>
+            </div>
+
           </motion.div>
         </div>
       </section>

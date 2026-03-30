@@ -34,7 +34,8 @@ import {
     Filter,
     Target,
     Link,
-    BoxSelect
+    BoxSelect,
+    Users
 } from "lucide-react";
 
 // Import local data 
@@ -464,11 +465,29 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                                 href="https://www.kaggle.com/datasets/jsphyg/weather-dataset-rattle-package?select=weatherAUS.csv"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="w-full mt-10 py-5 bg-on-surface text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-primary transition-all shadow-xl shadow-on-surface/10 flex items-center justify-center gap-3 cursor-pointer no-underline"
+                                                className="w-full mt-10 py-5 bg-on-surface text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-primary transition-all shadow-xl shadow-on-surface/10 flex items-center justify-center gap-3 cursor-pointer no-underline mb-10"
                                             >
                                                 <BookOpen size={18} />
                                                 Dataset on Kaggle
                                             </a>
+
+                                            <div className="pt-8 border-t border-outline-variant/10">
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <Users size={16} className="text-primary" />
+                                                    <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Project Contributors</span>
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {[
+                                                        "Lê Minh Hào"
+                                                       
+                                                    ].map((member, i) => (
+                                                        <div key={i} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                                                            <span className="text-[10px] font-bold text-on-surface truncate">{member}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <ImagePlaceholder label="Meteorological Scene" src={heroImage} className="min-h-[280px]" />

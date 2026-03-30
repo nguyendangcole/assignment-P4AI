@@ -164,6 +164,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   onNavigate('tabular-eda');
                 } else if (item.title === "Text Data") {
                   onNavigate('text-eda');
+                } else if (item.title === "Image Data") {
+                  onNavigate('image-eda');
                 } else {
                   onNavigate('art-analysis', item.title);
                 }

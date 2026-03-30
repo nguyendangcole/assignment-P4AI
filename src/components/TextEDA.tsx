@@ -42,7 +42,8 @@ import {
     Type,
     Grid,
     Sparkles,
-    BadgeCheck
+    BadgeCheck,
+    Users
 } from "lucide-react";
 
 // --- Modern Academic UI Components (Same as TabularEDA) ---
@@ -501,6 +502,22 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                                                         <span className="text-on-surface font-black text-sm">{item.val}</span>
                                                     </div>
                                                 ))}
+                                            </div>
+                                            <div className="pt-8 border-t border-outline-variant/10">
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <Users size={16} className="text-primary" />
+                                                    <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Project Contributors</span>
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {[
+                                                        "Nguyễn Đặng Minh Trường"
+                                                    ].map((member, i) => (
+                                                        <div key={i} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                                                            <span className="text-[10px] font-bold text-on-surface truncate">{member}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
