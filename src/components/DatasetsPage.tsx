@@ -1,5 +1,8 @@
 import { motion } from "motion/react";
-import { Table, FileText, ImageIcon, Download, CloudDownload, Eraser, Share2, ShieldCheck, ArrowRight, Info, History, Layers } from "lucide-react";
+import { Table, FileText, ImageIcon, ExternalLink, Download, CloudDownload, Eraser, Share2, ShieldCheck, ArrowRight, Info, History, Layers } from "lucide-react";
+import tabularHero from "../assets/images/image/ảnh.jpg";
+import textHero from "../assets/images/image/text.jpg";
+import imageHero from "../assets/images/image/padang_food.png";
 
 export default function DatasetsPage() {
   return (
@@ -37,34 +40,38 @@ export default function DatasetsPage() {
             </div>
             <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
               <img
-                src="https://images.unsplash.com/photo-1551288049-bbda38a5f85d?auto=format&fit=crop&q=80&w=400"
-                alt="Tabular data"
+                src={tabularHero}
+                alt="Rain in Australia"
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                referrerPolicy="no-referrer"
               />
             </div>
-            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Sociodemographic Longitudinal</h3>
-            <p className="text-xs text-on-surface-variant mb-6">Cleaned census-derived metrics for urban development modeling.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Rain in Australia</h3>
+            <p className="text-xs text-on-surface-variant mb-6">Predicting next-day rain using 10 years of daily observations from the Bureau of Meteorology.</p>
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
-                <span className="text-on-surface font-medium">Urban Studies Dept.</span>
+                <span className="text-on-surface font-medium">Bureau of Meteorology</span>
               </div>
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
-                <span className="text-on-surface font-medium">10k rows / 4.2MB</span>
+                <span className="text-on-surface font-medium">145.5k rows / 14MB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
               <span className="text-[9px] uppercase font-bold text-primary mb-2 block">Structure Preview</span>
               <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
-                {`{ id: int, age: int, income: float, zip: str, educ_level: enum }`}
+                {`{ Date: str, Location: str, MinTemp: float, MaxTemp: float, RainTomorrow: bool }`}
               </code>
             </div>
-            <button className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all cursor-pointer">
-              <Download size={14} />
-              Download CSV
-            </button>
+            <a 
+              href="https://www.kaggle.com/datasets/jsphyg/weather-dataset-rattle-package?select=weatherAUS.csv"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
+            >
+              <ExternalLink size={14} />
+              View on Kaggle
+            </a>
           </motion.div>
 
           {/* Text Dataset Card */}
@@ -80,34 +87,38 @@ export default function DatasetsPage() {
             </div>
             <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
               <img
-                src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400"
-                alt="Textual data"
+                src={textHero}
+                alt="Trending Topics"
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                referrerPolicy="no-referrer"
               />
             </div>
-            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Academic Abstracts Corpus</h3>
-            <p className="text-xs text-on-surface-variant mb-6">Cross-discipline research summaries for NLP and topic modeling.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Trending Topics 2026</h3>
+            <p className="text-xs text-on-surface-variant mb-6">Multi-source synthetic dataset of trending news topics and categories for Feb 2026.</p>
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
-                <span className="text-on-surface font-medium">OpenScience API</span>
+                <span className="text-on-surface font-medium">Kaggle Synthetic Archive</span>
               </div>
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
-                <span className="text-on-surface font-medium">25k docs / 185MB</span>
+                <span className="text-on-surface font-medium">2.5k docs / 1.2MB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
               <span className="text-[9px] uppercase font-bold text-secondary mb-2 block">Structure Preview</span>
               <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
-                {`{ doc_id: str, text: longtext, tags: list, date: datetime }`}
+                {`{ article_id: str, short_text: longtext, topic_category: enum }`}
               </code>
             </div>
-            <button className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
-              <Download size={14} />
-              Download JSONL
-            </button>
+            <a 
+              href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all no-underline cursor-pointer"
+            >
+              <ExternalLink size={14} />
+              View on Kaggle
+            </a>
           </motion.div>
 
           {/* Image Dataset Card */}
@@ -123,34 +134,38 @@ export default function DatasetsPage() {
             </div>
             <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
               <img
-                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=400"
-                alt="Visual data"
+                src={imageHero}
+                alt="Padang Cuisine"
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                referrerPolicy="no-referrer"
               />
             </div>
-            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Microscopic Pathogens</h3>
-            <p className="text-xs text-on-surface-variant mb-6">High-resolution labeled imagery for classification algorithms.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Padang Cuisine (Food Image)</h3>
+            <p className="text-xs text-on-surface-variant mb-6">Indonesian Food Image Dataset with 9 classes, featuring authentic Padang culinary delights.</p>
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
-                <span className="text-on-surface font-medium">Bio-Tech Lab S3</span>
+                <span className="text-on-surface font-medium">Kaggle PadangFood Dataset</span>
               </div>
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
-                <span className="text-on-surface font-medium">5k imgs / 2.1GB</span>
+                <span className="text-on-surface font-medium">1k+ imgs / ~400MB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
               <span className="text-[9px] uppercase font-bold text-tertiary mb-2 block">Structure Preview</span>
               <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
-                /train/ {`{ class_a: *.jpg, class_b: *.jpg }`} /metadata.csv
+                /train/ {`{ ayam_pop, rendang, gulai_tunjang, ... }`}
               </code>
             </div>
-            <button className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
-              <Download size={14} />
-              Download TAR.GZ
-            </button>
+            <a 
+              href="https://www.kaggle.com/datasets/faldoae/padangfood"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto w-full py-2.5 bg-surface-container-high text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all no-underline cursor-pointer"
+            >
+              <ExternalLink size={14} />
+              View on Kaggle
+            </a>
           </motion.div>
 
           {/* Multimodal Dataset Card */}
