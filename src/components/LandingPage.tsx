@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon, Layers } from "lucide-react";
+import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon, Layers, MousePointer2 } from "lucide-react";
 import aviation from '../assets/images/aviation/aviation.png';
 import textPreview from '../assets/images/image/text_preview.jpg';
 import imagePreview from '../assets/images/image/image_preview.jpg';
@@ -42,6 +42,27 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           <div className="absolute inset-0 academic-gradient opacity-10"></div>
         </motion.div>
       </section>
+      
+      {/* Scroll Hint */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="flex flex-col items-center gap-3 mb-24 opacity-60"
+      >
+        <div className="flex items-center gap-3 px-6 py-2.5 bg-surface-container-low border border-on-surface-variant/5 rounded-full shadow-sm">
+          <motion.div
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <MousePointer2 size={16} className="text-primary rotate-12" />
+          </motion.div>
+          <span className="text-[11px] font-black uppercase tracking-[0.25em] text-on-surface-variant">
+            Explore dataset distributions below
+          </span>
+        </div>
+        <div className="h-12 w-px bg-linear-to-b from-primary/30 to-transparent"></div>
+      </motion.div>
 
       {/* Group Info Section */}
       <section className="mb-24">
