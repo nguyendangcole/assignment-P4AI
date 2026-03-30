@@ -3,6 +3,7 @@ import { Table, FileText, ImageIcon, ExternalLink, Download, CloudDownload, Eras
 import tabularHero from "../assets/images/image/ảnh.jpg";
 import textHero from "../assets/images/image/text.jpg";
 import imageHero from "../assets/images/image/padang_food.png";
+import multimodalHero from "../assets/images/image/artemis_multimodal.png";
 
 export default function DatasetsPage() {
   return (
@@ -181,32 +182,33 @@ export default function DatasetsPage() {
             </div>
             <div className="w-full h-32 rounded-lg overflow-hidden mb-6">
               <img
-                src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=400"
-                alt="Multimodal data"
+                src={multimodalHero}
+                alt="Artemis Dataset"
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                referrerPolicy="no-referrer"
               />
             </div>
-            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Cognitive Text-Image Pairs</h3>
-            <p className="text-xs text-on-surface-variant mb-6">Complex scene descriptions mapped to high-fidelity imagery for multimodal grounding.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Artemis (Art & Emotions)</h3>
+            <p className="text-xs text-on-surface-variant mb-6">A high-fidelity multimodal dataset of artworks and emotional responses for affective computing research.</p>
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
-                <span className="text-on-surface font-medium">Vision-Language Lab</span>
+                <span className="text-on-surface font-medium">Artemis Multimodal Archive</span>
               </div>
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
-                <span className="text-on-surface font-medium">100k pairs / 12.4GB</span>
+                <span className="text-on-surface font-medium">80k+ pairs / ~30GB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
               <span className="text-[9px] uppercase font-bold text-primary mb-2 block">Structure Preview</span>
               <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
-                /images/ *.jpg {`{ doc_id: str, prompt: text, clip_score: float }`} /metadata.parquet
+                /images/ *.jpg {`{ art_style, emotion, utterance }`} /metadata.csv
               </code>
             </div>
             <a 
-              href="#"
+              href="https://www.kaggle.com/datasets/rollas/artemis-dataset-including-10k-images"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-auto w-full py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 group-hover:shadow-lg transition-all no-underline cursor-pointer"
             >
               <ExternalLink size={14} />
