@@ -1,7 +1,10 @@
 import { motion } from "motion/react";
 import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon, Layers } from "lucide-react";
 import aviation from '../assets/images/aviation/aviation.png';
-import imageData from '../assets/images/image/image-data.png';
+import tabularPreview from '../assets/images/image/tabular_preview.jpg';
+import textPreview from '../assets/images/image/text_preview.jpg';
+import imagePreview from '../assets/images/image/image_preview.jpg';
+import multimodalPreview from '../assets/images/image/multimodal_preview.jpg';
 
 interface LandingPageProps {
   onNavigate: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda', dataset?: string) => void;
@@ -111,25 +114,25 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               title: "Tabular Data",
               icon: <Table className="text-primary" />,
               desc: "Exploration of structured datasets focusing on feature engineering, correlation matrices, and statistical distributions of numerical and categorical variables.",
-              img: "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800"
+              img: tabularPreview
             },
             {
               title: "Text Data",
               icon: <Languages className="text-primary" />,
               desc: "NLP preprocessing including tokenization, stop-word removal, and TF-IDF analysis to uncover semantic patterns and sentiment trends within textual corpora.",
-              img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800"
+              img: textPreview
             },
             {
               title: "Image Data",
               icon: <ImageIcon className="text-primary" />,
               desc: "Initial computer vision analysis involving pixel intensity distributions, RGB channel histograms, and basic shape/edge detection techniques.",
-              img: imageData
+              img: imagePreview
             },
             {
               title: "Multimodal Data",
               icon: <Layers className="text-primary" />,
               desc: "Integrative analysis of text-image pairs, investigating cross-modal semantic mapping and combined feature space distributions for complex data understanding.",
-              img: "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=800"
+              img: multimodalPreview
             }
           ].map((item, idx) => (
             <motion.div
