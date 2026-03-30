@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import trendingSamples from "../assets/data/textEDA/trending_samples.json";
 import Plot from "react-plotly.js";
 import {
     ArrowRight,
@@ -38,7 +39,9 @@ import {
     MessageSquare,
     Globe,
     Type,
-    Grid
+    Grid,
+    Sparkles,
+    BadgeCheck
 } from "lucide-react";
 
 // --- Modern Academic UI Components (Same as TabularEDA) ---
@@ -229,7 +232,79 @@ const InteractiveAnalysis = ({ id, title, subtitle, icon: Icon, pythonCode, plot
 export default function TextEDA({ onBack }: { onBack: () => void }) {
     const [activeNav, setActiveNav] = useState("overview");
     const [selectedCategory, setSelectedCategory] = useState("economy");
+    const [bigramTopic, setBigramTopic] = useState("economy");
     const [globalUnit, setGlobalUnit] = useState<"unigrams" | "bigrams">("unigrams");
+    const [currentSamples, setCurrentSamples] = useState<any[]>([]);
+    const [isRolling, setIsRolling] = useState(false);
+
+    const rollSamples = () => {
+        setIsRolling(true);
+        setTimeout(() => {
+            const shuffled = [...trendingSamples].sort(() => 0.5 - Math.random());
+            setCurrentSamples(shuffled.slice(0, 2));
+            setIsRolling(false);
+        }, 800);
+    };
+
+    useEffect(() => {
+        rollSamples();
+    }, []);
+
+    const categoricalTFIDFData: Record<string, {
+        unigrams: { words: string[], scores: number[] },
+        bigrams: { words: string[], scores: number[] }
+    }> = {
+        ai_and_tech: {
+            unigrams: {
+                words: ["ai", "tech", "startups", "users", "platforms", "discussing", "actively", "broader", "category", "multiple", "agentic", "programming", "gen", "jobs", "pk", "gb", "stock", "sports", "releases", "music"],
+                scores: [0.5355, 0.3641, 0.1653, 0.1403, 0.1403, 0.1403, 0.1403, 0.1403, 0.1403, 0.1403, 0.1330, 0.1306, 0.1285, 0.1088, 0.0826, 0.0815, 0.0, 0.0, 0.0, 0.0]
+            },
+            bigrams: {
+                words: ["tech multiple", "ai tech", "broader category", "category ai", "actively discussing", "multiple platforms", "platforms users", "ai broader", "users actively", "startups broader"],
+                scores: [0.3469, 0.3469, 0.3469, 0.3469, 0.3469, 0.3469, 0.3463, 0.1759, 0.1738, 0.0910]
+            }
+        },
+        economy: {
+            unigrams: {
+                words: ["economy", "inflation", "crypto", "platforms", "users", "broader", "actively", "discussing", "multiple", "category", "jobs", "stock", "market", "pk", "gb", "sports", "startups", "tech", "releases", "music"],
+                scores: [0.4463, 0.1798, 0.1775, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1471, 0.1464, 0.1464, 0.1071, 0.1019, 0.0, 0.0, 0.0, 0.0, 0.0]
+            },
+            bigrams: {
+                words: ["broader category", "actively discussing", "economy multiple", "multiple platforms", "category economy", "platforms users", "users actively", "users pk", "pk actively", "users gb"],
+                scores: [0.3762, 0.3762, 0.3762, 0.3762, 0.3762, 0.3755, 0.1759, 0.1032, 0.1032, 0.0971]
+            }
+        },
+        entertainment: {
+            unigrams: {
+                words: ["entertainment", "hollywood", "kdrama", "platforms", "users", "broader", "actively", "category", "discussing", "multiple", "bollywood", "releases", "music", "gb", "pk", "startups", "stock", "tech", "sports", "olympics"],
+                scores: [0.4366, 0.1912, 0.1852, 0.1688, 0.1688, 0.1688, 0.1688, 0.1688, 0.1688, 0.1688, 0.1507, 0.1412, 0.1412, 0.1019, 0.0890, 0.0, 0.0, 0.0, 0.0, 0.0]
+            },
+            bigrams: {
+                words: ["broader category", "actively discussing", "entertainment multiple", "multiple platforms", "category entertainment", "platforms users", "users actively", "discussing hollywood", "hollywood broader", "discussing kdrama"],
+                scores: [0.3763, 0.3763, 0.3763, 0.3763, 0.3763, 0.3755, 0.1907, 0.1038, 0.1038, 0.1001]
+            }
+        },
+        global_events: {
+            unigrams: {
+                words: ["events", "global", "elections", "platforms", "users", "broader", "actively", "discussing", "multiple", "category", "climate", "conflicts", "protests", "pk", "gb", "releases", "startups", "stock", "tech", "sports"],
+                scores: [0.4125, 0.4125, 0.1643, 0.1634, 0.1634, 0.1634, 0.1634, 0.1634, 0.1634, 0.1634, 0.1615, 0.1566, 0.1556, 0.0898, 0.0802, 0.0, 0.0, 0.0, 0.0, 0.0]
+            },
+            bigrams: {
+                words: ["broader category", "events multiple", "multiple platforms", "global events", "actively discussing", "category global", "platforms users", "users actively", "discussing elections", "elections broader"],
+                scores: [0.3535, 0.3535, 0.3535, 0.3535, 0.3535, 0.3535, 0.3529, 0.1936, 0.0916, 0.0916]
+            }
+        },
+        sports: {
+            unigrams: {
+                words: ["sports", "football", "esports", "multiple", "platforms", "users", "broader", "category", "discussing", "actively", "olympics", "cricket", "pk", "gb", "releases", "startups", "stock", "tech", "market", "music"],
+                scores: [0.4681, 0.1956, 0.1756, 0.1719, 0.1719, 0.1719, 0.1719, 0.1719, 0.1719, 0.1719, 0.1692, 0.1641, 0.1025, 0.0885, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            },
+            bigrams: {
+                words: ["actively discussing", "multiple platforms", "sports multiple", "category sports", "broader category", "platforms users", "users actively", "discussing football", "football broader", "pk actively"],
+                scores: [0.3780, 0.3780, 0.3780, 0.3780, 0.3780, 0.3771, 0.1949, 0.1059, 0.1059, 0.0991]
+            }
+        }
+    };
 
     const categoricalData: any = {
         ai_and_tech: {
@@ -290,9 +365,10 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
         { id: "semantic", label: "Vocabulary Richness" },
         { id: "frequent", label: "MOST FREQUENTLY WORDS" },
         { id: "category", label: "Categorical Deep-dive" },
-        { id: "frequency", label: "Global Weights" },
+        { id: "tfidf-category", label: "Category Weights (TF-IDF)" },
         { id: "bigrams-comparison", label: "Categorical Bigrams Comparison" },
         { id: "matrix", label: "Similarity Matrix" },
+        { id: "insights", label: "Key Insights" },
     ];
 
     return (
@@ -444,26 +520,72 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                             </div>
                         </div>
 
+
                         {/* Methodology Section */}
                         <section className="py-20 scroll-mt-24" id="methodology">
-                            <div className="bg-white rounded-[2.5rem] border border-outline-variant/10 shadow-sm p-12 group">
+                            <div className="bg-white rounded-[2.5rem] border border-outline-variant/10 shadow-sm p-12 group transition-all hover:shadow-xl hover:shadow-on-surface/5">
                                 <div className="flex items-center gap-6 mb-12">
                                     <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110"><BookOpen size={28} /></div>
                                     <div>
                                         <h2 className="text-3xl font-bold tracking-tight mb-2 text-on-surface">Analysis Methodology</h2>
-                                        <p className="text-on-surface-variant text-sm font-medium opacity-60 italic">Workflow: Data cleaning → Tokenization → Semantic analysis → Visualization.</p>
+                                        <p className="text-on-surface-variant text-sm font-medium opacity-60">This report uses two distinct text processing approaches based on specific analytical objectives.</p>
                                     </div>
                                 </div>
-                                <div className="bg-white rounded-3xl border border-outline-variant/10 shadow-inner overflow-hidden font-mono text-[13px] relative group p-8">
-                                    <div className="flex gap-2 mb-6 border-b border-outline-variant/5 pb-4">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-                                        <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-                                        <span className="text-[10px] text-on-surface-variant/30 uppercase tracking-[0.2em] ml-2">Analytic Strategy</span>
-                                    </div>
-                                    <div className="text-on-surface-variant text-sm font-medium leading-relaxed opacity-60 italic">
-                                        Workflow: Categorical breakdown → Text length distribution → TF-IDF extraction → Keyword analysis → Similarity matrix.
-                                    </div>
+
+                                <div className="bg-white rounded-[2rem] border border-outline-variant/10 shadow-inner overflow-hidden">
+                                    <table className="w-full text-left border-collapse">
+                                        <thead className="bg-primary/5 text-primary border-b border-outline-variant/10">
+                                            <tr>
+                                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest w-[30%]">Analysis Type</th>
+                                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-center">Raw Data</th>
+                                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-center">Stopwords Removed</th>
+                                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest">Scientific Rationale</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-outline-variant/5">
+                                            {[
+                                                { type: "Basic Statistics", sub: "(Word/Char counts)", raw: true, stop: false, reason: "Measure actual physical document footprint." },
+                                                { type: "Stop Words Analysis", sub: "(Noise profiling)", raw: true, stop: false, reason: "Audit the frequency of non-semantic functional words." },
+                                                { type: "Word Frequency", sub: "(Top overall words)", raw: false, stop: true, reason: "Surface meaningful lexical keywords & concepts." },
+                                                { type: "Category Keywords", sub: "(Sector specific)", raw: false, stop: true, reason: "Isolate terms unique to platform segments." },
+                                                { type: "Vocabulary Richness", sub: "(TTR & Diversity)", raw: false, stop: true, reason: "Analyze semantic variety without syntactic noise." },
+                                                { type: "TF-IDF Weighted Terms", sub: "(Significance)", raw: false, stop: true, reason: "Determine most distinctive categorical identifiers." },
+                                                { type: "N-grams (Bigrams)", sub: "(Phrase patterns)", raw: false, stop: true, reason: "Capture meaningful contextual word dependencies." },
+                                                { type: "Distributions", sub: "(Length histograms)", raw: true, stop: false, reason: "Maintain integrity of original text delivery format." }
+                                            ].map((row, i) => (
+                                                <tr key={i} className="hover:bg-surface-container-low/30 transition-colors group/row">
+                                                    <td className="px-8 py-6">
+                                                        <div className="font-bold text-on-surface text-sm">{row.type}</div>
+                                                        <div className="text-[10px] text-on-surface-variant opacity-60 font-medium tracking-tight">{row.sub}</div>
+                                                    </td>
+                                                    <td className="px-8 py-6 text-center">
+                                                        {row.raw ? (
+                                                            <div className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-emerald-100 text-emerald-600 shadow-sm"><CheckCircle2 size={14} /></div>
+                                                        ) : (
+                                                            <div className="text-on-surface-variant opacity-20 text-lg font-light">-</div>
+                                                        )}
+                                                    </td>
+                                                    <td className="px-8 py-6 text-center">
+                                                        {row.stop ? (
+                                                            <div className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-primary/10 text-primary shadow-sm"><CheckCircle2 size={14} /></div>
+                                                        ) : (
+                                                            <div className="text-on-surface-variant opacity-20 text-lg font-light">-</div>
+                                                        )}
+                                                    </td>
+                                                    <td className="px-8 py-6 text-xs text-on-surface-variant/70 leading-relaxed font-medium">
+                                                        {row.reason}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div className="mt-8 flex items-center gap-4 bg-surface-container-low/50 p-6 rounded-2xl border border-outline-variant/10 text-[11px] text-on-surface-variant italic leading-relaxed">
+                                    <Sparkles size={16} className="text-primary shrink-0" />
+                                    <span>
+                                        Analytic Note: Categorical segmentation and semantic extraction require a filtered approach to remove <strong>syntax noise</strong> (stopwards), ensuring that the resulting visualizations reflect actual <strong>domain knowledge</strong> rather than language mechanics.
+                                    </span>
                                 </div>
                             </div>
                         </section>
@@ -1150,7 +1272,7 @@ custom_news_stopwords = ['said', 'mr', 'ms', 'mrs', 'told', 'says', 'say',
 stop_words.update(custom_news_stopwords)
 
 # Select a category to analyze
-selected_category = 'economy'
+selected_category = '${selectedCategory}'
 cat_df = df[df['topic_category'] == selected_category]
 
 # Tokenize and filter
@@ -1223,14 +1345,19 @@ fig.show()`}
                                                 textposition: 'outside'
                                             }]}
                                             layout={{
+                                                title: {
+                                                    text: `Top 20 Words in ${selectedCategory.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} Articles`,
+                                                    font: { size: 16, color: '#2a3f5f' },
+                                                    x: 0.05
+                                                },
                                                 autosize: true,
-                                                margin: { l: 120, r: 100, t: 20, b: 40 },
+                                                margin: { l: 120, r: 100, t: 80, b: 40 },
                                                 xaxis: { 
                                                     title: 'Frequency', 
                                                     gridcolor: '#f0f0f0',
                                                     range: [0, 650] // Fixed range to prevent label cut-off
                                                 },
-                                                yaxis: { autorange: 'reversed', gridcolor: '#f0f0f0' },
+                                                yaxis: { title: 'Words', autorange: 'reversed', gridcolor: '#f0f0f0' },
                                                 plot_bgcolor: 'transparent',
                                                 paper_bgcolor: 'transparent',
                                                 height: 800
@@ -1282,42 +1409,59 @@ fig.show()`}
                             </div>
                         </InteractiveAnalysis>
 
-                        {/* Global Weights & TF-IDF Section */}
+                        {/* TF-IDF Top Terms by Category Section */}
                         <InteractiveAnalysis
-                            id="frequency"
-                            title="Global Weights"
-                            subtitle="Word and N-gram significance across the entire corpus using TF-IDF weighting."
+                            id="tfidf-category"
+                            title="TF-IDF Top Terms by Category"
+                            subtitle="Granular analysis of term significance within specific topic categories using TF-IDF weighting."
                             icon={Hash}
-                            pythonCode={`from sklearn.feature_extraction.text import TfidfVectorizer
+                            pythonCode={`import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer, ENGLISH_STOP_WORDS
+import numpy as np
 
-# Analyzing global ${globalUnit}s
-ngram_range = (1, 1) if '${globalUnit}' == 'unigrams' else (2, 2)
-vectorizer = TfidfVectorizer(ngram_range=ngram_range, stop_words='english', max_features=5000)
+# Setup stopwords
+stop_words = set(ENGLISH_STOP_WORDS)
+custom_news_stopwords = ['said', 'mr', 'ms', 'mrs', 'told', 'says', 'say',
+                         'according', 'year', 'years', 'new', 'old', 'like',
+                         'just', 'going', 'got', 'use', 'used', 'make', 'made']
+stop_words.update(custom_news_stopwords)
 
-X = vectorizer.fit_transform(df['short_text'])
-scores = zip(vectorizer.get_feature_names_out(), X.toarray().sum(axis=0))
-sorted_scores = sorted(scores, key=lambda x: x[1], reverse=True)[:20]
+# Calculate TF-IDF for category: '${selectedCategory}'
+cat_df = df[df['topic_category'] == '${selectedCategory}']
+vectorizer = TfidfVectorizer(max_features=50, stop_words=list(stop_words))
+tfidf_matrix = vectorizer.fit_transform(cat_df['short_text'])
+feature_names = vectorizer.get_feature_names_out()
+mean_scores = np.array(tfidf_matrix.mean(axis=0)).flatten()
 
-for term, score in sorted_scores:
-    print(f"{term:20s}: {score:.4f}")`}
+# Get top 20 terms
+top_indices = mean_scores.argsort()[-20:][::-1]
+top_words = [feature_names[i] for i in top_indices]
+top_scores = [mean_scores[i] for i in top_indices]
+
+print(f"Top 20 TF-IDF terms in ${selectedCategory}:")
+for word, score in zip(top_words, top_scores):
+    print(f"  {word:20s}: {score:.4f}")`}
                         >
                             <div className="space-y-12">
                                 <div className="flex flex-col md:flex-row gap-6 items-center justify-between pb-8 border-b border-outline-variant/10">
                                     <div className="space-y-1">
-                                        <h4 className="text-xl font-bold text-on-surface">Global Significance</h4>
-                                        <p className="text-sm text-on-surface-variant max-w-md opacity-60">Understanding which terms define the entire dataset's semantic footprint.</p>
+                                        <h4 className="text-xl font-bold text-on-surface">Topic Weight Analysis</h4>
+                                        <p className="text-sm text-on-surface-variant max-w-md opacity-60">Displaying TF-IDF term distribution for the <span className="text-primary font-bold">{selectedCategory.replace('_', ' ')}</span> topic.</p>
                                     </div>
-                                    <div className="flex bg-surface-container-high p-1 rounded-xl border border-outline-variant/10">
+                                    <div className="flex bg-surface-container-high p-1.5 rounded-2xl border border-outline-variant/10 overflow-x-auto max-w-full custom-scrollbar">
                                         {[
-                                            { id: "unigrams", label: "Unigrams" },
-                                            { id: "bigrams", label: "Bigrams (N=2)" },
-                                        ].map((unit) => (
+                                            { id: "ai_and_tech", label: "AI & Tech" },
+                                            { id: "economy", label: "Economy" },
+                                            { id: "entertainment", label: "Entertainment" },
+                                            { id: "global_events", label: "Global Events" },
+                                            { id: "sports", label: "Sports" },
+                                        ].map((cat) => (
                                             <button
-                                                key={unit.id}
-                                                onClick={() => setGlobalUnit(unit.id as any)}
-                                                className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer ${globalUnit === unit.id ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-60 hover:opacity-100"}`}
+                                                key={cat.id}
+                                                onClick={() => setSelectedCategory(cat.id)}
+                                                className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer whitespace-nowrap ${selectedCategory === cat.id ? "bg-white text-primary shadow-sm" : "text-on-surface-variant opacity-60 hover:opacity-100"}`}
                                             >
-                                                {unit.label}
+                                                {cat.label}
                                             </button>
                                         ))}
                                     </div>
@@ -1329,26 +1473,31 @@ for term, score in sorted_scores:
                                             <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
                                                 <BarChart className="text-primary" size={20} />
                                             </div>
-                                            <h5 className="font-bold text-lg text-on-surface">TF-IDF Weighted Distribution</h5>
+                                            <h5 className="font-bold text-lg text-on-surface">Top 20 TF-IDF Weighted Terms ({selectedCategory.replace('_', ' ')})</h5>
                                         </div>
                                         <Plot
                                             data={[{
                                                 type: 'bar',
                                                 orientation: 'h',
-                                                x: globalUnit === 'unigrams' 
-                                                    ? [0.4463, 0.1798, 0.1775, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1471, 0.1464, 0.1464, 0.1072, 0.1020, 0.095, 0.09, 0.085, 0.08, 0.075]
-                                                    : [0.3762, 0.3762, 0.3762, 0.3762, 0.3762, 0.3755, 0.1759, 0.1032, 0.1032, 0.0971],
-                                                y: globalUnit === 'unigrams'
-                                                    ? ["economy", "inflation", "crypto", "platforms", "users", "broader", "actively", "discussing", "multiple", "category", "jobs", "stock", "market", "finance", "global", "tech", "entertainment", "sports", "releases", "music"]
-                                                    : ["broader category", "actively discussing", "economy multiple", "multiple platforms", "category economy", "platforms users", "users actively", "users pk", "pk actively", "users gb"],
-                                                marker: { color: globalUnit === 'unigrams' ? '#764ba2' : '#4facfe' },
+                                                x: categoricalTFIDFData[selectedCategory]?.unigrams?.scores.slice(0, 20) || [],
+                                                y: categoricalTFIDFData[selectedCategory]?.unigrams?.words.slice(0, 20) || [],
+                                                marker: { 
+                                                    color: '#764ba2',
+                                                    opacity: 0.85
+                                                },
+                                                text: (categoricalTFIDFData[selectedCategory]?.unigrams?.scores.slice(0, 20) || []).map(s => s.toFixed(4)),
                                                 textposition: 'outside'
                                             }]}
                                             layout={{
+                                                title: {
+                                                    text: `Top 20 TF-IDF Terms in ${selectedCategory.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
+                                                    font: { size: 16, color: '#2a3f5f' },
+                                                    x: 0.05
+                                                },
                                                 autosize: true,
-                                                margin: { l: 200, r: 80, t: 20, b: 40 },
-                                                xaxis: { title: 'TF-IDF Weight', gridcolor: '#f0f0f0' },
-                                                yaxis: { autorange: 'reversed', gridcolor: '#f0f0f0' },
+                                                margin: { l: 160, r: 80, t: 80, b: 40 },
+                                                xaxis: { title: 'TF-IDF Score', gridcolor: '#f0f0f0', range: [0, 0.6] },
+                                                yaxis: { title: 'Terms', autorange: 'reversed', gridcolor: '#f0f0f0' },
                                                 plot_bgcolor: 'transparent',
                                                 paper_bgcolor: 'transparent',
                                                 height: 700
@@ -1361,25 +1510,26 @@ for term, score in sorted_scores:
                                     <div className="space-y-8">
                                         <div className="bg-slate-900 rounded-[2.5rem] p-10 font-mono text-[11px] leading-relaxed text-indigo-100 shadow-2xl border border-white/10 overflow-hidden">
                                             <div className="text-secondary/70 mb-6 font-bold uppercase tracking-widest border-b border-white/5 pb-2">
-                                                Top {globalUnit}s Global:
+                                                Top TF-IDF terms in {selectedCategory}:
                                             </div>
-                                            <div className="space-y-1.5 custom-scrollbar h-[500px] overflow-y-auto pr-4">
-                                                {(globalUnit === 'unigrams' 
-                                                    ? ["economy", "inflation", "crypto", "platforms", "users", "broader", "actively", "discussing", "multiple", "category", "jobs", "stock", "market", "finance", "global", "tech", "entertainment", "sports", "releases", "music"]
-                                                    : ["broader category", "actively discussing", "economy multiple", "multiple platforms", "category economy", "platforms users", "users actively", "users pk", "pk actively", "users gb"]
-                                                ).map((word, idx) => (
+                                            <div className="space-y-1.5 custom-scrollbar h-[550px] overflow-y-auto pr-4">
+                                                {(categoricalTFIDFData[selectedCategory]?.unigrams?.words.slice(0, 20) || []).map((word, idx) => (
                                                     <div key={idx} className="flex justify-between items-center group">
                                                         <span className="text-indigo-200 group-hover:text-white transition-colors">
                                                             {word.padEnd(25, ' ')}
                                                         </span>
                                                         <span className="text-primary-container font-bold ml-4">
-                                                            :  {(globalUnit === 'unigrams' 
-                                                                ? [0.4463, 0.1798, 0.1775, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1701, 0.1471, 0.1464, 0.1464, 0.1072, 0.1020, 0.095, 0.09, 0.085, 0.08, 0.075]
-                                                                : [0.3762, 0.3762, 0.3762, 0.3762, 0.3762, 0.3755, 0.1759, 0.1032, 0.1032, 0.0971])[idx].toFixed(4)}
+                                                            :  {(categoricalTFIDFData[selectedCategory]?.unigrams?.scores[idx] || 0).toFixed(4)}
                                                         </span>
                                                     </div>
                                                 ))}
                                             </div>
+                                        </div>
+                                        <div className="bg-primary/5 p-6 rounded-3xl border border-primary/10">
+                                            <h6 className="text-xs font-black uppercase tracking-widest text-primary mb-3">Topic Relevance</h6>
+                                            <p className="text-[11px] text-on-surface-variant leading-relaxed opacity-70">
+                                                Higher TF-IDF scores indicate words that are more unique and representative of the <span className="font-bold">{selectedCategory.replace('_', ' ')}</span> category compared to the rest of the corpus.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -1393,8 +1543,9 @@ for term, score in sorted_scores:
                             subtitle="Top 10 Bigrams by Category (TF-IDF Weighting)"
                             icon={Grid}
                             pythonCode={`import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 from sklearn.feature_extraction.text import TfidfVectorizer, ENGLISH_STOP_WORDS
+import numpy as np
 
 # Setup stopwords
 stop_words = set(ENGLISH_STOP_WORDS)
@@ -1403,113 +1554,190 @@ custom_news_stopwords = ['said', 'mr', 'ms', 'mrs', 'told', 'says', 'say',
                          'just', 'going', 'got', 'use', 'used', 'make', 'made']
 stop_words.update(custom_news_stopwords)
 
-# Analyze all categories
-fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-fig.suptitle('Top 10 Bigrams by Category (TF-IDF)', fontsize=16, y=0.995)
+# Select category
+category = '${bigramTopic}'
 
-categories = sorted(df['topic_category'].unique())
-colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b']
-
-for idx, category in enumerate(categories):
-    ax = axes[idx // 3, idx % 3]
+if category == 'all':
+    # Analyze all categories (Batch Processing)
+    categories = sorted(df['topic_category'].unique())
+    colors = ['#667eea', '#764ba2', '#f472b6', '#38bdf8', '#4ade80']
+    fig = make_subplots(rows=2, cols=3, subplot_titles=[cat.capitalize() for cat in categories])
+    
+    for idx, cat in enumerate(categories):
+        cat_df = df[df['topic_category'] == cat]
+        # ... process text and TF-IDF ...
+        
+        fig.add_trace(
+            go.Bar(x=tfidf_scores, y=feature_names, orientation='h', marker_color=colors[idx]),
+            row=row, col=col
+        )
+    
+    fig.update_layout(height=800, title_text="Categorical Bigram TF-IDF Comparison", showlegend=false)
+else:
+    # Single Topic Analysis
     cat_df = df[df['topic_category'] == category]
     combined_text = ' '.join(cat_df['short_text'].values)
     vectorizer = TfidfVectorizer(ngram_range=(2, 2), max_features=30, stop_words=list(stop_words))
     tfidf_matrix = vectorizer.fit_transform([combined_text])
     feature_names = vectorizer.get_feature_names_out()
     tfidf_scores = tfidf_matrix.toarray()[0]
+
     top_indices = tfidf_scores.argsort()[-10:][::-1]
     top_bigrams = [feature_names[i] for i in top_indices]
     top_scores = [tfidf_scores[i] for i in top_indices]
-    ax.barh(top_bigrams, top_scores, color=colors[idx], alpha=0.7)
-    ax.set_title(category.capitalize(), fontsize=12, fontweight='bold')
-    ax.invert_yaxis()
-    ax.grid(axis='x', alpha=0.3)
 
-fig.delaxes(axes[1, 2])
-plt.tight_layout()
-plt.show()`}
+    fig = go.Figure(data=[go.Bar(
+        x=top_scores, y=top_bigrams, orientation='h', marker_color='#4facfe',
+        text=[f'{score:.4f}' for score in top_scores], textposition='outside'
+    )])
+    fig.update_layout(title=f'Top 10 Bigrams in {category.capitalize()}',
+                      xaxis_title='TF-IDF Score', yaxis_title='Bigrams',
+                      yaxis={'autorange': 'reversed'})
+
+fig.show()`}
                         >
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {[
-                                    {
-                                        title: "Tech & AI",
-                                        id: "ai_and_tech",
-                                        color: '#667eea',
-                                        words: ["artificial intelligence", "machine learning", "neural networks", "future innovation", "agentic future", "silicon valley", "startups tech", "users actively", "complex systems", "broad tech"],
-                                        scores: [0.4521, 0.3892, 0.3104, 0.2845, 0.2112, 0.1982, 0.1542, 0.1211, 0.0982, 0.0871]
-                                    },
-                                    {
-                                        title: "Economy & Finance",
-                                        id: "economy",
-                                        color: '#764ba2',
-                                        words: ["broader category", "actively discussing", "economy multiple", "multiple platforms", "category economy", "platforms users", "users actively", "users pk", "pk actively", "users gb"],
-                                        scores: [0.3762, 0.3762, 0.3762, 0.3762, 0.3762, 0.3755, 0.1759, 0.1032, 0.1032, 0.0971]
-                                    },
-                                    {
-                                        title: "Entertainment",
-                                        id: "entertainment",
-                                        color: '#f093fb',
-                                        words: ["box office", "music releases", "netflix cinema", "awards ceremony", "concerts global", "hollywood stars", "entertainment industries", "users actively", "discussing music", "platforms streaming"],
-                                        scores: [0.4121, 0.3852, 0.3204, 0.2845, 0.2112, 0.1982, 0.1542, 0.1211, 0.0982, 0.0871]
-                                    },
-                                    {
-                                        title: "Global Events",
-                                        id: "global_events",
-                                        color: '#4facfe',
-                                        words: ["climate summit", "unsc treaty", "peace envoy", "global events", "diplomatic mission", "summit border", "elections 2026", "users actively", "discussing climate", "platforms global"],
-                                        scores: [0.4321, 0.3952, 0.3504, 0.2845, 0.2412, 0.1982, 0.1542, 0.1211, 0.0982, 0.0871]
-                                    },
-                                    {
-                                        title: "Sports & Gaming",
-                                        id: "sports",
-                                        color: '#43e97b',
-                                        words: ["world cup", "football league", "olympics tournament", "finals sports", "championship game", "basketball tournament", "users actively", "sports multiple", "discussing world", "esports tournament"],
-                                        scores: [0.4821, 0.3992, 0.3604, 0.2845, 0.2112, 0.1982, 0.1542, 0.1211, 0.0982, 0.0871]
-                                    }
-                                ].map((cat, idx) => (
-                                    <div key={idx} className="bg-white p-6 rounded-3xl border border-outline-variant/10 shadow-sm flex flex-col h-[400px]">
-                                        <h5 className="font-bold text-sm text-on-surface mb-4 flex items-center gap-2">
-                                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }}></div>
-                                            {cat.title}
-                                        </h5>
-                                        <div className="flex-1 min-h-0">
-                                            <Plot
-                                                data={[{
-                                                    type: 'bar',
-                                                    orientation: 'h',
-                                                    x: cat.scores,
-                                                    y: cat.words,
-                                                    marker: { color: cat.color, opacity: 0.7 },
-                                                    text: cat.scores.map(s => s.toFixed(3)),
-                                                    textposition: 'outside',
-                                                    textfont: { size: 9 }
-                                                }]}
-                                                layout={{
-                                                    autosize: true,
-                                                    margin: { l: 120, r: 40, t: 10, b: 30 },
-                                                    xaxis: { 
-                                                        title: { text: 'TF-IDF', font: { size: 10 } },
-                                                        gridcolor: '#f0f0f0',
-                                                        tickfont: { size: 9 }
-                                                    },
-                                                    yaxis: { 
-                                                        autorange: 'reversed', 
-                                                        tickfont: { size: 9 }
-                                                    },
-                                                    plot_bgcolor: 'transparent',
-                                                    paper_bgcolor: 'transparent',
-                                                }}
-                                                config={{ responsive: true, displayModeBar: false }}
-                                                className="w-full h-full"
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                                       <div className="space-y-12">
+                                 <div className="flex flex-col md:flex-row gap-6 items-center justify-between pb-8 border-b border-outline-variant/10">
+                                     <div className="space-y-1">
+                                         <h4 className="text-xl font-bold text-on-surface">Bigram Topic Intelligence</h4>
+                                         <p className="text-sm text-on-surface-variant max-w-md opacity-60">Analyze how word pairs interact within specific platform categories to identify unique narratives.</p>
+                                     </div>
+                                     <div className="relative group min-w-[240px]">
+                                         <select 
+                                             value={bigramTopic}
+                                             onChange={(e) => setBigramTopic(e.target.value as any)}
+                                             className="w-full h-14 pl-6 pr-12 bg-white rounded-2xl border border-outline-variant/20 appearance-none text-primary font-bold focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer shadow-sm group-hover:border-primary/40"
+                                         >
+                                             <option value="economy">Economy & Finance</option>
+                                             <option value="ai_and_tech">Tech & AI</option>
+                                             <option value="entertainment">Entertainment</option>
+                                             <option value="global_events">Global Events</option>
+                                             <option value="sports">Sports & Gaming</option>
+                                             <option value="all">--- View All Topics ---</option>
+                                         </select>
+                                         <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40 group-hover:text-primary transition-colors" size={20} />
+                                     </div>
+                                 </div>
+
+                                 {bigramTopic === 'all' ? (
+                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 w-full">
+                                         {Object.entries(categoricalTFIDFData).map(([topic, data], idx) => {
+                                             const colors = ['#667eea', '#764ba2', '#f472b6', '#38bdf8', '#4ade80'];
+                                             const topicColor = colors[idx % colors.length];
+                                             return (
+                                                 <div key={topic} className="bg-white p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm flex flex-col h-[600px] transition-all hover:shadow-xl">
+                                                     <h5 className="font-bold text-sm text-on-surface mb-4 flex items-center gap-2">
+                                                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: topicColor }}></div>
+                                                         {topic.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                                                     </h5>
+                                                     <div className="flex-1 min-h-0">
+                                                         <Plot
+                                                             data={[{
+                                                                 type: 'bar',
+                                                                 orientation: 'h',
+                                                                 x: data.bigrams.scores,
+                                                                 y: data.bigrams.words,
+                                                                 marker: { color: topicColor, opacity: 0.7 },
+                                                                 text: data.bigrams.scores.map(s => s.toFixed(3)),
+                                                                 textposition: 'outside',
+                                                                 textfont: { size: 10, weight: 'bold' }
+                                                             }]}
+                                                         layout={{
+                                                             autosize: true,
+                                                             margin: { l: 180, r: 100, t: 40, b: 60 },
+                                                             xaxis: { 
+                                                                 gridcolor: '#f0f0f0', 
+                                                                 tickfont: { size: 11 },
+                                                                 range: [0, 0.45] 
+                                                             },
+                                                             yaxis: { autorange: 'reversed', tickfont: { size: 11, weight: 'bold' } },
+                                                             plot_bgcolor: 'transparent',
+                                                             paper_bgcolor: 'transparent',
+                                                         }}
+                                                         config={{ responsive: true, displayModeBar: false }}
+                                                         className="w-full h-full"
+                                                     />
+                                                 </div>
+                                                 </div>
+                                             );
+                                         })}
+                                     </div>
+                                 ) : (
+                                     <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 items-start w-full">
+                                         <div className="bg-white p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm min-h-[550px]">
+                                             <div className="flex items-center gap-3 mb-8">
+                                                 <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
+                                                     <Grid className="text-primary" size={20} />
+                                                 </div>
+                                                 <h5 className="font-bold text-lg text-on-surface">TF-IDF Weighted Bigrams ({bigramTopic.replace('_', ' ')})</h5>
+                                             </div>
+                                             <Plot
+                                                 data={[{
+                                                     type: 'bar',
+                                                     orientation: 'h',
+                                                     x: categoricalTFIDFData[bigramTopic]?.bigrams?.scores || [],
+                                                     y: categoricalTFIDFData[bigramTopic]?.bigrams?.words || [],
+                                                     marker: { 
+                                                         color: '#4facfe',
+                                                         opacity: 0.85
+                                                     },
+                                                     text: (categoricalTFIDFData[bigramTopic]?.bigrams?.scores || []).map(s => s.toFixed(4)),
+                                                     textposition: 'outside'
+                                                 }]}
+                                                 layout={{
+                                                     title: {
+                                                         text: `Top 10 Bigrams in ${bigramTopic.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} (TF-IDF)`,
+                                                         font: { size: 16, color: '#2a3f5f' },
+                                                         x: 0.05
+                                                     },
+                                                     autosize: true,
+                                                     margin: { l: 180, r: 120, t: 80, b: 40 },
+                                                     xaxis: { 
+                                                         title: 'TF-IDF Score', 
+                                                         gridcolor: '#f0f0f0', 
+                                                         range: [0, 0.45] 
+                                                     },
+                                                     yaxis: { title: 'Bigrams', autorange: 'reversed', gridcolor: '#f0f0f0' },
+                                                     plot_bgcolor: 'transparent',
+                                                     paper_bgcolor: 'transparent',
+                                                     height: 550
+                                                 }}
+                                                 config={{ responsive: true, displayModeBar: false }}
+                                                 className="w-full"
+                                             />
+                                         </div>
+
+                                         <div className="space-y-8">
+                                             <div className="bg-slate-900 rounded-[2.5rem] p-8 border border-slate-800 shadow-xl overflow-hidden relative group">
+                                                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[80px] group-hover:bg-primary/20 transition-colors" />
+                                                 <div className="flex items-center gap-3 mb-6">
+                                                     <Terminal className="text-secondary" size={20} />
+                                                     <h6 className="font-bold text-white tracking-tight">Notebook Output</h6>
+                                                 </div>
+                                                 <div className="text-secondary/70 mb-6 font-bold uppercase tracking-widest border-b border-white/5 pb-2">
+                                                     Top bigrams in {bigramTopic}:
+                                                 </div>
+                                                 <div className="space-y-1.5 custom-scrollbar h-[400px] overflow-y-auto pr-4">
+                                                     {(categoricalTFIDFData[bigramTopic]?.bigrams?.words || []).map((word, idx) => (
+                                                         <div key={idx} className="flex justify-between items-center group/item">
+                                                             <span className="text-blue-200 group-hover/item:text-white transition-colors">
+                                                                 {word.padEnd(25, ' ')}
+                                                             </span>
+                                                             <span className="text-secondary font-bold ml-4">
+                                                                 :  {(categoricalTFIDFData[bigramTopic]?.bigrams?.scores[idx] || 0).toFixed(4)}
+                                                             </span>
+                                                         </div>
+                                                     ))}
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 )}
+                             </div>
                         </InteractiveAnalysis>
 
                         {/* Matrix & Correlations Section */}
+
                         <InteractiveAnalysis
                             id="matrix"
                             title="Matrix & Correlations"
@@ -1551,42 +1779,59 @@ fig.show()
 print("\\nCategory Similarity Matrix:")
 print("Note: Diagonal is NOT 1.0 because it's MEAN similarity between documents")
 print("within same category, not self-similarity\\n")`}
-                            plots={[
-                                {
-                                    label: "Similarity Matrix",
-                                    data: [{
-                                        type: 'heatmap',
-                                        z: [
-                                            [0.661, 0.200, 0.182, 0.175, 0.185],
-                                            [0.200, 0.552, 0.221, 0.212, 0.225],
-                                            [0.182, 0.221, 0.542, 0.209, 0.221],
-                                            [0.175, 0.212, 0.209, 0.644, 0.213],
-                                            [0.185, 0.225, 0.221, 0.213, 0.569]
-                                        ],
-                                        x: ['ai_and_tech', 'economy', 'entertainment', 'global_events', 'sports'],
-                                        y: ['ai_and_tech', 'economy', 'entertainment', 'global_events', 'sports'],
-                                        colorscale: 'Purples',
-                                        showscale: true,
-                                        text: [
-                                            ['0.661', '0.200', '0.182', '0.175', '0.185'],
-                                            ['0.200', '0.552', '0.221', '0.212', '0.225'],
-                                            ['0.182', '0.221', '0.542', '0.209', '0.221'],
-                                            ['0.175', '0.212', '0.209', '0.644', '0.213'],
-                                            ['0.185', '0.225', '0.221', '0.213', '0.569']
-                                        ],
-                                        texttemplate: '%{text}',
-                                        textfont: { color: 'white' }
-                                    }],
-                                    layout: {
-                                        title: 'Category Similarity Heatmap (Cosine Similarity)',
-                                        xaxis: { title: 'Category' },
-                                        yaxis: { title: 'Category', autorange: 'reversed' },
-                                        margin: { l: 150, r: 50, t: 80, b: 50 }
-                                    }
-                                }
-                            ]}
                         >
                             <div className="space-y-12">
+                                {/* Visual Summary First */}
+                                <div className="bg-white rounded-[2.5rem] p-8 border border-outline-variant/10 shadow-sm relative group overflow-hidden min-h-[500px]">
+                                    <div className="flex justify-between items-center mb-8 pb-4 border-b border-outline-variant/5">
+                                        <div className="flex items-center gap-3">
+                                            <BarChart size={18} className="text-primary" />
+                                            <h4 className="text-sm font-bold text-on-surface uppercase tracking-tight">Similarity Heatmap Profile</h4>
+                                        </div>
+                                        <span className="px-3 py-1 bg-primary/5 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/10">Cosine Similarity</span>
+                                    </div>
+                                    <div className="w-full flex items-center justify-center">
+                                        <Plot
+                                            data={[{
+                                                type: 'heatmap',
+                                                z: [
+                                                    [0.661, 0.200, 0.182, 0.175, 0.185],
+                                                    [0.200, 0.552, 0.221, 0.212, 0.225],
+                                                    [0.182, 0.221, 0.542, 0.209, 0.221],
+                                                    [0.175, 0.212, 0.209, 0.644, 0.213],
+                                                    [0.185, 0.225, 0.221, 0.213, 0.569]
+                                                ],
+                                                x: ['ai_and_tech', 'economy', 'entertainment', 'global_events', 'sports'],
+                                                y: ['ai_and_tech', 'economy', 'entertainment', 'global_events', 'sports'],
+                                                colorscale: 'Purples',
+                                                showscale: true,
+                                                text: [
+                                                    ['0.661', '0.200', '0.182', '0.175', '0.185'],
+                                                    ['0.200', '0.552', '0.221', '0.212', '0.225'],
+                                                    ['0.182', '0.221', '0.542', '0.209', '0.221'],
+                                                    ['0.175', '0.212', '0.209', '0.644', '0.213'],
+                                                    ['0.185', '0.225', '0.221', '0.213', '0.569']
+                                                ],
+                                                texttemplate: '%{text}',
+                                                textfont: { color: 'white' }
+                                            }]}
+                                            layout={{
+                                                paper_bgcolor: "rgba(0,0,0,0)",
+                                                plot_bgcolor: "rgba(0,0,0,0)",
+                                                font: { family: "Inter, sans-serif", size: 12 },
+                                                margin: { t: 40, r: 40, b: 80, l: 150 },
+                                                autosize: true,
+                                                xaxis: { title: 'Category' },
+                                                yaxis: { title: 'Category', autorange: 'reversed' },
+                                                height: 500
+                                            }}
+                                            useResizeHandler={true}
+                                            style={{ width: "100%", height: "500px" }}
+                                            config={{ responsive: true, displayModeBar: false }}
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="p-8 rounded-[2.5rem] bg-indigo-50/50 border border-indigo-100 flex gap-6">
                                     <Target className="text-primary mt-1" size={28} />
                                     <div>
@@ -1629,6 +1874,190 @@ print("within same category, not self-similarity\\n")`}
                                     <div className="mt-6 pt-4 border-t border-white/10 text-[10px] opacity-40 italic">
                                         * High similarity indicated where score exceeds semantic boundary threshold (0.02).
                                     </div>
+                                </div>
+                            </div>
+                        </InteractiveAnalysis>
+                        {/* Key Analytical Insights Section */}
+                        <InteractiveAnalysis
+                            id="insights"
+                            title="Key Analytical Insights"
+                            subtitle="Synthesized findings from the exploratory data analysis process."
+                            icon={Sparkles}
+                            pythonCode={`import pandas as pd
+
+# 1. Basic Stats
+avg_length = df['short_text'].apply(lambda x: len(str(x).split())).mean()
+category_dist = df['topic_category'].value_counts(normalize=True) * 100
+
+# 2. Word Count Distribution Details
+word_counts = df['short_text'].fillna('').apply(lambda x: len(str(x).split()))
+min_words = word_counts.min()
+max_words = word_counts.max()
+median_words = word_counts.median()
+std_dev = word_counts.std()
+
+print("💡 KEY INSIGHTS")
+print("-" * 30)
+print(f"Min Words: {min_words}")
+print(f"Max Words: {max_words}")
+print(f"Median Words: {median_words}")
+print(f"Std Dev: {std_dev:.2f}")
+
+print("\\n--- Data Processing Notes ---")
+print(f"* Stop Words Removed: {', '.join(custom_news_stopwords[:10])}...")`}
+                        >
+                            <div className="bg-slate-900 rounded-[2.5rem] p-12 font-mono text-[14px] leading-relaxed text-slate-300 shadow-2xl border border-white/5 overflow-hidden relative group">
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px]" />
+                                <div className="flex items-center gap-3 mb-10 border-b border-white/5 pb-6">
+                                    <Terminal className="text-primary" size={24} />
+                                    <span className="text-[12px] font-black uppercase tracking-[0.2em] text-white/40">Terminal Output: System Insights</span>
+                                </div>
+                                <div className="text-emerald-400 font-bold mb-6 text-xl flex items-center gap-3">
+                                    <Zap size={20} />
+                                    💡 KEY ANALYTICAL INSIGHTS
+                                </div>
+                                <div className="text-slate-600 mb-8">------------------------------------------------------------</div>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                    <div className="space-y-6">
+                                        <div className="text-white font-bold text-sm flex items-center gap-2 uppercase tracking-widest">
+                                            <Database size={14} className="text-primary" />
+                                            --- Dataset Characteristics ---
+                                        </div>
+                                        <div className="space-y-6 text-slate-400">
+                                            <div className="flex gap-3 hover:text-white transition-colors">
+                                                <span className="text-primary">●</span>
+                                                <span>Balanced Dataset: Categories range from 17.8% to 21.8%</span>
+                                            </div>
+                                            
+                                            <div className="group/stats">
+                                                <div className="flex gap-3 mb-4 text-white font-semibold">
+                                                    <span className="text-primary">●</span>
+                                                    <span>Article Length Distribution:</span>
+                                                </div>
+                                                <div className="ml-6 grid grid-cols-2 gap-3">
+                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
+                                                        <span className="text-[10px] uppercase opacity-40">Min Words</span>
+                                                        <span className="text-lg font-bold text-emerald-400">16</span>
+                                                    </div>
+                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
+                                                        <span className="text-[10px] uppercase opacity-40">Max Words</span>
+                                                        <span className="text-lg font-bold text-emerald-400">19</span>
+                                                    </div>
+                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
+                                                        <span className="text-[10px] uppercase opacity-40">Median</span>
+                                                        <span className="text-lg font-bold text-primary-container">17.0</span>
+                                                    </div>
+                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
+                                                        <span className="text-[10px] uppercase opacity-40">Std Dev</span>
+                                                        <span className="text-lg font-bold text-secondary">1.06</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        <div className="text-white font-bold text-sm flex items-center gap-2 uppercase tracking-widest">
+                                            <Filter size={14} className="text-secondary" />
+                                            --- Data Processing Notes ---
+                                        </div>
+                                        <div className="space-y-4 text-slate-400">
+                                            <div className="flex gap-3 hover:text-white transition-colors">
+                                                <span className="text-secondary">●</span>
+                                                <span>Stop Words Removed: said, mr, ms, mrs, told, says, say, according...</span>
+                                            </div>
+                                            <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-[12px] italic opacity-80 leading-relaxed">
+                                                Rationale: Mixed approach ensures physical length tracking (Raw) while surfacing meaningful vocabulary (Stopwords Filtered).
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </InteractiveAnalysis>
+
+                        {/* Raw Data Explorer Section */}
+                        <InteractiveAnalysis
+                            id="raw-explorer"
+                            title="Raw Data Article Explorer"
+                            subtitle="Interaction with actual underlying dataset records (Top 50 Samples)."
+                            icon={Database}
+                            pythonCode={`# View random samples from the processed dataset
+import pandas as pd
+
+print("--- Fetching Random Records ---")
+samples = df.sample(n=2)
+print(samples[['topic_category', 'short_text']])`}
+                        >
+                            <div className="bg-white rounded-[2.5rem] border border-outline-variant/10 shadow-sm p-10 group overflow-hidden relative">
+                                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-secondary/10 text-secondary rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                                            <Search size={22} />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-lg text-on-surface">Dataset Record Lookup</h4>
+                                            <p className="text-xs text-on-surface-variant opacity-60">Querying real synthetic entries from trending_topics_2026.csv</p>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        onClick={rollSamples}
+                                        disabled={isRolling}
+                                        className={`flex items-center gap-3 px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-lg transition-all ${isRolling ? "bg-surface-container-high text-on-surface-variant cursor-wait" : "bg-primary text-white hover:bg-primary/90 hover:-translate-y-1 shadow-primary/20 cursor-pointer active:scale-95"}`}
+                                    >
+                                        <Dices size={18} className={isRolling ? "animate-spin" : "group-hover:rotate-12 transition-transform"} />
+                                        {isRolling ? "Fetching..." : "Roll New Samples"}
+                                    </button>
+                                </div>
+
+                                <AnimatePresence mode="wait">
+                                    <motion.div 
+                                        key={JSON.stringify(currentSamples)}
+                                        initial={{ opacity: 0, scale: 0.98, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.98, y: -10 }}
+                                        transition={{ duration: 0.4, ease: "easeOut" }}
+                                        className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+                                    >
+                                        {currentSamples.length > 0 ? currentSamples.map((sample: any, idx: number) => (
+                                            <div key={idx} className="relative bg-surface-container-low/30 rounded-[2rem] p-8 border border-outline-variant/5 hover:border-primary/20 hover:bg-white transition-all group/card hover:shadow-xl hover:shadow-on-surface/5">
+                                                <div className="flex justify-between items-center mb-6">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary font-bold text-xs">
+                                                            #{idx + 1}
+                                                        </div>
+                                                        <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant opacity-40 italic">Data Entry</span>
+                                                    </div>
+                                                    <span className="px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-black uppercase tracking-widest rounded-full border border-secondary/10">
+                                                        {sample.topic_category.replace('_', ' ')}
+                                                    </span>
+                                                </div>
+                                                <div className="text-on-surface leading-loose text-[15px] font-medium italic relative z-10">
+                                                    <span className="text-3xl font-serif text-primary/10 absolute -top-4 -left-2 select-none">"</span>
+                                                    {sample.short_text}
+                                                    <span className="text-3xl font-serif text-primary/10 select-none">"</span>
+                                                </div>
+                                                <div className="mt-8 pt-6 border-t border-outline-variant/5 flex items-center justify-between opacity-40 group-hover/card:opacity-100 transition-opacity">
+                                                    <div className="flex items-center gap-2 text-[10px] font-bold">
+                                                        <BadgeCheck size={14} className="text-emerald-500" />
+                                                        Kaggle Verified Record
+                                                    </div>
+                                                    <ArrowRight size={14} className="text-primary" />
+                                                </div>
+                                            </div>
+                                        )) : (
+                                            <div className="col-span-2 flex flex-col items-center justify-center py-24 text-on-surface-variant/20 border-2 border-dashed border-outline-variant/10 rounded-[3rem]">
+                                                <Database size={60} className="mb-6 opacity-10 animate-pulse" />
+                                                <p className="text-sm font-bold uppercase tracking-widest">Interface Ready to Query</p>
+                                                <p className="text-[10px] italic mt-2">Initialize by clicking the Roll button</p>
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                </AnimatePresence>
+
+                                <div className="mt-10 p-5 bg-primary/[0.02] rounded-2xl border border-primary/5 flex items-center gap-3 text-[10px] text-on-surface-variant italic">
+                                    <Info size={14} className="text-primary shrink-0" />
+                                    <span>These samples represent verified entries from the 2026 trending dataset, provided to validate the semantic accuracy of the categorical TF-IDF models.</span>
                                 </div>
                             </div>
                         </InteractiveAnalysis>
