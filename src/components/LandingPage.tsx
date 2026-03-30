@@ -3,7 +3,7 @@ import { User, FileText, PlayCircle, Code, Table, Languages, Image as ImageIcon,
 import aviation from '../assets/images/aviation/aviation.png';
 import textPreview from '../assets/images/image/text_preview.jpg';
 import imagePreview from '../assets/images/image/image_preview.jpg';
-import multimodalPreview from '../assets/images/image/multimodal_preview.jpg';
+import multimodalPreview from '../assets/images/image/multimodal_preview.webp';
 
 interface LandingPageProps {
   onNavigate: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda', dataset?: string) => void;
