@@ -299,14 +299,16 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
     const tocItems = [
         { id: "overview", label: "Overview" },
         { id: "methodology", label: "Methodology" },
-        { id: "features", label: "Dataset Inventory" },
+        { id: "features", label: "Dataset Overview" },
         { id: "quality", label: "Missing Values" },
-        { id: "distribution", label: "Statistical Distributions" },
+        { id: "distribution", label: "Numerical Distributions" },
         { id: "outliers", label: "Outlier Detection" },
-        { id: "categorical", label: "Categorical Mapping" },
+        { id: "categorical", label: "Categorical Distributions" },
         { id: "targetLikelihood", label: "Target Relationships" },
-        { id: "sampling", label: "Exploration Archives" },
-        { id: "findings", label: "Study Summary" },
+        { id: "targetRel", label: "Correlation Analysis" },
+        { id: "time-series-seasonality", label: "Seasonality Analysis"},
+        { id: "sampling", label: "Sample Data" },
+        { id: "findings", label: "Key Insight" },
     ];
 
     const rollDice = () => {

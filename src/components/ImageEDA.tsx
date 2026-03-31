@@ -41,7 +41,13 @@ import {
     Palette,
     Sun,
     Focus,
+    Box, 
+    HardDrive, 
 } from "lucide-react";
+
+import _data from "../assets/data/dataset_padang_food/data.json";
+
+const data = _data as any;
 
 // --- Modern Academic UI Components (Mirroring TabularEDA) ---
 
@@ -364,6 +370,11 @@ export default function ImageEDA({ onBack }: { onBack: () => void }) {
         { id: "distribution", label: "Class Distribution" },
         { id: "sampling", label: "Sample Gallery" },
         { id: "profiling", label: "Feature Profiling" },
+        { id: "image-quality-metrics", label: "Quality Analysis" },
+        { id: "rgb-color-distribution", label: "Color Space" },
+        { id: "size-marginal-distribution", label: "Dimension Analysis" },
+        { id: "file-size-distribution", label: "Storage Metrics" },
+        { id: "aspect-ratio-distribution", label: "Aspect Ratios" },
         { id: "findings", label: "Study Summary" },
     ];
 
@@ -1080,6 +1091,56 @@ print(f"- Avg size: {df['file_size_kb'].mean():.1f} KB")`}
                                 </div>
                             </div>
                         </InteractiveAnalysis>
+
+                        <InteractiveAnalysis
+                            id="image-quality-metrics"
+                            title="Quanlity Analysis"
+                            icon={Zap}
+                            pythonCode={data.img_qualCode}
+                            plots={[
+                                { label: "Image Quality Metrics (Sharpness vs Contrast)", data: data.img_qualChart?.data, layout: data.img_qualChart?.layout },
+                            ]}
+                        />
+
+                        <InteractiveAnalysis
+                            id="rgb-color-distribution"
+                            title="Color Space"
+                            icon={Box}
+                            pythonCode={data.rgb_spaceCode}
+                            plots={[
+                                { label: "RGB Color Space Distribution (3D Cube)", data: data.rgb_spaceChart?.data, layout: data.rgb_spaceChart?.layout },
+                            ]}
+                        />
+
+                        <InteractiveAnalysis
+                            id="size-marginal-distribution"
+                            title="Dimesion Analysis"
+                            icon={Maximize}
+                            pythonCode={data.size_distCode}
+                            plots={[
+                                { label: "Size Marginal Distribution (Width x Height)", data: data.size_distChart?.data, layout: data.size_distChart?.layout },
+                            ]}
+                        />
+
+                        <InteractiveAnalysis
+                            id="file-size-distribution"
+                            title="Storage Metrics"
+                            icon={HardDrive}
+                            pythonCode={data.file_sizeCode}
+                            plots={[
+                                { label: "File Size Distribution", data: data.file_sizeChart?.data, layout: data.file_sizeChart?.layout },
+                            ]}
+                        />
+
+                        <InteractiveAnalysis
+                            id="aspect-ratio-distribution"
+                            title="Aspect Ratios"
+                            icon={Focus}
+                            pythonCode={data.asp_ratiolCode}
+                            plots={[
+                                { label: "Aspect Ratio Distribution", data: data.asp_ratioChart?.data, layout: data.asp_ratioChart?.layout },
+                            ]}
+                        />
 
                         {/* Study Summary Section */}
 
