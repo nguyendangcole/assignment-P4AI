@@ -35,7 +35,9 @@ import {
     Target,
     Link,
     BoxSelect,
-    Users
+    Users,
+    FileWarning,
+    Calendar
 } from "lucide-react";
 
 // Import local data 
@@ -47,6 +49,7 @@ import _correlation_analysis from "../assets/data/tabularEDA/correlation_analysi
 import _outlier_detection from "../assets/data/tabularEDA/outlier_detection.json";
 import _target_vs from "../assets/data/tabularEDA/target_vs.json";
 import _weather_data from "../assets/data/tabularEDA/weather_data.json";
+import _timeseries from "../assets/data/tabularEDA/timeseries.json";
 
 const missing_values = _missing_values as any;
 const numerical_distribution = _numerical_distribution as any;
@@ -56,6 +59,7 @@ const correlation_analysis = _correlation_analysis as any;
 const outlier_detection = _outlier_detection as any;
 const target_vs = _target_vs as any;
 const weather_data = _weather_data as any;
+const timeseries = _timeseries as any;
 
 // --- Modern Academic UI Components ---
 
@@ -496,7 +500,7 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
 
                             {/* Core KPIs */}
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-24">
-                                <StatCard label="Total Depth" value="145,460" icon={Database} />
+                                <StatCard label="Total Samples" value="145,460" icon={Database} />
                                 <StatCard label="Weather Stations" value="49" icon={Layout} />
                                 <StatCard label="Feature Count" value="23" icon={Columns} />
                                 <StatCard label="Majority Base" value="77.9%" variant="primary" icon={Target} />
@@ -504,7 +508,7 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                         </div>
                     </section>
 
-                    <div className="max-w-[1240px] mx-auto pb-40">
+                    <div className="max-w-[1240px] mx-auto">
 
                         {/* Dataset Profile & Ethics */}
                         <section className="py-20 mb-8">
@@ -589,8 +593,7 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
 
                         <InteractiveAnalysis
                             id="features"
-                            title="Dataset Inventory"
-                            subtitle="Full enumeration of meteorological sensors and record markers."
+                            title="Dataset Overview"
                             icon={Columns}
                             defaultOpen={false}
                         >
@@ -598,7 +601,7 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                 <table className="w-full text-left border-collapse min-w-[1000px]">
                                     <thead className="sticky top-0 z-20 bg-on-surface text-white">
                                         <tr>
-                                            <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest">Sensor Name</th>
+                                            <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest">Feature</th>
                                             <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest">Class</th>
                                             <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest">Description</th>
                                         </tr>
@@ -626,8 +629,8 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                             { name: "Cloud3pm", type: "Numerical", desc: "Fraction of sky obscured by cloud at 3pm (oktas)." },
                                             { name: "Temp9am", type: "Numerical", desc: "Temperature (Celsius) at 9am." },
                                             { name: "Temp3pm", type: "Numerical", desc: "Temperature (Celsius) at 3pm." },
-                                            { name: "RainToday", type: "Categorical", desc: "Boolean: 1 if precipitation in 24h to 9am > 1mm, else 0." },
-                                            { name: "RainTomorrow", type: "Target", desc: "The amount of next day rain in mm." }
+                                            { name: "RainToday", type: "Categorical", desc: "Did the rainfall exceed 1mm today? (Yes/No)" },
+                                            { name: "RainTomorrow", type: "Target", desc: "Did it rain the next day? (Yes/No)" }
                                         ].map((f) => (
                                             <tr key={f.name} className="hover:bg-primary/5 transition-colors even:bg-surface-container-low/20">
                                                 <td className="px-8 py-4 font-bold text-sm text-primary">{f.name}</td>
@@ -646,8 +649,7 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
 
                         <InteractiveAnalysis
                             id="quality"
-                            title="Data Quality Assessment"
-                            subtitle="Identification of sensor gaps and missing data anomalies."
+                            title="Missing Values Analysis"
                             icon={Activity}
                             pythonCode={missing_values.pythonCode}
                             plots={[{ label: "Missing Data Density", data: missing_values.chartData?.data, layout: missing_values.chartData?.layout }]}
@@ -655,15 +657,13 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                                 <div className="bg-white p-10 rounded-[2rem] border border-outline-variant/10 shadow-sm relative overflow-hidden group">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform" />
-                                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-40 mb-4">Integrity Loss</div>
                                     <div className="text-5xl font-sans font-bold text-on-surface mb-2 tracking-tighter italic">343,248</div>
-                                    <div className="text-xs font-bold text-outline-variant uppercase tracking-widest">Total Null Cells in Archive</div>
+                                    <div className="text-xs font-bold text-outline-variant uppercase tracking-widest">Total Null Cells in Dataset</div>
                                 </div>
                                 <div className="bg-on-surface p-10 rounded-[2rem] text-white shadow-xl relative overflow-hidden group">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform" />
-                                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-4">Sensor Health</div>
                                     <div className="text-5xl font-sans font-bold text-primary mb-2 tracking-tighter italic">21 <span className="text-white/20">/ 23</span></div>
-                                    <div className="text-xs font-bold text-white/30 uppercase tracking-widest">Variables with missing records</div>
+                                    <div className="text-xs font-bold text-white/30 uppercase tracking-widest">Columns with missing records</div>
                                 </div>
                             </div>
 
@@ -671,7 +671,7 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                 <table className="w-full text-left border-collapse min-w-[800px]">
                                     <thead className="sticky top-0 z-20 bg-on-surface text-white">
                                         <tr>
-                                            <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest">Sensor Field</th>
+                                            <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest">Feature</th>
                                             <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest text-center">Null Count</th>
                                             <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest text-center">Null %</th>
                                             <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-widest">Assessment</th>
@@ -679,19 +679,27 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                     </thead>
                                     <tbody className="divide-y divide-outline-variant/5">
                                         {[
-                                            { name: "Sunshine", count: "69,835", pct: "48.01%", severity: "High Severity", badge: "red" },
-                                            { name: "Evaporation", count: "62,790", pct: "43.17%", severity: "High Severity", badge: "red" },
-                                            { name: "Cloud3pm", count: "59,358", pct: "40.81%", severity: "High Severity", badge: "red" },
-                                            { name: "Cloud9am", count: "55,888", pct: "38.42%", severity: "High Severity", badge: "red" },
-                                            { name: "Pressure9am", count: "15,065", pct: "10.36%", severity: "Medium Alert", badge: "amber" },
-                                            { name: "Pressure3pm", count: "15,028", pct: "10.33%", severity: "Medium Alert", badge: "amber" },
-                                            { name: "WindDir9am", count: "10,566", pct: "7.26%", severity: "Maintenance Required", badge: "amber" },
-                                            { name: "WindGustDir", count: "10,326", pct: "7.10%", severity: "Maintenance Required", badge: "amber" },
-                                            { name: "WindGustSpeed", count: "10,263", pct: "7.06%", severity: "Maintenance Required", badge: "amber" },
-                                            { name: "Humidity3pm", count: "4,507", pct: "3.10%", severity: "Low Impact", badge: "emerald" },
-                                            { name: "WindDir3pm", count: "4,228", pct: "2.91%", severity: "Low Impact", badge: "emerald" },
-                                            { name: "Temp3pm", count: "3,609", pct: "2.48%", severity: "Low Impact", badge: "emerald" },
-                                            { name: "RainTomorrow", count: "3,267", pct: "2.25%", severity: "Operational", badge: "emerald" }
+                                            { name: "Sunshine", count: "69,835", pct: "48.01%", severity: "High", badge: "red" },
+                                            { name: "Evaporation", count: "62,790", pct: "43.17%", severity: "High", badge: "red" },
+                                            { name: "Cloud3pm", count: "59,358", pct: "40.81%", severity: "High", badge: "red" },
+                                            { name: "Cloud9am", count: "55,888", pct: "38.42%", severity: "High", badge: "red" },
+                                            { name: "Pressure9am", count: "15,065", pct: "10.36%", severity: "Medium", badge: "amber" },
+                                            { name: "Pressure3pm", count: "15,028", pct: "10.33%", severity: "Medium", badge: "amber" },
+                                            { name: "WindDir9am", count: "10,566", pct: "7.26%", severity: "Medium", badge: "amber" },
+                                            { name: "WindGustDir", count: "10,326", pct: "7.10%", severity: "Medium", badge: "amber" },
+                                            { name: "WindGustSpeed", count: "10,263", pct: "7.06%", severity: "Medium", badge: "amber" },
+                                            { name: "Humidity3pm", count: "4,507", pct: "3.10%", severity: "Low", badge: "emerald" },
+                                            { name: "WindDir3pm", count: "4,228", pct: "2.91%", severity: "Low", badge: "emerald" },
+                                            { name: "Temp3pm", count: "3,609", pct: "2.48%", severity: "Low", badge: "emerald" },
+                                            { name: "RainTomorrow", count: "3,267", pct: "2.25%", severity: "Low", badge: "emerald" }, 
+                                            { name: "Rainfall", count: "3,261", pct: "2.24%", severity: "Low", badge: "emerald" },
+                                            { name: "RainToday", count: "3,261", pct: "2.24%", severity: "Low", badge: "emerald" },
+                                            { name: "WindSpeed3pm", count: "3,062", pct: "2.11%", severity: "Low", badge: "emerald" },
+                                            { name: "Humidity9am", count: "2,654", pct: "1.82%", severity: "Low", badge: "emerald" },
+                                            { name: "WindSpeed9am", count: "1,767", pct: "1.21%", severity: "Low", badge: "emerald" },
+                                            { name: "Temp9am", count: "1,767", pct: "1.21%", severity: "Low", badge: "emerald" },
+                                            { name: "MinTemp", count: "1,485", pct: "1.02%", severity: "Low", badge: "emerald" },
+                                            { name: "MaxTemp", count: "1,261", pct: "0.87%", severity: "Low", badge: "emerald" }
                                         ].map((m) => (
                                             <tr key={m.name} className="hover:bg-primary/5 transition-colors even:bg-surface-container-low/5">
                                                 <td className="px-8 py-4 font-bold text-sm text-on-surface">{m.name}</td>
@@ -712,26 +720,47 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
 
                         <InteractiveAnalysis
                             id="distribution"
-                            title="Statistical Distributions"
-                            subtitle="Evaluating the variance and central tendency of meteorological sensors."
+                            title="Numerical Features Distributions"
                             icon={Layers}
                             headerImage={true}
                             pythonCode={numerical_distribution.pythonCode}
                             plots={[
-                                { label: "Min Temperature", data: numerical_distribution.minTempChart?.data, layout: numerical_distribution.minTempChart?.layout },
-                                { label: "Max Temperature", data: numerical_distribution.maxTempChart?.data, layout: numerical_distribution.maxTempChart?.layout },
-                                { label: "Daily Rainfall", data: numerical_distribution.rainfallChart?.data, layout: numerical_distribution.rainfallChart?.layout },
-                                { label: "Solar Sunshine", data: numerical_distribution.sunshineChart?.data, layout: numerical_distribution.sunshineChart?.layout },
-                                { label: "Wind Velocity", data: numerical_distribution.windGustSpeedChart?.data, layout: numerical_distribution.windGustSpeedChart?.layout },
-                                { label: "Barometric Pressure", data: numerical_distribution.pressure3pmChart?.data, layout: numerical_distribution.pressure3pmChart?.layout },
+                                { label: "MinTemp", data: numerical_distribution.minTempChart?.data, layout: numerical_distribution.minTempChart?.layout },
+                                { label: "MaxTemp", data: numerical_distribution.maxTempChart?.data, layout: numerical_distribution.maxTempChart?.layout },
+                                { label: "Rainfall", data: numerical_distribution.rainfallChart?.data, layout: numerical_distribution.rainfallChart?.layout },
+                                { label: "Evaporation", data: numerical_distribution.evaporationChart?.data, layout: numerical_distribution.evaporationChart?.layout },
+                                { label: "Sunshine", data: numerical_distribution.sunshineChart?.data, layout: numerical_distribution.sunshineChart?.layout },
+                                { label: "WindGustSpeed", data: numerical_distribution.windGustSpeedChart?.data, layout: numerical_distribution.windGustSpeedChart?.layout },
+                                { label: "WindSpeed9am", data: numerical_distribution.windSpeed9amChart?.data, layout: numerical_distribution.windSpeed9amChart?.layout },
+                                { label: "WindSpeed3pm", data: numerical_distribution.windSpeed3pmChart?.data, layout: numerical_distribution.windSpeed3pmChart?.layout },
+                                { label: "Humidity9am", data: numerical_distribution.humidity9amChart?.data, layout: numerical_distribution.humidity9amChart?.layout },
+                                { label: "Humidity3pm", data: numerical_distribution.humidity3pmChart?.data, layout: numerical_distribution.humidity3pmChart?.layout },
+                                { label: "Pressure9am", data: numerical_distribution.pressure9amChart?.data, layout: numerical_distribution.pressure9amChart?.layout },
+                                { label: "Pressure3pm", data: numerical_distribution.pressure3pmChart?.data, layout: numerical_distribution.pressure3pmChart?.layout },
+                                { label: "Cloud9am", data: numerical_distribution.cloud9amChart?.data, layout: numerical_distribution.cloud9amChart?.layout },
+                                { label: "Cloud3pm", data: numerical_distribution.cloud3pmChart?.data, layout: numerical_distribution.cloud3pmChart?.layout },
+                                { label: "Temp9am", data: numerical_distribution.temp9amChart?.data, layout: numerical_distribution.temp9amChart?.layout },
+                                { label: "Temp3pm", data: numerical_distribution.temp3pmChart?.data, layout: numerical_distribution.temp3pmChart?.layout }
                             ]}
                         >
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                                 {[
-                                    { label: "Solar Intensity", mean: "7.61 hrs", median: "8.40 hrs", std: "3.79" },
-                                    { label: "Ambient Humidity", mean: "51.5%", median: "52.0%", std: "20.8" },
-                                    { label: "Barometric Avg", mean: "1015 hpa", median: "1015 hpa", std: "7.04" },
-                                    { label: "Thermal Max", mean: "23.2 °C", median: "22.6 °C", std: "7.12" },
+                                    { label: "MinTemp", mean: "12.19", median: "12.00", std: "6.40" },
+                                    { label: "MaxTemp", mean: "23.22", median: "22.60", std: "7.12" }, // Fixed the typo 23,22 to 23.22
+                                    { label: "Rainfall", mean: "2.35", median: "0.00", std: "8.48" },
+                                    { label: "Evaporation", mean: "5.47", median: "4.80", std: "4.19" },
+                                    { label: "Sunshine", mean: "7.61", median: "8.40", std: "3.79" },
+                                    { label: "WindGustSpeed", mean: "40.04", median: "39.00", std: "13.61" },
+                                    { label: "WindSpeed9am", mean: "14.04", median: "13.00", std: "8.92" },
+                                    { label: "WindSpeed3pm", mean: "18.66", median: "19.00", std: "8.81" },
+                                    { label: "Humidity9am", mean: "68.88", median: "70.00", std: "19.03" },
+                                    { label: "Humidity3pm", mean: "51.54", median: "52.00", std: "20.80" },
+                                    { label: "Pressure9am", mean: "1017.65", median: "1017.60", std: "7.11" },
+                                    { label: "Pressure3pm", mean: "1015.26", median: "1015.20", std: "7.04" },
+                                    { label: "Cloud9am", mean: "4.45", median: "5.00", std: "2.89" },
+                                    { label: "Cloud3pm", mean: "4.51", median: "5.00", std: "2.72" },
+                                    { label: "Temp9am", mean: "16.99", median: "16.70", std: "6.49" },
+                                    { label: "Temp3pm", mean: "21.68", median: "21.10", std: "6.94" }
                                 ].map((stat) => (
                                     <div key={stat.label} className="bg-white p-8 rounded-2xl border border-outline-variant/10 shadow-sm relative group hover:shadow-xl transition-all border-l-4 border-l-primary">
                                         <div className="flex items-center justify-between mb-6">
@@ -751,7 +780,6 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                         <InteractiveAnalysis
                             id="outliers"
                             title="Outlier Detection (IQR Method)"
-                            subtitle="Identification of extreme value anomalies using Interquartile Range thresholds."
                             icon={BoxSelect}
                             pythonCode={outlier_detection.pythonCode}
                             plots={[]}
@@ -760,7 +788,7 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                 <table className="w-full text-left border-collapse min-w-[1000px]">
                                     <thead className="sticky top-0 z-20 bg-on-surface text-white">
                                         <tr>
-                                            <th className="px-10 py-5 text-[11px] font-bold uppercase tracking-widest">Sensor Field</th>
+                                            <th className="px-10 py-5 text-[11px] font-bold uppercase tracking-widest">Feature</th>
                                             <th className="px-10 py-5 text-[11px] font-bold uppercase tracking-widest">Anomaly Volume</th>
                                             <th className="px-10 py-5 text-[11px] font-bold uppercase tracking-widest">Arrest Range (IQR)</th>
                                             <th className="px-10 py-5 text-[11px] font-bold uppercase tracking-widest">Assessment</th>
@@ -768,16 +796,22 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                     </thead>
                                     <tbody className="divide-y divide-outline-variant/5">
                                         {[
-                                            { name: "Rainfall", count: "25,580 (17.6%)", severity: "CRITICAL", badge: "red", range: "[-1.2, 2.0]" },
-                                            { name: "WindGustSpeed", count: "3,092 (2.1%)", severity: "ALERT", badge: "amber", range: "[5.5, 73.5]" },
-                                            { name: "WindSpeed3pm", count: "2,523 (1.7%)", severity: "STRESS", badge: "amber", range: "[-3.5, 40.5]" },
-                                            { name: "Evaporation", count: "1,995 (1.4%)", severity: "STRESS", badge: "amber", range: "[-4.6, 14.6]" },
-                                            { name: "Pressure9am", count: "708 (0.5%)", severity: "MARGINAL", badge: "emerald", range: "[1000.5, 1030.1]" },
-                                            { name: "Pressure3pm", count: "630 (0.4%)", severity: "MARGINAL", badge: "emerald", range: "[1000.5, 1030.1]" },
-                                            { name: "Temp9am", count: "482 (0.3%)", severity: "MINIMAL", badge: "emerald", range: "[3.2, 30.4]" },
-                                            { name: "Temp3pm", count: "420 (0.3%)", severity: "MINIMAL", badge: "emerald", range: "[2.8, 38.6]" },
-                                            { name: "Humidity9am", count: "360 (0.2%)", severity: "STABLE", badge: "emerald", range: "[12.0, 100.0]" },
-                                            { name: "Humidity3pm", count: "290 (0.2%)", severity: "STABLE", badge: "emerald", range: "[8.0, 100.0]" }
+                                            { name: "Rainfall", count: "25,578 (17.58%)", severity: "High", badge: "red", range: "[-1.20, 2.00]" },
+                                            { name: "WindGustSpeed", count: "3,092 (2.13%)", severity: "Medium", badge: "amber", range: "[5.50, 73.50]" },
+                                            { name: "WindSpeed3pm", count: "2,523 (1.73%)", severity: "Medium", badge: "amber", range: "[-3.50, 40.50]" },
+                                            { name: "Evaporation", count: "1,995 (1.37%)", severity: "Medium", badge: "amber", range: "[-4.60, 14.60]" },
+                                            { name: "WindSpeed9am", count: "1,817 (1.25%)", severity: "Medium", badge: "amber", range: "[-11.00, 37.00]" },
+                                            { name: "Humidity9am", count: "1,425 (0.98%)", severity: "Low", badge: "emerald", range: "[18.00, 122.00]" },
+                                            { name: "Pressure9am", count: "1,191 (0.82%)", severity: "Low", badge: "emerald", range: "[998.65, 1036.65]" },
+                                            { name: "Pressure3pm", count: "919 (0.63%)", severity: "Low", badge: "emerald", range: "[996.00, 1034.40]" },
+                                            { name: "Temp3pm", count: "764 (0.53%)", severity: "Low", badge: "emerald", range: "[1.90, 41.10]" },
+                                            { name: "MaxTemp", count: "489 (0.34%)", severity: "Low", badge: "emerald", range: "[2.45, 43.65]" },
+                                            { name: "Temp9am", count: "262 (0.18%)", severity: "Low", badge: "emerald", range: "[-1.65, 35.55]" },
+                                            { name: "MinTemp", count: "54 (0.04%)", severity: "Low", badge: "emerald", range: "[-6.35, 30.85]" },
+                                            { name: "Sunshine", count: "0 (0.00%)", severity: "None", badge: "emerald", range: "[-3.90, 19.30]" },
+                                            { name: "Humidity3pm", count: "0 (0.00%)", severity: "None", badge: "emerald", range: "[-6.50, 109.50]" },
+                                            { name: "Cloud9am", count: "0 (0.00%)", severity: "None", badge: "emerald", range: "[-8.00, 16.00]" },
+                                            { name: "Cloud3pm", count: "0 (0.00%)", severity: "None", badge: "emerald", range: "[-5.50, 14.50]" }
                                         ].map((o) => (
                                             <tr key={o.name} className="hover:bg-primary/5 transition-colors even:bg-surface-container-low/20">
                                                 <td className="px-10 py-5 font-bold text-sm text-on-surface">{o.name}</td>
@@ -797,21 +831,22 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
 
                         <InteractiveAnalysis
                             id="categorical"
-                            title="Categorical Frequency Mapping"
-                            subtitle="Cardinality assessment of geographical and observational labels."
+                            title="Categorical Features Distribution"
                             icon={GitMerge}
                             pythonCode={categorical_distribution.pythonCode}
                             plots={[
+                                { label: "Date", data: categorical_distribution.dateChart?.data, layout: categorical_distribution.dateChart?.layout },
                                 { label: "Location", data: categorical_distribution.locationChart?.data, layout: categorical_distribution.locationChart?.layout },
-                                { label: "RainToday", data: categorical_distribution.rainTodayChart?.data, layout: categorical_distribution.rainTodayChart?.layout },
-                                { label: "WindGustDir", data: target_vs.windGustDirChart?.data, layout: target_vs.windGustDirChart?.layout },
+                                { label: "WindGustDir", data: categorical_distribution.windGustDirChart?.data, layout: categorical_distribution.windGustDirChart?.layout },
+                                { label: "WindDir9am", data: categorical_distribution.windDir9amChart?.data, layout: categorical_distribution.windDir9amChart?.layout },
+                                { label: "WindDir3pm", data: categorical_distribution.windDir3pmChart?.data, layout: categorical_distribution.windDir3pmChart?.layout },
+                                { label: "RainToday", data: categorical_distribution.rainTodayChart?.data, layout: categorical_distribution.rainTodayChart?.layout }
                             ]}
                         />
 
                         <InteractiveAnalysis
                             id="targetLikelihood"
                             title="Target vs Categorical Features"
-                            subtitle="Likelihood distribution across observational segments."
                             icon={Target}
                             pythonCode={target_vs.pythonCode}
                             plots={[
@@ -827,23 +862,47 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                         <InteractiveAnalysis
                             id="targetRel"
                             title="Correlation Analysis"
-                            subtitle="Quantifying target dependency and feature importance."
                             icon={BarChart}
-                            pythonCode={target_vs.pythonCode}
+                            pythonCode={correlation_analysis.pythonCode}
                             plots={[
                                 { label: "Pearson Matrix", data: correlation_analysis.chartData?.data, layout: correlation_analysis.chartData?.layout },
                             ]}
                         />
 
+                        <InteractiveAnalysis
+                            id="time-series-seasonality"
+                            title="Time-Series & Seasonality Analysis"
+                            icon={Calendar}
+                            pythonCode={timeseries.pythonCode}
+                            plots={[
+                                { label: "Newcastle", data: timeseries.newcastleChart?.data, layout: timeseries.newcastleChart?.layout },
+                                { label: "Richmond", data: timeseries.richmondChart?.data, layout: timeseries.richmondChart?.layout },
+                                { label: "Sydney", data: timeseries.sydneyChart?.data, layout: timeseries.sydneyChart?.layout },
+                                { label: "Wollongong", data: timeseries.wollongongChart?.data, layout: timeseries.wollongongChart?.layout },
+                                { label: "Canberra", data: timeseries.canberraChart?.data, layout: timeseries.canberraChart?.layout },
+                                { label: "Ballarat", data: timeseries.ballaratChart?.data, layout: timeseries.ballaratChart?.layout },
+                                { label: "Bendigo", data: timeseries.bendigoChart?.data, layout: timeseries.bendigoChart?.layout },
+                                { label: "Melbourne", data: timeseries.melbourneChart?.data, layout: timeseries.melbourneChart?.layout },
+                                { label: "Portland", data: timeseries.portlandChart?.data, layout: timeseries.portlandChart?.layout },
+                                { label: "Brisbane", data: timeseries.brisbaneChart?.data, layout: timeseries.brisbaneChart?.layout },
+                                { label: "GoldCoast", data: timeseries.goldcoastChart?.data, layout: timeseries.goldcoastChart?.layout }, // If your JSON uses lowercase 'c', change this to goldcoastChart
+                                { label: "Adelaide", data: timeseries.adelaideChart?.data, layout: timeseries.adelaideChart?.layout },
+                                { label: "Perth", data: timeseries.perthChart?.data, layout: timeseries.perthChart?.layout },
+                                { label: "Hobart", data: timeseries.hobartChart?.data, layout: timeseries.hobartChart?.layout },
+                                { label: "Launceston", data: timeseries.launcestonChart?.data, layout: timeseries.launcestonChart?.layout },
+                                { label: "Darwin", data: timeseries.darwinChart?.data, layout: timeseries.darwinChart?.layout }
+                            ]}
+                        />
+
                         {/* Records Archive Section */}
-                        <section className="py-24 border-t border-outline-variant/10" id="sampling">
+                        <section className="py-8 border-t border-outline-variant/10" id="sampling">
                             <div className="bg-on-surface rounded-[4rem] p-16 text-white shadow-2xl relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full translate-x-1/3 -translate-y-1/3" />
                                 <div className="relative z-10">
                                     <div className="max-w-3xl mb-16">
                                         <h2 className="text-5xl font-extrabold mb-8 tracking-tighter italic shadow-sm">Exploration Archives</h2>
                                         <p className="text-white/40 text-xl font-medium leading-relaxed italic">
-                                            Query isolated meteorogical archives from the baseline, stratified by rainfall outcome. Utilize the Archive Dice to refresh the study sample.
+                                            Query isolated meteorogical archives from the baseline, stratified by RainTomorrow outcome. Utilize the Archive Dice to refresh the study sample.
                                         </p>
                                     </div>
                                     <div className="flex flex-col xl:flex-row gap-12 items-center">
@@ -877,42 +936,143 @@ export default function TabularEDA({ onBack }: { onBack: () => void }) {
                                 </div>
                             </div>
 
-                            <div className="mt-24">
+                            <div className="mt-16">
                                 {renderTable(yesRows, "Yes", <Zap size={20} className="text-primary" />)}
-                                <div className="h-16" />
                                 {renderTable(noRows, "No", <Info size={20} className="text-secondary" />)}
                             </div>
                         </section>
                     </div>
 
                     {/* Global Study Summary */}
-                    <section className="py-44 bg-white border-t border-outline-variant/10 relative overflow-hidden" id="findings">
+                    <section className="py-20 bg-white border-t border-outline-variant/10 relative overflow-hidden" id="findings">
                         <div className="max-w-[1240px] mx-auto px-10 relative">
                             <div className="flex flex-col items-center mb-24">
-                                <div className="px-5 py-2 bg-primary/5 text-primary rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 border border-primary/10">Expert Findings</div>
-                                <h2 className="text-6xl md:text-7xl font-extrabold tracking-tighter text-center italic leading-[1] text-on-surface max-w-4xl">Forensic Study Summary</h2>
+                                <div className="px-5 py-2 bg-primary/5 text-primary rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 border border-primary/10">Key Insight</div>
+                                <h2 className="text-6xl md:text-7xl font-extrabold tracking-tighter text-center italic leading-[1] text-on-surface max-w-4xl">Study Summary</h2>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                                {/* Box 1: Dataset Overview */}
                                 <div className="p-12 bg-white rounded-[3.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl transition-all border-t-[12px] border-t-primary cursor-default group">
-                                    <div className="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><Search size={32} /></div>
-                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Indicator Dominance</h3>
-                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70">
-                                        Humidity (3pm) and Pressure (3pm) are the superior meteorological indicators for predicting next-day rainfall events across all 49 stations.
+                                    <div className="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><Database size={32} /></div>
+                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Dataset Overview</h3>
+                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70 mb-4">
+                                        A comprehensive historical weather dataset comprising 10 years of daily observations (2007-2017) across Australia.
                                     </p>
+                                    <ul className="text-sm text-on-surface-variant/80 space-y-2 font-medium">
+                                        <li>• <strong>Total Records:</strong> 145,460 rows</li>
+                                        <li>• <strong>Features:</strong> 23 columns (Categorical & Numerical)</li>
+                                        <li>• <strong>Locations:</strong> 49 distinct weather stations</li>
+                                        <li>• <strong>Target Variable:</strong> RainTomorrow (Binary)</li>
+                                    </ul>
                                 </div>
+
+                                {/* Box 2: Target Imbalance */}
                                 <div className="p-12 bg-white rounded-[3.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl transition-all border-t-[12px] border-t-secondary cursor-default group">
-                                    <div className="w-16 h-16 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><Activity size={32} /></div>
-                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Temporal Drift</h3>
-                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70">
-                                        Daily rainfall amounts exhibit extreme positive skewness, requiring log-transformations or non-linear architectures for robust modeling accuracy.
+                                    <div className="w-16 h-16 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><PieChart size={32} /></div>
+                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Target Imbalance</h3>
+                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70 mb-4">
+                                        The target variable exhibits a severe 3.46:1 class imbalance, requiring handling prior to model training.
                                     </p>
+                                    <ul className="text-sm text-on-surface-variant/80 space-y-2 font-medium mb-4">
+                                        <li>• <strong>No (Dry Days):</strong> 110,316 (77.6%)</li>
+                                        <li>• <strong>Yes (Rainy Days):</strong> 31,877 (22.4%)</li>
+                                        <li>• <strong>Unlabeled:</strong> 3,267 rows missing target data</li>
+                                    </ul>
+                                    <div className="bg-secondary/10 text-secondary-dark p-3 rounded-xl text-sm font-semibold">
+                                        💡 Suggestion: Drop unlabeled rows. Use SMOTE or class weights during training.
+                                    </div>
                                 </div>
-                                <div className="p-12 bg-white rounded-[3.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl transition-all border-t-[12px] border-t-on-surface cursor-default group">
-                                    <div className="w-16 h-16 rounded-2xl bg-on-surface/5 text-on-surface flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><Brain size={32} /></div>
-                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Archive Imbalance</h3>
-                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70">
-                                        The dataset 78/22 class split indicates the need for SMOTE or balanced-ensemble strategies during the next phase of predictive deployment.
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                                {/* Box 3: Missing Data - Updated with Subtle Background Color */}
+                                <div className="p-12 bg-white rounded-[3.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl transition-all border-t-[12px] border-t-amber-200 cursor-default group">
+                                    <div className="w-16 h-16 rounded-2xl bg-amber-200/20 text-amber-200 flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><FileWarning size={32} /></div>
+                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Missing Data Analysis</h3>                                  
+                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70 mb-4">
+                                        ⚠️ Detected 343,248 missing cells across 21 features. 9 features are missing &gt;5% of their data:
                                     </p>
+                                    
+                                    <div className="grid grid-cols-2 gap-2 text-sm text-on-surface-variant/80 font-medium mb-4">
+                                        <ul className="space-y-1">
+                                            <li>• Sunshine: 48.0%</li>
+                                            <li>• Evaporation: 43.2%</li>
+                                            <li>• Cloud3pm: 40.8%</li>
+                                            <li>• Cloud9am: 38.4%</li>
+                                            <li>• Pressure9am: 10.4%</li>
+                                        </ul>
+                                        <ul className="space-y-1">
+                                            <li>• Pressure3pm: 10.3%</li>
+                                            <li>• WindDir9am: 7.3%</li>
+                                            <li>• WindGustDir: 7.1%</li>
+                                            <li>• WindGustSpeed: 7.1%</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div className="bg-amber-100 text-amber-900 p-3 rounded-xl text-sm font-semibold">
+                                        💡 Suggestion: Drop Sunshine. Use KNN Imputation for the remaining high-missing features.
+                                    </div>
+                                </div>
+
+                                {/* Box 4: Outlier Detection */}
+                                <div className="p-12 bg-white rounded-[3.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl transition-all border-t-[12px] border-t-tertiary cursor-default group">
+                                    <div className="w-16 h-16 rounded-2xl bg-tertiary/10 text-tertiary flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><Activity size={32} /></div>
+                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Outlier Detection (IQR)</h3>
+                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70 mb-4">
+                                        ⚠️ Detected 40,109 outliers across 16 numerical features. 5 features exceed 1% outliers:
+                                    </p>
+                                    <ul className="text-sm text-on-surface-variant/80 space-y-2 font-medium mb-4">
+                                        <li><span className="text-error font-bold">• Rainfall:</span> 25,578 outliers (17.58%)</li>
+                                        <li>• WindGustSpeed: 3,092 outliers (2.13%)</li>
+                                        <li>• WindSpeed3pm: 2,523 outliers (1.73%)</li>
+                                        <li>• Evaporation: 1,995 outliers (1.37%)</li>
+                                        <li>• WindSpeed9am: 1,817 outliers (1.25%)</li>
+                                    </ul>
+                                    <div className="bg-tertiary/10 text-tertiary-dark p-3 rounded-xl text-sm font-semibold">
+                                        💡 Suggestion: Log Transform Rainfall (real storms). Winsorize wind/evaporation at 99th percentile.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                {/* Box 5: Multicollinearity */}
+                                <div className="p-12 bg-white rounded-[3.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl transition-all border-t-[12px] border-t-amber-500 cursor-default group">
+                                    <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><Link size={32} /></div>
+                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Multicollinearity Mitigation</h3>
+                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70 mb-4">
+                                        ⚠️ Detected 7 highly correlated feature pairs (|r| &gt; 0.7) that will distort linear models:
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2 text-sm text-on-surface-variant/80 font-medium mb-4">
+                                        <ul className="space-y-1">
+                                            <li>• MaxTemp ↔ Temp3pm (0.98)</li>
+                                            <li>• Pressure9am ↔ 3pm (0.96)</li>
+                                            <li>• MinTemp ↔ Temp9am (0.90)</li>
+                                            <li>• Temp9am ↔ Temp3pm (0.86)</li>
+                                        </ul>
+                                        <ul className="space-y-1">
+                                            <li>• MinTemp ↔ MaxTemp (0.73)</li>
+                                            <li>• MinTemp ↔ Temp3pm (0.70)</li>
+                                            <li>• Cloud3pm ↔ Sunshine (-0.70)</li>
+                                        </ul>
+                                    </div>
+                                    <div className="bg-amber-500/10 text-amber-700 p-3 rounded-xl text-sm font-semibold">
+                                        💡 Suggestion: Drop time-specific readings (9am/3pm) and keep daily summaries.
+                                    </div>
+                                </div>
+
+                                {/* Box 6: Geospatial Seasonality */}
+                                <div className="p-12 bg-white rounded-[3.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl transition-all border-t-[12px] border-t-emerald-500 cursor-default group">
+                                    <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center mb-10 transition-transform group-hover:scale-110"><Calendar size={32} /></div>
+                                    <h3 className="text-2xl font-bold mb-6 tracking-tight italic">Geospatial Seasonality</h3>
+                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70 mb-4">
+                                        Weather patterns are heavily cyclical, but completely inverse depending on the specific location (e.g., Perth winter rains vs. Darwin summer monsoons). 
+                                    </p>
+                                    <p className="text-on-surface-variant leading-relaxed font-medium opacity-70 mb-4">
+                                        Raw Date strings (YYYY-MM-DD) cause machine learning algorithms to treat every day as a unique, random event without context.
+                                    </p>
+                                    <div className="bg-emerald-500/10 text-emerald-700 p-3 rounded-xl text-sm font-semibold">
+                                        💡 Suggestion: Feature Engineer by extracting the "Month" from the Date column so models can learn localized rules.
+                                    </div>
                                 </div>
                             </div>
                         </div>
