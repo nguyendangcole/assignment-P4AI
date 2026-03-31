@@ -347,14 +347,14 @@ export default function MultimodalEDA({ onBack }: { onBack: () => void }) {
                                 >
                                     <div className="flex items-center justify-center lg:justify-start gap-3 text-primary font-bold tracking-widest text-[10px] uppercase mb-8">
                                         <span className="w-8 h-px bg-primary/40"></span>
-                                        Multimodal Dataset Analysis
+                                        Multimodal Synthesis Analysis
                                     </div>
                                     <h1 className="text-6xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-[1] text-on-surface">
-                                        Artemis Dataset <br />
-                                        <span className="text-primary italic font-serif opacity-90">A Descriptive Report.</span>
+                                        ArtEmis Dataset <br />
+                                        <span className="text-primary italic font-serif opacity-90">Affective Study Report.</span>
                                     </h1>
                                     <p className="text-lg text-on-surface-variant leading-relaxed max-w-2xl font-medium mb-12 opacity-80">
-                                        Exploring the emotional landscape of art through image-text pairs. A curated subset of 10,000 samples from WikiArt with human annotations.
+                                        Exploring the emotional landscape of art through image-text pairs. A curated subset from the ArtEmis corpus with human affective annotations.
                                     </p>
                                     <div className="flex flex-wrap justify-center lg:justify-start gap-4">
                                         <div className="flex items-center gap-2 px-5 py-2.5 bg-surface-container-low rounded-xl border border-outline-variant/10 text-[10px] font-black uppercase tracking-widest">
@@ -495,7 +495,7 @@ df.info()`}
                             title="Sample Artwork Visualization"
                             subtitle="A museum-grade overview of representative paintings from the corpus."
                             icon={ImageIcon}
-                            observation="The artworks cover a vast range of styles and historical periods, from Dürer's Northern Renaissance portraiture to Lichtenstein's Pop Art. This confirms the comprehensive visual semantic scope of the Artemis dataset."
+                            observation="The artworks cover a vast range of styles and historical periods, from Dürer's Northern Renaissance portraiture to Lichtenstein's Pop Art. This confirms the comprehensive visual semantic scope of the ArtEmis dataset."
                             pythonCode={`image_files = list(base_path.rglob("*.jpg")) + list(base_path.rglob("*.png"))
 sample_imgs = random.sample(image_files, min(9, len(image_files)))
 

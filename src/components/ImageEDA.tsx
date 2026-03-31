@@ -438,11 +438,11 @@ export default function ImageEDA({ onBack }: { onBack: () => void }) {
                                 >
                                     <div className="flex items-center justify-center lg:justify-start gap-3 text-primary font-bold tracking-widest text-[10px] uppercase mb-8">
                                         <span className="w-8 h-px bg-primary/40"></span>
-                                        Culinary Dataset Analysis
+                                        Image Modality Analysis
                                     </div>
                                     <h1 className="text-6xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-[1] text-on-surface">
                                         Padang Cuisine <br />
-                                        <span className="text-primary italic font-serif opacity-90">A Descriptive Report.</span>
+                                        <span className="text-primary italic font-serif opacity-90">Image Dataset Report.</span>
                                     </h1>
                                     <p className="text-lg text-on-surface-variant leading-relaxed max-w-2xl font-medium mb-12 opacity-80">
                                         Exploratory analysis of 9 traditional Indonesian food classes from West Sumatra, curated for training high-fidelity classification models.
@@ -489,7 +489,7 @@ export default function ImageEDA({ onBack }: { onBack: () => void }) {
                                                 className="w-full mt-10 py-5 bg-on-surface text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-primary transition-all shadow-xl shadow-on-surface/10 flex items-center justify-center gap-3 cursor-pointer no-underline mb-10"
                                             >
                                                 <BookOpen size={18} />
-                                                Dataset on Kaggle
+                                                View on Kaggle
                                             </a>
 
                                             <div className="pt-8 border-t border-outline-variant/10">
