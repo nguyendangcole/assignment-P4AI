@@ -6,7 +6,7 @@ import imageHero from "../assets/images/image/padang_food.png";
 import multimodalHero from "../assets/images/image/artemis_multimodal.png";
 
 interface DatasetsPageProps {
-  onNavigate?: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda' | 'image-eda', dataset?: string) => void;
+  onNavigate?: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda' | 'image-eda' | 'multimodal-eda', dataset?: string) => void;
 }
 
 export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
@@ -250,7 +250,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
                 Kaggle
               </a>
               <button
-                onClick={() => onNavigate?.('art-analysis', 'Artemis')}
+                onClick={() => onNavigate?.('multimodal-eda', 'Artemis')}
                 className="flex-1 py-2.5 academic-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
               >
                 <BarChart3 size={14} />

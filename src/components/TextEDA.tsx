@@ -71,10 +71,10 @@ const StatCard = ({ label, value, icon: Icon, variant = "ghost" }: { label: stri
 const ImagePlaceholder = ({ className = "", label = "Topic Image Placeholder", src }: { className?: string, label?: string, src?: string }) => (
     <div className={`relative overflow-hidden group/img ${className}`}>
         {src ? (
-            <img 
-                src={src} 
+            <img
+                src={src}
                 alt={label}
-                className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover/img:scale-110" 
+                className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover/img:scale-110"
             />
         ) : (
             <div className={`bg-white/5 border-2 border-dashed border-outline-variant/10 rounded-[2.5rem] flex items-center justify-center p-8 transition-all hover:bg-primary/5 hover:border-primary/20 min-h-[200px]`}>
@@ -508,13 +508,13 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                                                     <Users size={16} className="text-primary" />
                                                     <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Project Contributors</span>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-3">
+                                                <div className="flex flex-wrap gap-4">
                                                     {[
                                                         "Nguyễn Đặng Minh Trường"
                                                     ].map((member, i) => (
-                                                        <div key={i} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10">
+                                                        <div key={i} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10 w-fit">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-                                                            <span className="text-[10px] font-bold text-on-surface truncate">{member}</span>
+                                                            <span className="text-[10px] font-bold text-on-surface whitespace-nowrap">{member}</span>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -544,14 +544,14 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                             <div>
                                 <h3 className="text-sm font-black text-on-surface uppercase tracking-[0.1em] mb-3">Dataset Ethics & Origin</h3>
                                 <p className="text-sm text-on-surface-variant leading-relaxed opacity-70 font-medium">
-                                    This report utilizes the <strong className="text-secondary">Global Trending Topics 2026 – Multi-Source Synthetic Dataset</strong>. 
-                                    The data comprises ~2,500 records of artificially generated trending topics for February 2026. 
-                                    With a <strong className="text-primary font-bold">10.00 Usability Score</strong> on Kaggle, this analysis ensure absolute privacy compliance and zero-risk exploration of NLP patterns. 
+                                    This report utilizes the <strong className="text-secondary">Global Trending Topics 2026 – Multi-Source Synthetic Dataset</strong>.
+                                    The data comprises ~2,500 records of artificially generated trending topics for February 2026.
+                                    With a <strong className="text-primary font-bold">10.00 Usability Score</strong> on Kaggle, this analysis ensure absolute privacy compliance and zero-risk exploration of NLP patterns.
                                     Licensed under <span className="font-bold">CC0 1.0 (Public Domain)</span>.
                                 </p>
-                                <a 
-                                    href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage" 
-                                    target="_blank" 
+                                <a
+                                    href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage"
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     className="mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-on-surface text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary hover:shadow-lg hover:-translate-y-0.5 group"
                                 >
@@ -1277,7 +1277,7 @@ print(f"Total words (no stop words): {len(words):,}")`}
                                                 </div>
                                             ))}
                                             <div className="pt-4 mt-4 border-t border-slate-700/50 text-[11px] text-slate-500">
-                                                Total unique words: 35<br/>
+                                                Total unique words: 35<br />
                                                 Total words: 23,413
                                             </div>
                                         </div>
@@ -1352,7 +1352,7 @@ fig.show()`}
                                         <p className="text-sm text-on-surface-variant max-w-md opacity-60">Drill down into specific platform topics to uncover localized trending terminology.</p>
                                     </div>
                                     <div className="relative group min-w-[240px]">
-                                        <select 
+                                        <select
                                             value={selectedCategory}
                                             onChange={(e) => setSelectedCategory(e.target.value as any)}
                                             className="w-full h-14 pl-6 pr-12 bg-white rounded-2xl border border-outline-variant/20 appearance-none text-primary font-bold focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer shadow-sm group-hover:border-primary/40"
@@ -1393,8 +1393,8 @@ fig.show()`}
                                                 },
                                                 autosize: true,
                                                 margin: { l: 120, r: 100, t: 80, b: 40 },
-                                                xaxis: { 
-                                                    title: 'Frequency', 
+                                                xaxis: {
+                                                    title: 'Frequency',
                                                     gridcolor: '#f0f0f0',
                                                     range: [0, 650] // Fixed range to prevent label cut-off
                                                 },
@@ -1522,7 +1522,7 @@ for word, score in zip(top_words, top_scores):
                                                 orientation: 'h',
                                                 x: categoricalTFIDFData[selectedCategory]?.unigrams?.scores.slice(0, 20) || [],
                                                 y: categoricalTFIDFData[selectedCategory]?.unigrams?.words.slice(0, 20) || [],
-                                                marker: { 
+                                                marker: {
                                                     color: '#764ba2',
                                                     opacity: 0.85
                                                 },
@@ -1637,144 +1637,144 @@ else:
 
 fig.show()`}
                         >
-                                       <div className="space-y-12">
-                                 <div className="flex flex-col md:flex-row gap-6 items-center justify-between pb-8 border-b border-outline-variant/10">
-                                     <div className="space-y-1">
-                                         <h4 className="text-xl font-bold text-on-surface">Bigram Topic Intelligence</h4>
-                                         <p className="text-sm text-on-surface-variant max-w-md opacity-60">Analyze how word pairs interact within specific platform categories to identify unique narratives.</p>
-                                     </div>
-                                     <div className="relative group min-w-[240px]">
-                                         <select 
-                                             value={bigramTopic}
-                                             onChange={(e) => setBigramTopic(e.target.value as any)}
-                                             className="w-full h-14 pl-6 pr-12 bg-white rounded-2xl border border-outline-variant/20 appearance-none text-primary font-bold focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer shadow-sm group-hover:border-primary/40"
-                                         >
-                                             <option value="economy">Economy & Finance</option>
-                                             <option value="ai_and_tech">Tech & AI</option>
-                                             <option value="entertainment">Entertainment</option>
-                                             <option value="global_events">Global Events</option>
-                                             <option value="sports">Sports & Gaming</option>
-                                             <option value="all">--- View All Topics ---</option>
-                                         </select>
-                                         <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40 group-hover:text-primary transition-colors" size={20} />
-                                     </div>
-                                 </div>
+                            <div className="space-y-12">
+                                <div className="flex flex-col md:flex-row gap-6 items-center justify-between pb-8 border-b border-outline-variant/10">
+                                    <div className="space-y-1">
+                                        <h4 className="text-xl font-bold text-on-surface">Bigram Topic Intelligence</h4>
+                                        <p className="text-sm text-on-surface-variant max-w-md opacity-60">Analyze how word pairs interact within specific platform categories to identify unique narratives.</p>
+                                    </div>
+                                    <div className="relative group min-w-[240px]">
+                                        <select
+                                            value={bigramTopic}
+                                            onChange={(e) => setBigramTopic(e.target.value as any)}
+                                            className="w-full h-14 pl-6 pr-12 bg-white rounded-2xl border border-outline-variant/20 appearance-none text-primary font-bold focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer shadow-sm group-hover:border-primary/40"
+                                        >
+                                            <option value="economy">Economy & Finance</option>
+                                            <option value="ai_and_tech">Tech & AI</option>
+                                            <option value="entertainment">Entertainment</option>
+                                            <option value="global_events">Global Events</option>
+                                            <option value="sports">Sports & Gaming</option>
+                                            <option value="all">--- View All Topics ---</option>
+                                        </select>
+                                        <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40 group-hover:text-primary transition-colors" size={20} />
+                                    </div>
+                                </div>
 
-                                 {bigramTopic === 'all' ? (
-                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 w-full">
-                                         {Object.entries(categoricalTFIDFData).map(([topic, data], idx) => {
-                                             const colors = ['#667eea', '#764ba2', '#f472b6', '#38bdf8', '#4ade80'];
-                                             const topicColor = colors[idx % colors.length];
-                                             return (
-                                                 <div key={topic} className="bg-white p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm flex flex-col h-[600px] transition-all hover:shadow-xl">
-                                                     <h5 className="font-bold text-sm text-on-surface mb-4 flex items-center gap-2">
-                                                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: topicColor }}></div>
-                                                         {topic.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
-                                                     </h5>
-                                                     <div className="flex-1 min-h-0">
-                                                         <Plot
-                                                             data={[{
-                                                                 type: 'bar',
-                                                                 orientation: 'h',
-                                                                 x: data.bigrams.scores,
-                                                                 y: data.bigrams.words,
-                                                                 marker: { color: topicColor, opacity: 0.7 },
-                                                                 text: data.bigrams.scores.map(s => s.toFixed(3)),
-                                                                 textposition: 'outside',
-                                                                 textfont: { size: 10, weight: 'bold' }
-                                                             }]}
-                                                         layout={{
-                                                             autosize: true,
-                                                             margin: { l: 180, r: 100, t: 40, b: 60 },
-                                                             xaxis: { 
-                                                                 gridcolor: '#f0f0f0', 
-                                                                 tickfont: { size: 11 },
-                                                                 range: [0, 0.45] 
-                                                             },
-                                                             yaxis: { autorange: 'reversed', tickfont: { size: 11, weight: 'bold' } },
-                                                             plot_bgcolor: 'transparent',
-                                                             paper_bgcolor: 'transparent',
-                                                         }}
-                                                         config={{ responsive: true, displayModeBar: false }}
-                                                         className="w-full h-full"
-                                                     />
-                                                 </div>
-                                                 </div>
-                                             );
-                                         })}
-                                     </div>
-                                 ) : (
-                                     <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 items-start w-full">
-                                         <div className="bg-white p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm min-h-[550px]">
-                                             <div className="flex items-center gap-3 mb-8">
-                                                 <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
-                                                     <Grid className="text-primary" size={20} />
-                                                 </div>
-                                                 <h5 className="font-bold text-lg text-on-surface">TF-IDF Weighted Bigrams ({bigramTopic.replace('_', ' ')})</h5>
-                                             </div>
-                                             <Plot
-                                                 data={[{
-                                                     type: 'bar',
-                                                     orientation: 'h',
-                                                     x: categoricalTFIDFData[bigramTopic]?.bigrams?.scores || [],
-                                                     y: categoricalTFIDFData[bigramTopic]?.bigrams?.words || [],
-                                                     marker: { 
-                                                         color: '#4facfe',
-                                                         opacity: 0.85
-                                                     },
-                                                     text: (categoricalTFIDFData[bigramTopic]?.bigrams?.scores || []).map(s => s.toFixed(4)),
-                                                     textposition: 'outside'
-                                                 }]}
-                                                 layout={{
-                                                     title: {
-                                                         text: `Top 10 Bigrams in ${bigramTopic.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} (TF-IDF)`,
-                                                         font: { size: 16, color: '#2a3f5f' },
-                                                         x: 0.05
-                                                     },
-                                                     autosize: true,
-                                                     margin: { l: 180, r: 120, t: 80, b: 40 },
-                                                     xaxis: { 
-                                                         title: 'TF-IDF Score', 
-                                                         gridcolor: '#f0f0f0', 
-                                                         range: [0, 0.45] 
-                                                     },
-                                                     yaxis: { title: 'Bigrams', autorange: 'reversed', gridcolor: '#f0f0f0' },
-                                                     plot_bgcolor: 'transparent',
-                                                     paper_bgcolor: 'transparent',
-                                                     height: 550
-                                                 }}
-                                                 config={{ responsive: true, displayModeBar: false }}
-                                                 className="w-full"
-                                             />
-                                         </div>
+                                {bigramTopic === 'all' ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 w-full">
+                                        {Object.entries(categoricalTFIDFData).map(([topic, data], idx) => {
+                                            const colors = ['#667eea', '#764ba2', '#f472b6', '#38bdf8', '#4ade80'];
+                                            const topicColor = colors[idx % colors.length];
+                                            return (
+                                                <div key={topic} className="bg-white p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm flex flex-col h-[600px] transition-all hover:shadow-xl">
+                                                    <h5 className="font-bold text-sm text-on-surface mb-4 flex items-center gap-2">
+                                                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: topicColor }}></div>
+                                                        {topic.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                                                    </h5>
+                                                    <div className="flex-1 min-h-0">
+                                                        <Plot
+                                                            data={[{
+                                                                type: 'bar',
+                                                                orientation: 'h',
+                                                                x: data.bigrams.scores,
+                                                                y: data.bigrams.words,
+                                                                marker: { color: topicColor, opacity: 0.7 },
+                                                                text: data.bigrams.scores.map(s => s.toFixed(3)),
+                                                                textposition: 'outside',
+                                                                textfont: { size: 10, weight: 'bold' }
+                                                            }]}
+                                                            layout={{
+                                                                autosize: true,
+                                                                margin: { l: 180, r: 100, t: 40, b: 60 },
+                                                                xaxis: {
+                                                                    gridcolor: '#f0f0f0',
+                                                                    tickfont: { size: 11 },
+                                                                    range: [0, 0.45]
+                                                                },
+                                                                yaxis: { autorange: 'reversed', tickfont: { size: 11, weight: 'bold' } },
+                                                                plot_bgcolor: 'transparent',
+                                                                paper_bgcolor: 'transparent',
+                                                            }}
+                                                            config={{ responsive: true, displayModeBar: false }}
+                                                            className="w-full h-full"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 items-start w-full">
+                                        <div className="bg-white p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm min-h-[550px]">
+                                            <div className="flex items-center gap-3 mb-8">
+                                                <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
+                                                    <Grid className="text-primary" size={20} />
+                                                </div>
+                                                <h5 className="font-bold text-lg text-on-surface">TF-IDF Weighted Bigrams ({bigramTopic.replace('_', ' ')})</h5>
+                                            </div>
+                                            <Plot
+                                                data={[{
+                                                    type: 'bar',
+                                                    orientation: 'h',
+                                                    x: categoricalTFIDFData[bigramTopic]?.bigrams?.scores || [],
+                                                    y: categoricalTFIDFData[bigramTopic]?.bigrams?.words || [],
+                                                    marker: {
+                                                        color: '#4facfe',
+                                                        opacity: 0.85
+                                                    },
+                                                    text: (categoricalTFIDFData[bigramTopic]?.bigrams?.scores || []).map(s => s.toFixed(4)),
+                                                    textposition: 'outside'
+                                                }]}
+                                                layout={{
+                                                    title: {
+                                                        text: `Top 10 Bigrams in ${bigramTopic.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} (TF-IDF)`,
+                                                        font: { size: 16, color: '#2a3f5f' },
+                                                        x: 0.05
+                                                    },
+                                                    autosize: true,
+                                                    margin: { l: 180, r: 120, t: 80, b: 40 },
+                                                    xaxis: {
+                                                        title: 'TF-IDF Score',
+                                                        gridcolor: '#f0f0f0',
+                                                        range: [0, 0.45]
+                                                    },
+                                                    yaxis: { title: 'Bigrams', autorange: 'reversed', gridcolor: '#f0f0f0' },
+                                                    plot_bgcolor: 'transparent',
+                                                    paper_bgcolor: 'transparent',
+                                                    height: 550
+                                                }}
+                                                config={{ responsive: true, displayModeBar: false }}
+                                                className="w-full"
+                                            />
+                                        </div>
 
-                                         <div className="space-y-8">
-                                             <div className="bg-slate-900 rounded-[2.5rem] p-8 border border-slate-800 shadow-xl overflow-hidden relative group">
-                                                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[80px] group-hover:bg-primary/20 transition-colors" />
-                                                 <div className="flex items-center gap-3 mb-6">
-                                                     <Terminal className="text-secondary" size={20} />
-                                                     <h6 className="font-bold text-white tracking-tight">Notebook Output</h6>
-                                                 </div>
-                                                 <div className="text-secondary/70 mb-6 font-bold uppercase tracking-widest border-b border-white/5 pb-2">
-                                                     Top bigrams in {bigramTopic}:
-                                                 </div>
-                                                 <div className="space-y-1.5 custom-scrollbar h-[400px] overflow-y-auto pr-4">
-                                                     {(categoricalTFIDFData[bigramTopic]?.bigrams?.words || []).map((word, idx) => (
-                                                         <div key={idx} className="flex justify-between items-center group/item">
-                                                             <span className="text-blue-200 group-hover/item:text-white transition-colors">
-                                                                 {word.padEnd(25, ' ')}
-                                                             </span>
-                                                             <span className="text-secondary font-bold ml-4">
-                                                                 :  {(categoricalTFIDFData[bigramTopic]?.bigrams?.scores[idx] || 0).toFixed(4)}
-                                                             </span>
-                                                         </div>
-                                                     ))}
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 )}
-                             </div>
+                                        <div className="space-y-8">
+                                            <div className="bg-slate-900 rounded-[2.5rem] p-8 border border-slate-800 shadow-xl overflow-hidden relative group">
+                                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[80px] group-hover:bg-primary/20 transition-colors" />
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <Terminal className="text-secondary" size={20} />
+                                                    <h6 className="font-bold text-white tracking-tight">Notebook Output</h6>
+                                                </div>
+                                                <div className="text-secondary/70 mb-6 font-bold uppercase tracking-widest border-b border-white/5 pb-2">
+                                                    Top bigrams in {bigramTopic}:
+                                                </div>
+                                                <div className="space-y-1.5 custom-scrollbar h-[400px] overflow-y-auto pr-4">
+                                                    {(categoricalTFIDFData[bigramTopic]?.bigrams?.words || []).map((word, idx) => (
+                                                        <div key={idx} className="flex justify-between items-center group/item">
+                                                            <span className="text-blue-200 group-hover/item:text-white transition-colors">
+                                                                {word.padEnd(25, ' ')}
+                                                            </span>
+                                                            <span className="text-secondary font-bold ml-4">
+                                                                :  {(categoricalTFIDFData[bigramTopic]?.bigrams?.scores[idx] || 0).toFixed(4)}
+                                                            </span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </InteractiveAnalysis>
 
                         {/* Matrix & Correlations Section */}
@@ -1904,7 +1904,7 @@ print("within same category, not self-similarity\\n")`}
                                                     <div key={j} className="flex justify-between items-center pl-4 opacity-70 hover:opacity-100 transition-opacity">
                                                         <span>vs {v.n.padEnd(15)}: </span>
                                                         <span className="flex items-center gap-2">
-                                                            {v.s.toFixed(3)} 
+                                                            {v.s.toFixed(3)}
                                                             <span className="text-amber-400 font-bold">⚠️ High</span>
                                                         </span>
                                                     </div>
@@ -1958,7 +1958,7 @@ print(f"* Stop Words Removed: {', '.join(custom_news_stopwords[:10])}...")`}
                                     💡 KEY ANALYTICAL INSIGHTS
                                 </div>
                                 <div className="text-slate-600 mb-8">------------------------------------------------------------</div>
-                                
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                     <div className="space-y-6">
                                         <div className="text-white font-bold text-sm flex items-center gap-2 uppercase tracking-widest">
@@ -1970,7 +1970,7 @@ print(f"* Stop Words Removed: {', '.join(custom_news_stopwords[:10])}...")`}
                                                 <span className="text-primary">●</span>
                                                 <span>Balanced Dataset: Categories range from 17.8% to 21.8%</span>
                                             </div>
-                                            
+
                                             <div className="group/stats">
                                                 <div className="flex gap-3 mb-4 text-white font-semibold">
                                                     <span className="text-primary">●</span>
@@ -2041,7 +2041,7 @@ print(samples[['topic_category', 'short_text']])`}
                                             <p className="text-xs text-on-surface-variant opacity-60">Querying real synthetic entries from trending_topics_2026.csv</p>
                                         </div>
                                     </div>
-                                    <button 
+                                    <button
                                         onClick={rollSamples}
                                         disabled={isRolling}
                                         className={`flex items-center gap-3 px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-lg transition-all ${isRolling ? "bg-surface-container-high text-on-surface-variant cursor-wait" : "bg-primary text-white hover:bg-primary/90 hover:-translate-y-1 shadow-primary/20 cursor-pointer active:scale-95"}`}
@@ -2052,7 +2052,7 @@ print(samples[['topic_category', 'short_text']])`}
                                 </div>
 
                                 <AnimatePresence mode="wait">
-                                    <motion.div 
+                                    <motion.div
                                         key={JSON.stringify(currentSamples)}
                                         initial={{ opacity: 0, scale: 0.98, y: 10 }}
                                         animate={{ opacity: 1, scale: 1, y: 0 }}

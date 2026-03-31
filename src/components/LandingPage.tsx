@@ -6,7 +6,7 @@ import imagePreview from '../assets/images/image/image_preview.jpg';
 import multimodalPreview from '../assets/images/image/multimodal_preview.webp';
 
 interface LandingPageProps {
-  onNavigate: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda', dataset?: string) => void;
+  onNavigate: (page: 'overview' | 'assignments' | 'datasets' | 'art-analysis' | 'tabular-eda' | 'text-eda' | 'image-eda' | 'multimodal-eda', dataset?: string) => void;
 }
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
@@ -167,7 +167,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                 } else if (item.title === "Image Data") {
                   onNavigate('image-eda');
                 } else {
-                  onNavigate('art-analysis', item.title);
+                  onNavigate('multimodal-eda');
                 }
               }}
             >

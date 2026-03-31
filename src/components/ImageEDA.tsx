@@ -497,14 +497,14 @@ export default function ImageEDA({ onBack }: { onBack: () => void }) {
                                                     <Users size={16} className="text-primary" />
                                                     <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Project Contributors</span>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-3">
+                                                <div className="flex flex-wrap gap-3">
                                                     {[
                                                         "Trần Quốc Thắng"
                                                         
                                                     ].map((member, i) => (
-                                                        <div key={i} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10">
+                                                        <div key={i} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10 w-fit">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-                                                            <span className="text-[10px] font-bold text-on-surface truncate">{member}</span>
+                                                            <span className="text-[10px] font-bold text-on-surface whitespace-nowrap">{member}</span>
                                                         </div>
                                                     ))}
                                                 </div>
