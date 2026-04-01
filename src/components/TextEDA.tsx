@@ -253,7 +253,7 @@ const InteractiveAnalysis = ({ id, title, subtitle, icon: Icon, pythonCode, plot
 
 export default function TextEDA({ onBack }: { onBack: () => void }) {
     const [activeNav, setActiveNav] = useState("overview");
-    const [selectedCategory, setSelectedCategory] = useState("economy");
+    const [selectedCategory, setSelectedCategory] = useState("overall");
     const [bigramTopic, setBigramTopic] = useState("economy");
     const [globalUnit, setGlobalUnit] = useState<"unigrams" | "bigrams">("unigrams");
     const [currentSamples, setCurrentSamples] = useState<any[]>([]);
@@ -348,6 +348,10 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
         sports: {
             words: ["users", "actively", "discussing", "broader", "category", "sports", "multiple", "platforms", "football", "esports", "olympics", "world", "cup", "tennis", "basketball", "cricket", "league", "championship", "tournament", "finals"],
             counts: [446, 446, 446, 446, 446, 446, 446, 446, 125, 111, 105, 100, 95, 90, 85, 80, 75, 70, 65, 60]
+        },
+        overall: {
+            words: ["users", "actively", "discussing", "broader", "category", "multiple", "platforms", "global", "events", "entertainment", "tech", "economy", "sports", "jobs", "elections", "hollywood", "climate", "kdrama", "conflicts", "startups"],
+            counts: [2500, 2500, 2500, 2500, 2500, 2500, 2500, 544, 544, 511, 507, 492, 446, 231, 141, 141, 138, 136, 134, 133]
         }
     };
 
@@ -384,9 +388,8 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
         { id: "stop-words", label: "Stop Words" },
         { id: "word-count", label: "Word Count" },
         { id: "char-count", label: "Char Count" },
-        { id: "semantic", label: "Vocabulary Richness" },
-        { id: "frequent", label: "MOST FREQUENTLY WORDS" },
-        { id: "category", label: "Categorical Deep-dive" },
+        { id: "semantic", label: "Vocabulary Richness by category" },
+        { id: "category", label: "TOP 20 WORDS BY CATEGORIES" },
         { id: "tfidf-category", label: "Category Weights (TF-IDF)" },
         { id: "bigrams-comparison", label: "Categorical Bigrams Comparison" },
         { id: "matrix", label: "Similarity Matrix" },
@@ -589,7 +592,7 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                                                 { type: "Stop Words Analysis", sub: "(Noise profiling)", raw: true, stop: false, reason: "Audit the frequency of non-semantic functional words." },
                                                 { type: "Word Frequency", sub: "(Top overall words)", raw: false, stop: true, reason: "Surface meaningful lexical keywords & concepts." },
                                                 { type: "Category Keywords", sub: "(Sector specific)", raw: false, stop: true, reason: "Isolate terms unique to platform segments." },
-                                                { type: "Vocabulary Richness", sub: "(TTR & Diversity)", raw: false, stop: true, reason: "Analyze semantic variety without syntactic noise." },
+                                                { type: "Vocabulary Richness by category", sub: "(TTR & Diversity)", raw: false, stop: true, reason: "Analyze semantic variety without syntactic noise." },
                                                 { type: "TF-IDF Weighted Terms", sub: "(Significance)", raw: false, stop: true, reason: "Determine most distinctive categorical identifiers." },
                                                 { type: "N-grams (Bigrams)", sub: "(Phrase patterns)", raw: false, stop: true, reason: "Capture meaningful contextual word dependencies." },
                                                 { type: "Distributions", sub: "(Length histograms)", raw: true, stop: false, reason: "Maintain integrity of original text delivery format." }
@@ -1070,7 +1073,7 @@ print(f"Max: {df['char_count'].max()}")`}
                         {/* Vocabulary Richness Section */}
                         <InteractiveAnalysis
                             id="semantic"
-                            title="Vocabulary Richness"
+                            title="Vocabulary Richness by category"
                             subtitle="Evaluation of lexical diversity and unique token density across categories."
                             icon={Brain}
                             pythonCode={`import pandas as pd
@@ -1117,7 +1120,7 @@ fig = go.Figure(data=[go.Bar(
 )])
 
 fig.update_layout(
-    title='Vocabulary Richness by Category',
+    title='Vocabulary Richness by category',
     xaxis_title='Category',
     yaxis_title='Unique Words Count'
 )
@@ -1125,7 +1128,7 @@ fig.update_layout(
 fig.show()
 
 # Print statistics
-print("\\nVocabulary Richness Statistics:")
+print("\\nVocabulary Richness by category Statistics:")
 print(vocab_df.to_string(index=False))`}
                             plots={[
                                 {
@@ -1137,7 +1140,7 @@ print(vocab_df.to_string(index=False))`}
                                         marker: { color: '#4facfe' }
                                     }],
                                     layout: {
-                                        title: 'Vocabulary Richness (Unique Concepts)',
+                                        title: 'Vocabulary Richness by category (Unique Concepts)',
                                         xaxis: { title: 'Category' },
                                         yaxis: { title: 'Unique Word Count' }
                                     }
@@ -1152,151 +1155,12 @@ print(vocab_df.to_string(index=False))`}
                             </div>
                         </InteractiveAnalysis>
 
-                        {/* Most Frequent Words Section */}
-                        <InteractiveAnalysis
-                            id="frequent"
-                            title="MOST FREQUENTLY WORDS"
-                            subtitle="Global term frequency analysis after news-optimized noise reduction."
-                            icon={BarChart}
-                            pythonCode={`import pandas as pd
-import plotly.graph_objects as go
-from collections import Counter
-import re
-from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
-# Setup stop words
-stop_words = set(ENGLISH_STOP_WORDS)
-custom_news_stopwords = ['said', 'mr', 'ms', 'mrs', 'told', 'says', 'say',
-                         'according', 'year', 'years', 'new', 'old', 'like',
-                         'just', 'going', 'got', 'use', 'used', 'make', 'made']
-stop_words.update(custom_news_stopwords)
 
-# Get all words (remove stop words)
-all_text = ' '.join(df['short_text']).lower()
-# Use regex to match words >= 3 characters (same as report)
-words = re.findall(r'\\b[a-z]{3,}\\b', all_text)
-words = [w for w in words if w not in stop_words]
-word_counts = Counter(words).most_common(25)
-
-words_list = [word for word, count in word_counts]
-counts_list = [count for word, count in word_counts]
-
-# Create bar chart
-fig = go.Figure(data=[go.Bar(
-    x=words_list,
-    y=counts_list,
-    marker_color='#43e97b',
-    text=counts_list,
-    textposition='outside'
-)])
-
-fig.update_layout(
-    title='Top 25 Most Frequent Words (Overall)',
-    xaxis_title='Words',
-    yaxis_title='Frequency',
-    width=900,
-    height=500,
-    xaxis={'tickangle': 45}
-)
-
-fig.show()
-
-# Print statistics
-print("\\nTop 20 words across all categories:")
-for word, count in word_counts[:20]:
-    print(f"  {word:15s}: {count:5d}")
-
-print(f"\\nTotal unique words (no stop words): {len(set(words)):,}")
-print(f"Total words (no stop words): {len(words):,}")`}
-                        >
-                            <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12">
-                                <div className="bg-white p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm min-h-[500px]">
-                                    <div className="flex items-center gap-3 mb-8">
-                                        <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
-                                            <BarChart className="text-emerald-600" size={20} />
-                                        </div>
-                                        <h5 className="font-bold text-lg text-on-surface">Global Corpus Frequency (Top 25)</h5>
-                                    </div>
-                                    <Plot
-                                        data={[{
-                                            type: 'bar',
-                                            x: ["users", "actively", "discussing", "broader", "category", "multiple", "platforms", "global", "events", "entertainment", "tech", "economy", "sports", "jobs", "elections", "hollywood", "climate", "kdrama", "conflicts", "startups", "market", "policy", "growth", "interest", "rates"],
-                                            y: [2500, 2500, 2500, 2500, 2500, 2500, 2500, 544, 544, 511, 507, 492, 446, 231, 141, 141, 138, 136, 134, 133, 127, 126, 120, 115, 110],
-                                            marker: { color: '#43e97b' },
-                                            textposition: 'outside'
-                                        }]}
-                                        layout={{
-                                            autosize: true,
-                                            margin: { l: 40, r: 40, t: 20, b: 100 },
-                                            xaxis: { title: 'Words', tickangle: 45, gridcolor: '#f0f0f0' },
-                                            yaxis: { title: 'Frequency', gridcolor: '#f0f0f0' },
-                                            plot_bgcolor: 'transparent',
-                                            paper_bgcolor: 'transparent',
-                                            height: 500
-                                        }}
-                                        config={{ responsive: true, displayModeBar: false }}
-                                        className="w-full"
-                                    />
-                                    <div className="mt-8 flex justify-center gap-12">
-                                        <div className="text-center">
-                                            <div className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant/40 mb-1">Unique Tokens</div>
-                                            <div className="text-2xl font-bold text-primary">35</div>
-                                        </div>
-                                        <div className="text-center">
-                                            <div className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant/40 mb-1">Total Word Count</div>
-                                            <div className="text-2xl font-bold text-primary">23,413</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-8">
-                                    <div className="bg-surface-container-low/50 p-8 rounded-[2.5rem] border border-outline-variant/10 shadow-sm">
-                                        <div className="flex items-center gap-3 mb-6">
-                                            <Terminal className="text-primary" size={20} />
-                                            <h6 className="font-bold text-on-surface">Notebook Output Preview</h6>
-                                        </div>
-                                        <div className="bg-slate-900 rounded-2xl p-6 font-mono text-[13px] text-slate-300 space-y-2 border border-slate-800 shadow-inner overflow-hidden">
-                                            <div className="text-secondary/70 mb-4 font-bold border-b border-slate-700/50 pb-2 uppercase tracking-widest text-[10px]">
-                                                Top 20 words across all categories:
-                                            </div>
-                                            {[
-                                                { w: "users", c: 2500 }, { w: "actively", c: 2500 }, { w: "discussing", c: 2500 },
-                                                { w: "broader", c: 2500 }, { w: "category", c: 2500 }, { w: "multiple", c: 2500 },
-                                                { w: "platforms", c: 2500 }, { w: "global", c: 544 }, { w: "events", c: 544 },
-                                                { w: "entertainment", c: 511 }, { w: "tech", c: 507 }, { w: "economy", c: 492 },
-                                                { w: "sports", c: 446 }, { w: "jobs", c: 231 }, { w: "elections", c: 141 },
-                                                { w: "hollywood", c: 141 }
-                                            ].map((item, idx) => (
-                                                <div key={idx} className="flex justify-between items-center group">
-                                                    <span className="text-slate-100 group-hover:text-primary transition-colors">
-                                                        {item.w.padEnd(20, ' ')}
-                                                    </span>
-                                                    <span className="text-slate-500 font-bold ml-4 whitespace-nowrap">
-                                                        :  {item.c}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                            <div className="pt-4 mt-4 border-t border-slate-700/50 text-[11px] text-slate-500">
-                                                Total unique words: 35<br />
-                                                Total words: 23,413
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-emerald-50/50 p-6 rounded-2xl border border-emerald-100 italic text-sm text-emerald-900 flex gap-4">
-                                        <Info className="text-emerald-600 mt-1 shrink-0" size={20} />
-                                        <p>
-                                            Insight: The exact repetition of 2,500 occurrences for the top 7 tokens indicates that every single article in the dataset contains this template string, mathematically proving a synthetic generation pattern.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </InteractiveAnalysis>
-
-                        {/* Categorical Deep-dive Section */}
+                        {/* TOP 20 WORDS BY CATEGORIES Section */}
                         <InteractiveAnalysis
                             id="category"
-                            title="Categorical Deep-dive"
+                            title="TOP 20 WORDS BY CATEGORIES"
                             subtitle="In-depth topic frequency analysis per platform domain."
                             icon={GitMerge}
                             pythonCode={`import pandas as pd
@@ -1357,6 +1221,7 @@ fig.show()`}
                                             onChange={(e) => setSelectedCategory(e.target.value as any)}
                                             className="w-full h-14 pl-6 pr-12 bg-white rounded-2xl border border-outline-variant/20 appearance-none text-primary font-bold focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer shadow-sm group-hover:border-primary/40"
                                         >
+                                            <option value="overall" className="font-bold text-accent">TOP FREQUENTLY OVERALL</option>
                                             <option value="ai_and_tech">Tech & AI</option>
                                             <option value="economy">Economy & Finance</option>
                                             <option value="entertainment">Entertainment</option>
@@ -1396,7 +1261,7 @@ fig.show()`}
                                                 xaxis: {
                                                     title: 'Frequency',
                                                     gridcolor: '#f0f0f0',
-                                                    range: [0, 650] // Fixed range to prevent label cut-off
+                                                    range: [0, selectedCategory === 'overall' ? 2600 : 650] // Adjusted for overall counts
                                                 },
                                                 yaxis: { title: 'Words', autorange: 'reversed', gridcolor: '#f0f0f0' },
                                                 plot_bgcolor: 'transparent',
@@ -1959,60 +1824,57 @@ print(f"* Stop Words Removed: {', '.join(custom_news_stopwords[:10])}...")`}
                                 </div>
                                 <div className="text-slate-600 mb-8">------------------------------------------------------------</div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                    <div className="space-y-6">
-                                        <div className="text-white font-bold text-sm flex items-center gap-2 uppercase tracking-widest">
-                                            <Database size={14} className="text-primary" />
-                                            --- Dataset Characteristics ---
-                                        </div>
-                                        <div className="space-y-6 text-slate-400">
-                                            <div className="flex gap-3 hover:text-white transition-colors">
-                                                <span className="text-primary">●</span>
-                                                <span>Balanced Dataset: Categories range from 17.8% to 21.8%</span>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                                    {[
+                                        {
+                                            badge: "Anomaly",
+                                            badgeClass: "bg-red-500/10 text-red-500 border-red-500/20",
+                                            title: "Stop words",
+                                            desc: <>The top 6 words (<strong>from, are, within, the, of, across</strong>) all appear exactly <strong>2,500 times</strong> — suggesting a <strong>hard frequency cap</strong> was applied during data processing. This is a sign that stop words were not removed, which could negatively impact NLP models if not addressed.</>
+                                        },
+                                        {
+                                            badge: "Anomaly",
+                                            badgeClass: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
+                                            title: "Word count distribution",
+                                            desc: <>All articles contain only <strong>16–19 words</strong> — not a single article falls below 15 or above 20. This extremely <strong>narrow distribution</strong> is unusual and suggests the dataset may consist of <strong>news headlines</strong> rather than full articles, or that a hard truncation step was applied.</>
+                                        },
+                                        {
+                                            badge: "Anomaly",
+                                            badgeClass: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
+                                            title: "Character count distribution",
+                                            desc: <>No articles fall within certain character ranges (<strong>100–107, 111–112, 114–115, 119–123</strong>). These <strong>irregular gaps</strong> suggest the data originates from multiple sources with different formatting conventions, or that <strong>fixed-length filters</strong> were applied.</>
+                                        },
+                                        {
+                                            badge: "Important",
+                                            badgeClass: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+                                            title: "Vocabulary richness",
+                                            desc: <>4 out of 5 categories share nearly <strong>identical vocabulary richness</strong> (~13 unique words/article). Only <strong>sports is lower (~11–12)</strong>, reflecting the repetitive nature of sports language (team names, scores, results). This may make it harder for a model to distinguish sports from other categories.</>
+                                        },
+                                        {
+                                            badge: "Critical",
+                                            badgeClass: "bg-red-600/10 text-red-600 border-red-600/20",
+                                            title: "Economy word frequency",
+                                            desc: <>The top 8 words in Economy articles (<strong>users, actively, discussing, broader, category, economy, multiple, platforms</strong>) all appear exactly <strong>492 times</strong> — a clear sign of <strong>boilerplate/template text</strong> being repeated, not natural language. This strongly suggests the data may be <strong>synthetically or template-generated</strong>.</>
+                                        },
+                                        {
+                                            badge: "Important",
+                                            badgeClass: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+                                            title: "TF-IDF — economy",
+                                            desc: <>The word <strong>"economy"</strong> has a TF-IDF score of <strong>0.44</strong> — nearly double the next term (inflation: 0.18). Words like sports, startups, tech, releases, and music score <strong>0.0000 in Economy</strong> — a positive sign showing low cross-category term overlap. <strong>Crypto (0.18)</strong> stands out prominently, reflecting strong digital economy coverage.</>
+                                        }
+                                    ].map((item, i) => (
+                                        <div key={i} className="bg-[#1c1c1c] border border-white/5 rounded-3xl p-8 hover:bg-[#252525] transition-all group/insight md:min-h-[220px] flex flex-col justify-start">
+                                            <div className="flex items-center gap-4 mb-6">
+                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${item.badgeClass}`}>
+                                                    {item.badge}
+                                                </span>
+                                                <h6 className="font-bold text-white text-lg tracking-tight group-hover/insight:text-primary transition-colors">{item.title}</h6>
                                             </div>
-
-                                            <div className="group/stats">
-                                                <div className="flex gap-3 mb-4 text-white font-semibold">
-                                                    <span className="text-primary">●</span>
-                                                    <span>Article Length Distribution:</span>
-                                                </div>
-                                                <div className="ml-6 grid grid-cols-2 gap-3">
-                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
-                                                        <span className="text-[10px] uppercase opacity-40">Min Words</span>
-                                                        <span className="text-lg font-bold text-emerald-400">16</span>
-                                                    </div>
-                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
-                                                        <span className="text-[10px] uppercase opacity-40">Max Words</span>
-                                                        <span className="text-lg font-bold text-emerald-400">19</span>
-                                                    </div>
-                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
-                                                        <span className="text-[10px] uppercase opacity-40">Median</span>
-                                                        <span className="text-lg font-bold text-primary-container">17.0</span>
-                                                    </div>
-                                                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 flex flex-col">
-                                                        <span className="text-[10px] uppercase opacity-40">Std Dev</span>
-                                                        <span className="text-lg font-bold text-secondary">1.06</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <p className="text-slate-400 text-[14px] leading-[1.6] font-medium font-sans">
+                                                {item.desc}
+                                            </p>
                                         </div>
-                                    </div>
-
-                                    <div className="space-y-6">
-                                        <div className="text-white font-bold text-sm flex items-center gap-2 uppercase tracking-widest">
-                                            <Filter size={14} className="text-secondary" />
-                                            --- Data Processing Notes ---
-                                        </div>
-                                        <div className="space-y-4 text-slate-400">
-                                            <div className="flex gap-3 hover:text-white transition-colors">
-                                                <span className="text-secondary">●</span>
-                                                <span>Stop Words Removed: said, mr, ms, mrs, told, says, say, according...</span>
-                                            </div>
-                                            <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-[12px] italic opacity-80 leading-relaxed">
-                                                Rationale: Mixed approach ensures physical length tracking (Raw) while surfacing meaningful vocabulary (Stopwords Filtered).
-                                            </div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </InteractiveAnalysis>
