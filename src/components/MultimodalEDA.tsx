@@ -41,6 +41,7 @@ import imageHeightDist from "../assets/data/multimodalEDA/image_height_distribut
 import imageAspectRatioDist from "../assets/data/multimodalEDA/image_aspect_ratio_distribution.json";
 import imageDimensionsScatter from "../assets/data/multimodalEDA/image_dimensions_scatter.json";
 import styleEmotionHeatmap from "../assets/data/multimodalEDA/style_emotion_heatmap.json";
+import topEmotionProportionsByStyle from "../assets/data/multimodalEDA/top_emotion_proportions_by_style.json";
 import topWordsByEmotion from "../assets/data/multimodalEDA/top_words_by_emotion.json";
 import textLengthDist from "../assets/data/multimodalEDA/text_length_distribution.json";
 
@@ -284,6 +285,7 @@ export default function MultimodalEDA({ onBack }: { onBack: () => void }) {
         { id: "image-metadata", label: "Visual Properties" },
         { id: "text-length", label: "Textual Density" },
         { id: "style-emotion", label: "Style vs Emotion" },
+        { id: "style-emotion-bar", label: "Emotional Landscape" },
         { id: "top-words", label: "Lexical Patterns" },
     ];
 
@@ -868,6 +870,69 @@ fig.show()`}
                             </div>
                         </InteractiveAnalysis>
 
+                        {/* 15.1 Top Emotions within Art Styles (Grouped Bar Chart) */}
+                        <InteractiveAnalysis
+                            id="style-emotion-bar"
+                            title="Top Emotions within Art Styles"
+                            subtitle="Faceted bar chart showing the proportion of the top 5 emotions within the 10 most frequent art styles."
+                            icon={Columns}
+                            observation="This granular view reveals that even within 'Impressionism', 'Sadness' can be a dominant annotation, alongside the expected 'Contentment'. Faceted analysis allows us to compare emotional signatures across distinct artistic movements directly."
+                            pythonCode={`# Select top 10 art styles based on total annotations for better readability in visualization
+# \`style_insights\` DataFrame from cell 833ed3d2 contains 'total_annotations' for each style.
+top_n_styles_for_viz = style_insights.sort_values('total_annotations', ascending=False).head(10)['art_style'].tolist()
+
+# Filter \`style_emotion_pct\` for these top styles
+df_top_styles_emotions = style_emotion_pct.loc[top_n_styles_for_viz]
+
+# Melt the dataframe to long format for easier plotting with Plotly Express
+df_plot = df_top_styles_emotions.reset_index().melt(id_vars='art_style', var_name='emotion', value_name='proportion')
+
+# For each art style, select the top 5 emotions by proportion
+final_plot_data = []
+for style in top_n_styles_for_viz:
+    style_data = df_plot[df_plot['art_style'] == style].sort_values('proportion', ascending=False).head(5)
+    final_plot_data.append(style_data)
+
+final_plot_df = pd.concat(final_plot_data)
+
+# Create a grouped bar chart, faceted by art style
+fig = px.bar(
+    final_plot_df,
+    x="emotion",
+    y="proportion",
+    color="emotion", # Color bars by emotion
+    facet_col="art_style",
+    facet_col_wrap=5, # Wrap facets into 5 columns
+    title="Top 5 Emotion Proportions for Top 10 Art Styles",
+    labels={
+        "proportion": "Proportion within Art Style",
+        "emotion": "Emotion"
+    },
+    height=800, # Adjust height for better readability
+    template="plotly_white"
+)
+
+# Update layout for better appearance
+fig.update_layout(showlegend=False) # Legend is redundant with color-coding within facets
+fig.update_xaxes(matches=None, tickangle=45) # Allow independent x-axes for better readability of emotion labels
+fig.show()`}
+                        >
+                            <div className="w-full bg-white rounded-3xl overflow-hidden">
+                                <Plot
+                                    data={topEmotionProportionsByStyle.data}
+                                    layout={{
+                                        ...topEmotionProportionsByStyle.layout,
+                                        autosize: true,
+                                        margin: { t: 80, b: 100, l: 80, r: 40 },
+                                        template: "plotly_white"
+                                    }}
+                                    style={{ width: "100%", height: "800px" }}
+                                    useResizeHandler={true}
+                                    config={{ responsive: true, displaylogo: false }}
+                                />
+                            </div>
+                        </InteractiveAnalysis>
+
                         {/* 11. Top Words by Emotion */}
                         <InteractiveAnalysis
                             id="top-words"
@@ -968,7 +1033,7 @@ fig.show()`}
                                             <div>
                                                 <h4 className="text-md font-bold text-on-surface mb-2">Emotion Label Imbalance</h4>
                                                 <p className="text-sm text-on-surface-variant leading-relaxed opacity-70">
-                                                    Significant imbalance detected. 'Sadness' and 'Contentment' are over-represented. AI models will require technique like class weighting or oversampling to avoid directional bias.
+                                                    Significant imbalance detected. <strong>'sadness'</strong> is one of the most frequent labels, while others like <strong>'amusement'</strong> represent a very small fraction. AI models will require class weighting or oversampling.
                                                 </p>
                                             </div>
                                         </div>
@@ -977,9 +1042,9 @@ fig.show()`}
                                                 <Palette size={20} className="text-primary" />
                                             </div>
                                             <div>
-                                                <h4 className="text-md font-bold text-on-surface mb-2">Art Style Skewness</h4>
+                                                <h4 className="text-md font-bold text-on-surface mb-2">Art Style Emotional Signatures</h4>
                                                 <p className="text-sm text-on-surface-variant leading-relaxed opacity-70">
-                                                    Movements like Impressionism dominate the corpus. This may bias model learning toward specific visual textures, requiring balanced augmentation.
+                                                    Each style possesses a distinct emotional signature (e.g., 'sadness' in Impressionism, 'disgust' in Abstract Expressionism). These profiles are valuable for nuanced affective modeling.
                                                 </p>
                                             </div>
                                         </div>
@@ -991,9 +1056,9 @@ fig.show()`}
                                                 <Maximize size={20} className="text-secondary" />
                                             </div>
                                             <div>
-                                                <h4 className="text-md font-bold text-on-surface mb-2">Visual Diversity & Rescaling</h4>
+                                                <h4 className="text-md font-bold text-on-surface mb-2">Visual Diversity</h4>
                                                 <p className="text-sm text-on-surface-variant leading-relaxed opacity-70">
-                                                    Image resolutions vary significantly. Preprocessing pipelines must handle these variations carefully to maintain visual details and aspect ratios.
+                                                    Image resolutions vary significantly from small thumbnails to high-resolution. Preprocessing must maintain visual details and consistent aspect ratios.
                                                 </p>
                                             </div>
                                         </div>
@@ -1002,9 +1067,9 @@ fig.show()`}
                                                 <CheckCircle2 size={20} className="text-emerald-600" />
                                             </div>
                                             <div>
-                                                <h4 className="text-md font-bold text-on-surface mb-2">High Data Integrity</h4>
+                                                <h4 className="text-md font-bold text-on-surface mb-2">Data Quality</h4>
                                                 <p className="text-sm text-on-surface-variant leading-relaxed opacity-70">
-                                                    The dataset is well-curated with zero missing values and zero duplicate records, providing a clean foundation for multimodal training.
+                                                    The dataset is well-curated with zero missing values and zero duplicate records, providing a robust and clean foundation for multimodal training.
                                                 </p>
                                             </div>
                                         </div>
