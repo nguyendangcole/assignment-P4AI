@@ -22,22 +22,21 @@
 ---
 
 ## 👥 Meet Our Team
-| Name | Student ID | Role |
-| :--- | :--- | :--- |
-| **ĐẶNG DUY NGUYÊN** | 2352821 | Team Lead / Web Developer |
-| **NGUYỄN ĐẶNG MINH TRƯỜNG** | 2353262 | Data Analyst / Researcher |
-| **TRẦN QUỐC THẮNG** | 2353125 | Data Visualization |
-| **LÊ MINH HÀO** | 2310846 | Data Preprocessing |
+| Name | Student ID | Action / Role | Notebook Link |
+| :--- | :--- | :--- | :--- |
+| **ĐẶNG DUY NGUYÊN** | 2352821 | Multimodal text-image EDA | [Notebook]() |
+| **NGUYỄN ĐẶNG MINH TRƯỜNG** | 2353262 | Text EDA | [Notebook]() |
+| **TRẦN QUỐC THẮNG** | 2353125 | Image EDA | [Notebook]() |
+| **LÊ MINH HÀO** | 2310846 | Tabular EDA | [Notebook]() |
 
-**Lead Instructor:** Dr. Thanh-Sach LE
+**Instructor:** Dr. Thanh-Sach LE
 
 ---
 
 ## 🛠️ Tech Stack & Skills
-- **Frontend:** React, TypeScript, Vite, Tailwind CSS
 - **Visualization:** Plotly.js, Lucide Icons, Framer Motion
 - **Analysis:** Python, Pandas, Matplotlib, Seaborn (in Notebooks)
-- **Deployment:** GitHub Pages / Vercel
+- **Deployment:** GitHub Pages
 
 ---
 
