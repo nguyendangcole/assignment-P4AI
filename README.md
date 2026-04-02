@@ -46,10 +46,10 @@ The analytical heavy-lifting was performed using Google Colab. You can explore o
 ### 📔 [Google Colab Notebooks Folder](./google%20colab/)
 | Notebook | Description | Link |
 | :--- | :--- | :--- |
-| **ArtEmis EDA** | Systematic exploration of the ArtEmis dataset, focusing on visual semiotics and emotion. | [Link]() |
+| **ArtEmis** | Systematic exploration of the ArtEmis dataset, focusing on visual semiotics and emotion. | [Link]() |
 | **Rain in Australia** | Deep dive into tabular weather data for recursive pattern analysis. | [Link]() |
-| **P4D & AI Core** | Core assignment logic and foundational data processing. | [Link]() |
-| **BTL LT AI** | Additional comparative analysis and experimental findings. | [Link]() |
+| **Global Trending Topics 2026** | Exploratory analysis of multi-language trending topics, covering category distributions and textual statistics. | [Link]() |
+| **Padang Cuisine (IFood Image Dataset)** | Comprehensive visual analysis of the Padang Food dataset, including class distribution and sample inspections. | [Link]() |
 
 ---
 
