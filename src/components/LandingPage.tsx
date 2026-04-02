@@ -35,11 +35,10 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           {/* 👇 HƯỚNG DẪN THÊM ẢNH AVIATION 👇 */}
           <img
             alt="Aviation image"
-            className="w-full h-full object-cover mix-blend-multiply opacity-80"
+            className="w-full h-full object-cover"
             src={aviation}
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 academic-gradient opacity-10"></div>
         </motion.div>
       </section>
       
