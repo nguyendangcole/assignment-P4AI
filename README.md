@@ -57,7 +57,7 @@ The analytical heavy-lifting was performed using Google Colab. You can explore o
 For a detailed explanation of our methodology, data processing steps, and in-depth analysis results, please refer to our full project report:
 
 > [!TIP]
-> **[Download / View Assignment Report (PDF)](./Assignment_report_EDA.pdf)**
+> **[Download / View Assignment Report (PDF)](./public/Assignment_report_EDA.pdf)**
 ---
 
 ## 🚀 Getting Started

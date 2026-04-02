@@ -101,18 +101,27 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             A comprehensive study focusing on tabular, text, and image data analysis. Our project explores the underlying distributions, patterns, and anomalies across diverse data formats to build a robust foundation for future modeling.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="flex items-center gap-2 academic-gradient text-white px-8 py-3 rounded font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all cursor-pointer">
+            <a 
+              href="/Assignment_report_EDA.pdf" 
+              download 
+              className="flex items-center gap-2 academic-gradient text-white px-8 py-3 rounded font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all cursor-pointer no-underline"
+            >
               <FileText size={20} />
               Report (PDF)
-            </button>
+            </a>
             <button className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer">
               <PlayCircle size={20} />
               Video Presentation
             </button>
-            <button className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer">
+            <a 
+              href="https://github.com/nguyendangcole/assignment-P4AI?tab=readme-ov-file" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer no-underline"
+            >
               <Code size={20} />
               GitHub Repository
-            </button>
+            </a>
           </div>
         </div>
         <div className="absolute right-[-10%] top-[-20%] w-[50%] h-[150%] opacity-10 pointer-events-none rotate-12">
