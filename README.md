@@ -53,12 +53,11 @@ The analytical heavy-lifting was performed using Google Colab. You can explore o
 
 ---
 
-## ✨ Key Features
-- **Interactive Dashboards:** Real-time visualization of data distributions using Plotly.
-- **Multimodal Synthesis:** Unique "Interactive Analysis" for exploring relationships between art styles and human emotions.
-- **Dynamic Sampling:** Random image galleries to inspect visual data diversity.
-- **Responsive Design:** Optimized for both academic presentations and individual research review.
+## 📄 Project Report
+For a detailed explanation of our methodology, data processing steps, and in-depth analysis results, please refer to our full project report:
 
+> [!TIP]
+> **[Download / View Assignment Report (PDF)](./Assignment%20report%20EDA.pdf)**
 ---
 
 ## 🚀 Getting Started
