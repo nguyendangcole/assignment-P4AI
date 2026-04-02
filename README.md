@@ -46,10 +46,10 @@ The analytical heavy-lifting was performed using Google Colab. You can explore o
 ### 📔 [Google Colab Notebooks Folder](./google%20colab/)
 | Notebook | Description | Link |
 | :--- | :--- | :--- |
-| **ArtEmis EDA** | Systematic exploration of the ArtEmis dataset, focusing on visual semiotics and emotion. | [View Notebook](./google%20colab/ArtEmis_EDA.ipynb) |
-| **Rain in Australia** | Deep dive into tabular weather data for recursive pattern analysis. | [View Notebook](./google%20colab/Rain_in_Australia_EDA.ipynb) |
-| **P4D & AI Core** | Core assignment logic and foundational data processing. | [View Notebook](./google%20colab/P4D&Ai_Assignment.ipynb) |
-| **BTL LT AI** | Additional comparative analysis and experimental findings. | [View Notebook](./google%20colab/btl_ltAi.ipynb) |
+| **ArtEmis EDA** | Systematic exploration of the ArtEmis dataset, focusing on visual semiotics and emotion. | [Link]() |
+| **Rain in Australia** | Deep dive into tabular weather data for recursive pattern analysis. | [Link]() |
+| **P4D & AI Core** | Core assignment logic and foundational data processing. | [Link]() |
+| **BTL LT AI** | Additional comparative analysis and experimental findings. | [Link]() |
 
 ---
 
