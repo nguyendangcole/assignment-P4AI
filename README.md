@@ -14,7 +14,7 @@
 ---
 
 ## 📖 Project Overview
-**The Academic Curator** is a comprehensive Exploratory Data Analysis (EDA) dashboard designed to provide deep insights into multi-modal datasets. Developed as part of the **CO3135** course at **Ho Chi Minh City University of Technology (HCMUT)**, this project demonstrates systematic data inspection, statistical visualization, and semantic interpretation across three primary modalities: **Tabular**, **Text**, and **Image** data.
+**group - AI** is a comprehensive Exploratory Data Analysis (EDA) dashboard designed to provide deep insights into multi-modal datasets. Developed as part of the **CO3135** course at **Ho Chi Minh City University of Technology (HCMUT)**, this project demonstrates systematic data inspection, statistical visualization, and semantic interpretation across three primary modalities: **Tabular**, **Text**, and **Image** data.
 
 > [!NOTE]
 > This project follows the rigorous standards of HCMUT's AI & Data Science curriculum, emphasizing data quality, visual synthesis, and actionable insights for downstream machine learning tasks.

@@ -1192,7 +1192,7 @@ print(f"- Avg size: {df['file_size_kb'].mean():.1f} KB")`}
             <footer className="border-t border-outline-variant/10 bg-white py-12">
                 <div className="max-w-[1440px] mx-auto px-8 flex justify-between items-center">
                     <div className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant/40">
-                        Academic Curator / Image EDA / Masakan Padang
+                        group - AI / Image EDA / Masakan Padang
                     </div>
                     <div className="flex gap-8">
                         <button className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant/40 hover:text-primary transition-colors cursor-pointer">Documentation</button>
