@@ -22,12 +22,12 @@
 ---
 
 ## 👥 Meet Our Team
-| Name | Student ID | Action / Role | Notebook Link |
-| :--- | :--- | :--- | :--- |
-| **ĐẶNG DUY NGUYÊN** | 2352821 | Multimodal text-image EDA | [Notebook]() |
-| **NGUYỄN ĐẶNG MINH TRƯỜNG** | 2353262 | Text EDA | [Notebook]() |
-| **TRẦN QUỐC THẮNG** | 2353125 | Image EDA | [Notebook]() |
-| **LÊ MINH HÀO** | 2310846 | Tabular EDA | [Notebook]() |
+| Name | Student ID | Action / Role |
+| :--- | :--- | :--- |
+| **ĐẶNG DUY NGUYÊN** | 2352821 | Multimodal text-image EDA |
+| **NGUYỄN ĐẶNG MINH TRƯỜNG** | 2353262 | Text EDA |
+| **TRẦN QUỐC THẮNG** | 2353125 | Image EDA |
+| **LÊ MINH HÀO** | 2310846 | Tabular EDA |
 
 **Instructor:** Dr. Thanh-Sach LE
 
