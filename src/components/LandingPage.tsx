@@ -102,14 +102,17 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           </p>
           <div className="flex flex-wrap gap-4">
             <a 
-              href="/Assignment_report_EDA.pdf" 
+              href="./Assignment_report_EDA.pdf" 
               download 
               className="flex items-center gap-2 academic-gradient text-white px-8 py-3 rounded font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all cursor-pointer no-underline"
             >
               <FileText size={20} />
               Report (PDF)
             </a>
-            <button className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer">
+            <button 
+              onClick={() => alert('Video presentation is being finalized and will be available soon!')}
+              className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer"
+            >
               <PlayCircle size={20} />
               Video Presentation
             </button>
