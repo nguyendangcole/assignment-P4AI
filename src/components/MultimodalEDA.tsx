@@ -44,6 +44,7 @@ import styleEmotionHeatmap from "../assets/data/multimodalEDA/style_emotion_heat
 import topEmotionProportionsByStyle from "../assets/data/multimodalEDA/top_emotion_proportions_by_style.json";
 import topWordsByEmotion from "../assets/data/multimodalEDA/top_words_by_emotion.json";
 import textLengthDist from "../assets/data/multimodalEDA/text_length_distribution.json";
+import imageUtterances from "../assets/data/multimodalEDA/image_utterances.json";
 
 // Import Sample Images Dynamically
 const sampleFiles = import.meta.glob("../assets/data/multimodalEDA/sample/*.{jpg,png}", { eager: true });
@@ -53,10 +54,15 @@ const allSampleImages = Object.entries(sampleFiles).map(([path, mod]: [string, a
     const authorRaw = nameParts[0]?.replace(/-/g, ' ') || 'Unknown Artist';
     const titleRaw = nameParts[1]?.replace(/-/g, ' ') || 'Artemis Collection';
     
+    // Match with CSV mapping
+    const mapping = (imageUtterances as any)[fileName] || { emotion: "unknown", utterance: "No exploration details available for this artwork." };
+
     return {
         src: mod.default,
         author: authorRaw.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-        year: titleRaw.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+        year: titleRaw.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+        emotion: mapping.emotion,
+        utterance: mapping.utterance
     };
 });
 
@@ -237,10 +243,7 @@ export default function MultimodalEDA({ onBack }: { onBack: () => void }) {
 
     const shuffleSamples = () => {
         const shuffledImgs = [...allSampleImages].sort(() => 0.5 - Math.random());
-        setDisplaySamples(shuffledImgs.slice(0, 9));
-        
-        const shuffledTexts = [...utteranceSamples].sort(() => 0.5 - Math.random());
-        setDisplayUtterances(shuffledTexts.slice(0, 4));
+        setDisplaySamples(shuffledImgs.slice(0, 8));
     };
 
     const imageMetrics = [
@@ -278,8 +281,7 @@ export default function MultimodalEDA({ onBack }: { onBack: () => void }) {
     const tocItems = [
         { id: "overview", label: "Overview" },
         { id: "metadata-overview", label: "Technical Schema" },
-        { id: "sample-gallery", label: "Visual Gallery" },
-        { id: "sample-utterances", label: "Human Reactions" },
+        { id: "sample-gallery", label: "Sample Visualization" },
         { id: "emotion-dist", label: "Emotion Labels" },
         { id: "art-style-dist", label: "Art Movements" },
         { id: "image-metadata", label: "Visual Properties" },
@@ -491,25 +493,18 @@ df.info()`}
                         </InteractiveAnalysis>
                         
 
-                        {/* 10. Sample Artwork Visualization */}
+                        {/* Sample Artwork Visualization */}
                         <InteractiveAnalysis
                             id="sample-gallery"
-                            title="Sample Artwork Visualization"
-                            subtitle="A museum-grade overview of representative paintings from the corpus."
+                            title="Sample Visualization"
+                            subtitle="Representing paintings integrated with their human affective annotations."
                             icon={ImageIcon}
-                            observation="The artworks cover a vast range of styles and historical periods, from Dürer's Northern Renaissance portraiture to Lichtenstein's Pop Art. This confirms the comprehensive visual semantic scope of the ArtEmis dataset."
-                            pythonCode={`image_files = list(base_path.rglob("*.jpg")) + list(base_path.rglob("*.png"))
-sample_imgs = random.sample(image_files, min(9, len(image_files)))
-
-plt.figure(figsize=(10, 10))
-for i, img_path in enumerate(sample_imgs, 1):
-    img = Image.open(img_path)
-    plt.subplot(3, 3, i)
-    plt.imshow(img)
-    plt.axis("off")
-    plt.title(img_path.name[:15], fontsize=8)
-plt.tight_layout()
-plt.show()`}
+                            observation="This unified view confirms the tight coupling between visual semantics and human emotion. Instead of raw descriptions, utterances explain 'HOW' visual features (colors, brushstrokes, composition) trigger specific feelings."
+                            pythonCode={`# Data Coupling Logic
+sample = df.sample(1)
+print(f"Artwork: {sample['painting'].iloc[0]}")
+print(f"Label: {sample['emotion'].iloc[0].upper()}")
+print(f"Human Reaction: \\"{sample['utterance'].iloc[0]}\\"")`}
                         >
                             <div className="flex flex-col gap-10">
                                 {/* Shuffle Action */}
@@ -526,93 +521,48 @@ plt.show()`}
                                 <AnimatePresence mode="popLayout">
                                     <motion.div 
                                         key={displaySamples.map(d => d.src).join(',')}
-                                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                                        className="grid grid-cols-1 md:grid-cols-2 gap-10"
                                     >
                                         {displaySamples.map((art, i) => (
                                             <motion.div 
                                                 key={art.src}
-                                                initial={{ opacity: 0, scale: 0.9 }}
+                                                initial={{ opacity: 0, scale: 0.95 }}
                                                 animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0, scale: 0.9 }}
+                                                exit={{ opacity: 0, scale: 0.95 }}
                                                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                                                whileHover={{ y: -12 }}
-                                                className="group/art relative overflow-hidden rounded-[2.5rem] bg-surface-container-low border border-outline-variant/10 shadow-sm transition-all"
+                                                className="group/art flex flex-col h-full bg-white rounded-[2.5rem] border border-outline-variant/10 shadow-sm hover:shadow-2xl hover:shadow-primary/5 transition-all overflow-hidden"
                                             >
-                                                <div className="aspect-square relative overflow-hidden">
+                                                <div className="aspect-[4/3] relative overflow-hidden bg-surface-container-low">
                                                     <img 
                                                         src={art.src} 
                                                         alt={art.author}
-                                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover/art:scale-115"
+                                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover/art:scale-110"
                                                     />
-                                                    <div className="absolute inset-0 bg-linear-to-t from-on-surface/80 via-transparent to-transparent opacity-0 group-hover/art:opacity-100 transition-opacity duration-500" />
-                                                </div>
-                                                <div className="p-7">
-                                                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">{art.author}</div>
-                                                    <div className="text-xs font-semibold text-on-surface-variant opacity-70 italic truncate leading-tight">{art.year}</div>
-                                                </div>
-                                            </motion.div>
-                                        ))}
-                                    </motion.div>
-                                </AnimatePresence>
-                            </div>
-                        </InteractiveAnalysis>
-
-                        {/* Sample Utterance Visualization */}
-                        <InteractiveAnalysis
-                            id="sample-utterances"
-                            title="Human Semantic Reactions"
-                            subtitle="Sentimental and descriptive explanations of the artwork pool."
-                            icon={MessageSquare}
-                            observation="The explanations are deeply personal and emotional. Rather than just describing what is in the painting, humans explain HOW the visual triggers specific feelings (e.g., 'reminds me of...', 'evokes a sense of...')."
-                            pythonCode={`# Sample Utterances from dataset
-df_sample = df[['emotion', 'utterance', 'art_style']].sample(6)
-for i, row in df_sample.iterrows():
-    print(f"[{row['emotion'].upper()}] ({row['art_style']})")
-    print(f"\\"{row['utterance']}\\"\\n")`}
-                        >
-                            <div className="flex flex-col gap-10">
-                                {/* Shuffle Action */}
-                                <div className="flex justify-end">
-                                    <button 
-                                        onClick={shuffleSamples}
-                                        className="flex items-center gap-3 px-6 py-3 bg-surface-container-high hover:bg-[#00685f] hover:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 shadow-sm hover:shadow-[#00685f]/20 group/btn cursor-pointer"
-                                    >
-                                        <RefreshCw size={14} className="group-hover/btn:rotate-180 transition-transform duration-500 text-[#00685f] group-hover:text-white" />
-                                        Randomize Explanations
-                                    </button>
-                                </div>
-
-                                <AnimatePresence mode="popLayout">
-                                    <motion.div 
-                                        key={displayUtterances.map(u => u.text).join(',')}
-                                        className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                                    >
-                                        {displayUtterances.map((sample, i) => (
-                                            <motion.div 
-                                                key={sample.text}
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -20 }}
-                                                transition={{ duration: 0.4, delay: i * 0.05 }}
-                                                className="group/quote relative p-8 rounded-[2.5rem] bg-white border border-outline-variant/10 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500"
-                                            >
-                                                <div className="absolute top-6 left-6 text-primary/10">
-                                                    <BookOpen size={48} />
-                                                </div>
-                                                <div className="relative z-10">
-                                                    <div className="flex items-center gap-3 mb-6">
-                                                        <div className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-sm
-                                                            ${sample.emotion === 'fear' || sample.emotion === 'anger' ? 'bg-red-50 text-red-700' : 
-                                                              sample.emotion === 'contentment' || sample.emotion === 'awe' ? 'bg-emerald-50 text-emerald-700' :
-                                                              'bg-primary/10 text-primary'}
+                                                    <div className="absolute top-6 left-6">
+                                                        <div className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg backdrop-blur-md border border-white/20
+                                                            ${art.emotion === 'fear' || art.emotion === 'anger' ? 'bg-red-500/90 text-white' : 
+                                                              art.emotion === 'contentment' || art.emotion === 'awe' ? 'bg-emerald-500/90 text-white' :
+                                                              'bg-primary/90 text-white'}
                                                         `}>
-                                                            {sample.emotion}
+                                                            {art.emotion}
                                                         </div>
-                                                        <span className="text-[10px] font-medium text-on-surface-variant opacity-40 italic">— {sample.style}</span>
                                                     </div>
-                                                    <p className="text-on-surface leading-relaxed font-medium tracking-tight h-[100px] overflow-y-auto custom-scrollbar italic">
-                                                        "{sample.text}"
-                                                    </p>
+                                                </div>
+                                                
+                                                <div className="p-8 flex flex-col flex-1 justify-between gap-6 border-t border-outline-variant/5">
+                                                    <div className="space-y-4">
+                                                        <p className="text-on-surface font-medium italic leading-relaxed text-[13px] tracking-tight">
+                                                            "{art.utterance}"
+                                                        </p>
+                                                    </div>
+                                                    
+                                                    <div className="flex items-center justify-between pt-6 border-t border-outline-variant/5 mt-auto">
+                                                        <div className="flex flex-col">
+                                                            <span className="text-[9px] font-black uppercase tracking-[0.15em] text-primary/60 mb-1">Artist Reflection</span>
+                                                            <span className="text-xs font-bold text-on-surface tracking-tight">{art.author}</span>
+                                                        </div>
+                                                        <span className="text-[10px] font-medium text-on-surface-variant opacity-40 italic tracking-tight">{art.year}</span>
+                                                    </div>
                                                 </div>
                                             </motion.div>
                                         ))}
