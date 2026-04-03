@@ -939,13 +939,47 @@ fig.show()`}
                             title="Lexical Patterns by Emotion"
                             subtitle="Most significant keywords mentioned when expressing specific emotions."
                             icon={MessageSquare}
-                            observation="Keywords like 'happy', 'bright', and 'colors' dominate contentment, whereas 'dark', 'fear', and 'scary' characterize fear. This confirms the quality of the human annotations."
-                            pythonCode={`# Top 10 Most Frequent Words by Emotion
+                            observation="The word frequency analysis shows that each emotion category tends to have its own characteristic vocabulary. These differences suggest that utterances provide useful linguistic cues that may help distinguish emotional labels in the dataset."
+                            pythonCode={`import re
+import pandas as pd
+from collections import Counter
+import plotly.express as px
+
+# stopwords refinement
+stopwords = {
+    "the", "a", "an", "and", "or", "but", "if", "then", "so", "to", "of", "in", "on", "at", "for",
+    "with", "by", "from", "as", "is", "it", "this", "that", "these", "those", "be", "are", "was",
+    "were", "am", "i", "me", "my", "mine", "you", "your", "yours", "he", "she", "his", "her",
+    "they", "their", "them", "we", "our", "ours", "its", "about", "into", "over", "under", "than",
+    "very", "can", "could", "would", "should", "just", "also", "there", "here", "because", "feel",
+    "feels", "feeling", "make", "makes", "made", "one", "two", "like", "painting", "picture", "something", "looks", "look"
+}
+
+def clean_and_tokenize(text):
+    text = str(text).lower()
+    text = re.sub(r"[^a-z\\s]", " ", text)   # keep only letters and spaces
+    tokens = text.split()
+    tokens = [w for w in tokens if w not in stopwords and len(w) > 2]
+    return tokens
+
+# Generating word counts per emotion
+emotions = df['emotion'].unique()
+top_words_data = []
+
+for emotion in emotions:
+    tokens = []
+    df[df['emotion'] == emotion]['utterance'].apply(lambda x: tokens.extend(clean_and_tokenize(x)))
+    most_common = Counter(tokens).most_common(10)
+    for word, count in most_common:
+        top_words_data.append({"emotion": emotion, "word": word, "count": count})
+
+top_words_df = pd.DataFrame(top_words_data)
+
+# Visualization
 fig = px.bar(top_words_df, x='word', y='count', color='emotion',
              facet_col='emotion', facet_col_wrap=3,
              title='Top 10 Most Frequent Words by Emotion')
 fig.update_layout(height=1000, showlegend=false, template='plotly_white')
-fig.update_xaxes(tickangle=45)
 fig.show()`}
                         >
                             <div className="flex flex-col gap-8">
