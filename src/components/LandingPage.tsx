@@ -16,7 +16,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="mb-24 relative overflow-hidden">
         {/* Background Decorative Element */}
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 blur-3xl -z-10"></div>
-        
+
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -25,14 +25,14 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           >
             <div className="flex items-center gap-3 text-primary font-bold tracking-widest text-[10px] uppercase mb-6">
               <span className="w-10 h-px bg-primary/30"></span>
-              Programming for AI & Data Science (CO3135) | Instructor: Dr. Thanh-Sach LE
+              Programming for AI & Data Science (CO3135) | Instructor: Dr. LE THANH SACH
             </div>
-            
+
             <h1 className="text-6xl md:text-7xl font-headline font-extrabold text-on-surface tracking-tighter mb-8 leading-[1.05]">
-              Academic <br/>
+              Academic <br />
               <span className="text-primary italic font-serif">Curator.</span>
             </h1>
-            
+
             <p className="text-xl text-on-surface-variant max-w-xl leading-relaxed mb-10 opacity-90">
               Assignment portfolio for Exploratory Data Analysis project. A systematic investigation into data patterns and insights across diverse modalities.
             </p>
@@ -53,14 +53,16 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
 
             <div className="flex gap-6">
-              <button 
+              <button
                 onClick={() => onNavigate('datasets')}
                 className="px-8 py-4 bg-on-surface text-white font-bold hover:bg-primary transition-all shadow-xl shadow-on-surface/5 cursor-pointer"
               >
                 Browse Datasets
               </button>
-              <button 
-                onClick={() => onNavigate('assignments')}
+              <button
+                onClick={() => {
+                  document.getElementById('datasets-overview')?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="px-8 py-4 bg-white border border-on-surface-variant/20 text-on-surface font-bold hover:bg-surface-container-low transition-all cursor-pointer"
               >
                 View Report
@@ -97,7 +99,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                 </div>
               </div>
             </div>
-            
+
             {/* Floating Logo Badge - Keeping it square and sharp now */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 bg-white/95 backdrop-blur-md shadow-2xl border border-on-surface/5 p-6 flex items-center justify-center z-20">
               <img src={aviation} alt="P4AI Logo" className="w-full h-full object-contain" />
@@ -105,9 +107,9 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           </motion.div>
         </div>
       </section>
-      
+
       {/* Scroll Hint */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
@@ -164,26 +166,26 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             A comprehensive study focusing on tabular, text, and image data analysis. Our project explores the underlying distributions, patterns, and anomalies across diverse data formats to build a robust foundation for future modeling.
           </p>
           <div className="flex flex-wrap gap-4">
-            <a 
-              href="/assignment-P4AI/Assignment_report_EDA.pdf" 
-              download="Assignment report EDA.pdf" 
+            <a
+              href="/assignment-P4AI/Assignment_report_EDA.pdf"
+              download="Assignment report EDA.pdf"
               className="flex items-center gap-2 academic-gradient text-white px-8 py-3 rounded font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all cursor-pointer no-underline"
             >
               <FileText size={20} />
               Report (PDF)
             </a>
-            <a 
-              href="https://youtu.be/XjtqkoDtTiw" 
-              target="_blank" 
+            <a
+              href="https://youtu.be/Bs-nb6exOT0"
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer no-underline"
             >
               <PlayCircle size={20} />
               Video Presentation
             </a>
-            <a 
-              href="https://github.com/nguyendangcole/assignment-P4AI?tab=readme-ov-file" 
-              target="_blank" 
+            <a
+              href="https://github.com/nguyendangcole/assignment-P4AI.git"
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer no-underline"
             >
@@ -203,7 +205,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Datasets Overview */}
-      <section className="mb-24">
+      <section id="datasets-overview" className="mb-24">
         <h2 className="text-3xl font-headline font-bold text-on-surface mb-10 text-center">Datasets Overview</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
