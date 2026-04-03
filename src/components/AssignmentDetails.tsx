@@ -41,8 +41,8 @@ export default function AssignmentDetails() {
                 <span className="px-3 py-1 bg-secondary-container text-secondary text-xs font-bold rounded-full">Active Mission</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-on-surface-variant">Lead Instructor</span>
-                <span className="text-on-surface font-black text-xs uppercase tracking-tighter">Dr. Thanh-Sach LE</span>
+                <span className="text-sm text-on-surface-variant">Instructor</span>
+                <span className="text-on-surface font-black text-xs uppercase tracking-tighter">Dr. LE THANH SACH</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-on-surface-variant">Due Date</span>
@@ -99,11 +99,17 @@ export default function AssignmentDetails() {
             <h3 className="font-headline text-xl font-bold mb-6">Execution Deliverables</h3>
             <div className="space-y-4">
               {[
-                { title: "GitHub Landing Page", icon: <Layout size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600" },
-                { title: "Video Presentation (10-15m)", icon: <Video size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600" },
-                { title: "Slide-style PDF Report", icon: <FileText size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600" }
+                { title: "GitHub Landing Page", icon: <Layout size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600", link: "https://github.com/nguyendangcole/assignment-P4AI" },
+                { title: "Video Presentation (10-15m)", icon: <Video size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600", link: "https://youtu.be/Bs-nb6exOT0" },
+                { title: "Slide-style PDF Report", icon: <FileText size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600", link: "/assignment-P4AI/Assignment_report_EDA.pdf" }
               ].map((item, idx) => (
-                <div key={idx} className="group flex items-center justify-between p-5 bg-white rounded-2xl border border-on-surface-variant/10 hover:bg-surface-container-low transition-all cursor-pointer">
+                <a 
+                  key={idx} 
+                  href={item.link}
+                  target={item.link.startsWith('http') ? "_blank" : undefined}
+                  rel={item.link.startsWith('http') ? "noopener noreferrer" : undefined}
+                  className="group flex items-center justify-between p-5 bg-white rounded-2xl border border-on-surface-variant/10 hover:bg-surface-container-low transition-all cursor-pointer no-underline text-on-surface"
+                >
                   <div className="flex items-center gap-4">
                     <span className="text-primary group-hover:scale-110 transition-transform">{item.icon}</span>
                     <span className="font-bold text-sm tracking-tight">{item.title}</span>
@@ -112,7 +118,7 @@ export default function AssignmentDetails() {
                     {item.statusIcon}
                     {item.status}
                   </span>
-                </div>
+                </a>
               ))}
             </div>
           </section>

@@ -149,9 +149,9 @@ export default function App() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-8 text-sm">
-            <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Ethics Policy</a>
-            <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Data Privacy</a>
-            <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Faculty</a>
+            <a className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" onClick={(e) => e.preventDefault()}>Ethics Policy</a>
+            <a className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" onClick={(e) => e.preventDefault()}>Data Privacy</a>
+            <a className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" onClick={(e) => e.preventDefault()}>Contact Faculty</a>
           </div>
 
           <div className="text-sm text-on-surface-variant/60">

@@ -18,6 +18,13 @@ import {
 const NavItem = ({ href, children, active = false }: { href: string, children: React.ReactNode, active?: boolean }) => (
     <a
         href={href}
+        onClick={(e) => {
+            e.preventDefault();
+            const targetId = href.startsWith('#') ? href.substring(1) : '';
+            if (targetId) {
+                document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+            }
+        }}
         className={`text-sm font-medium uppercase tracking-widest transition-colors flex items-center h-full ${active
             ? "text-primary border-b-2 border-primary font-bold"
             : "text-on-surface-variant hover:text-primary"

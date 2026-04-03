@@ -429,6 +429,10 @@ export default function TextEDA({ onBack }: { onBack: () => void }) {
                                         <a
                                             key={item.id}
                                             href={`#${item.id}`}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                                            }}
                                             className={`block py-2.5 px-6 -ml-[2px] border-l-2 text-[11px] font-bold tracking-tight transition-all duration-300 ${isActive
                                                 ? "text-primary border-primary bg-primary/5"
                                                 : "text-on-surface-variant/40 border-transparent hover:text-on-surface-variant/70 hover:border-outline-variant/30"
