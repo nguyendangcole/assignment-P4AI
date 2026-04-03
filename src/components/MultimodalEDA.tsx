@@ -55,16 +55,17 @@ const allSampleImages = Object.entries(sampleFiles).map(([path, mod]: [string, a
     const titleRaw = nameParts[1]?.replace(/-/g, ' ') || 'Artemis Collection';
     
     // Match with CSV mapping
-    const mapping = (imageUtterances as any)[fileName] || { emotion: "unknown", utterance: "No exploration details available for this artwork." };
+    const mapping = (imageUtterances as any)[fileName];
+    if (!mapping) return null;
 
     return {
-        src: mod.default,
+        src: mod.default || mod, // Handle both module object and direct URL string
         author: authorRaw.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
         year: titleRaw.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
         emotion: mapping.emotion,
         utterance: mapping.utterance
     };
-});
+}).filter((item): item is NonNullable<typeof item> => item !== null);
 
 // --- Modern Academic UI Components ---
 
