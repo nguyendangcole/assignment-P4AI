@@ -13,33 +13,97 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
   return (
     <div className="max-w-[1200px] mx-auto px-8 py-16">
       {/* ... (rest of the component) ... */}
-      <section className="mb-24 flex flex-col md:flex-row items-center gap-12">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="w-full md:w-3/5"
-        >
-          <p className="text-primary font-bold tracking-wider uppercase text-sm mb-4">Programming for AI & Data Science (CO3135)</p>
-          <h1 className="text-5xl md:text-6xl font-headline font-extrabold text-on-surface tracking-tight mb-6 leading-tight">
-            Group Project Overview
-          </h1>
-          <p className="text-xl text-on-surface-variant max-w-xl leading-relaxed">
-            Assignment portfolio for Exploratory Data Analysis project. A systematic investigation into data patterns and insights.
-          </p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="w-full md:w-2/5 aspect-square bg-surface-container-low rounded-xl overflow-hidden relative"
-        >
-          {/* 👇 HƯỚNG DẪN THÊM ẢNH AVIATION 👇 */}
-          <img
-            alt="Aviation image"
-            className="w-full h-full object-cover"
-            src={aviation}
-            referrerPolicy="no-referrer"
-          />
-        </motion.div>
+      <section className="mb-24 relative overflow-hidden">
+        {/* Background Decorative Element */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 blur-3xl -z-10"></div>
+        
+        <div className="flex flex-col lg:flex-row items-center gap-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full lg:w-1/2"
+          >
+            <div className="flex items-center gap-3 text-primary font-bold tracking-widest text-[10px] uppercase mb-6">
+              <span className="w-10 h-px bg-primary/30"></span>
+              Programming for AI & Data Science (CO3135)
+            </div>
+            
+            <h1 className="text-6xl md:text-7xl font-headline font-extrabold text-on-surface tracking-tighter mb-8 leading-[1.05]">
+              Academic <br/>
+              <span className="text-primary italic font-serif">Curator.</span>
+            </h1>
+            
+            <p className="text-xl text-on-surface-variant max-w-xl leading-relaxed mb-10 opacity-90">
+              Assignment portfolio for Exploratory Data Analysis project. A systematic investigation into data patterns and insights across diverse modalities.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mb-10">
+              <div className="flex items-center gap-2 px-4 py-2 bg-surface-container-low border border-on-surface-variant/10 text-[10px] font-black uppercase tracking-widest">
+                <Layers size={14} className="text-primary" />
+                3 Modalities
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-surface-container-low border border-on-surface-variant/10 text-[10px] font-black uppercase tracking-widest">
+                <Table size={14} className="text-primary" />
+                120k+ Samples
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-surface-container-low border border-on-surface-variant/10 text-[10px] font-black uppercase tracking-widest">
+                <ImageIcon size={14} className="text-primary" />
+                Curated Assets
+              </div>
+            </div>
+
+            <div className="flex gap-6">
+              <button 
+                onClick={() => onNavigate('datasets')}
+                className="px-8 py-4 bg-on-surface text-white font-bold hover:bg-primary transition-all shadow-xl shadow-on-surface/5 cursor-pointer"
+              >
+                Browse Datasets
+              </button>
+              <button 
+                onClick={() => onNavigate('assignments')}
+                className="px-8 py-4 bg-white border border-on-surface-variant/20 text-on-surface font-bold hover:bg-surface-container-low transition-all cursor-pointer"
+              >
+                View Report
+              </button>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full lg:w-1/2 relative"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4 pt-12">
+                <div className="aspect-[4/5] overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-500 border border-on-surface-variant/5">
+                  <img src={imagePreview} alt="Data Preview" className="w-full h-full object-cover" />
+                </div>
+                <div className="aspect-square bg-primary/10 flex items-center justify-center p-8 border border-primary/10">
+                  <div className="text-center">
+                    <div className="text-4xl font-headline font-black text-primary mb-1 tracking-tighter">99%</div>
+                    <div className="text-[10px] font-black uppercase tracking-widest text-primary/60">Data Integrity</div>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="aspect-square bg-secondary/10 flex items-center justify-center p-8 border border-on-surface-variant/5">
+                  <div className="text-center">
+                    <div className="text-4xl font-headline font-black text-on-surface mb-1 tracking-tighter">04</div>
+                    <div className="text-[10px] font-black uppercase tracking-widest opacity-40">Collaborators</div>
+                  </div>
+                </div>
+                <div className="aspect-[4/5] overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-500 border border-on-surface-variant/5">
+                  <img src={multimodalPreview} alt="Art Analysis" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Floating Logo Badge - Keeping it square and sharp now */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 bg-white/95 backdrop-blur-md shadow-2xl border border-on-surface/5 p-6 flex items-center justify-center z-20">
+              <img src={aviation} alt="P4AI Logo" className="w-full h-full object-contain" />
+            </div>
+          </motion.div>
+        </div>
       </section>
       
       {/* Scroll Hint */}
@@ -49,7 +113,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         transition={{ delay: 0.5 }}
         className="flex flex-col items-center gap-3 mb-24 opacity-60"
       >
-        <div className="flex items-center gap-3 px-6 py-2.5 bg-surface-container-low border border-on-surface-variant/5 rounded-full shadow-sm">
+        <div className="flex items-center gap-3 px-6 py-2.5 bg-surface-container-low border border-on-surface-variant/5 shadow-sm">
           <motion.div
             animate={{ y: [0, 4, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
@@ -80,9 +144,9 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             <motion.div
               key={idx}
               whileHover={{ y: -5 }}
-              className="bg-white paper-shadow p-6 rounded-xl border border-transparent hover:border-primary/20 transition-all"
+              className="bg-white paper-shadow p-6 border border-transparent hover:border-primary/20 transition-all"
             >
-              <div className="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-secondary-container flex items-center justify-center mb-4">
                 <User className="text-primary w-6 h-6" />
               </div>
               <h3 className="font-headline font-bold text-lg mb-1">{member.name}</h3>
@@ -93,7 +157,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Assignment Focus Section */}
-      <section className="mb-24 bg-surface-container-low rounded-xl p-12 overflow-hidden relative">
+      <section className="mb-24 bg-surface-container-low p-12 overflow-hidden relative">
         <div className="relative z-10 max-w-2xl">
           <h2 className="text-4xl font-headline font-extrabold text-on-surface mb-6 tracking-tight">Assignment 1 – Exploratory Data Analysis (EDA)</h2>
           <p className="text-lg text-on-surface-variant mb-10 leading-relaxed">
@@ -184,7 +248,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                 }
               }}
             >
-              <div className="h-64 mb-6 rounded-xl overflow-hidden bg-surface-container-highest">
+              <div className="h-64 mb-6 overflow-hidden bg-surface-container-highest">
                 <img
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

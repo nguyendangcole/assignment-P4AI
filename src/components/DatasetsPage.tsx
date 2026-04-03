@@ -321,7 +321,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
             <History className="text-primary mt-1 flex-shrink-0" size={24} />
             <div>
               <h4 className="font-bold mb-1">Citation Mandate</h4>
-              <p className="text-sm text-on-surface-variant">Researchers must cite both the original source and **group - AI** in all resulting publications or whitepapers.</p>
+              <p className="text-sm text-on-surface-variant">Researchers must cite both the original source and **Academic Curator** in all resulting publications or whitepapers.</p>
             </div>
           </div>
         </div>

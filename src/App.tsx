@@ -68,7 +68,7 @@ export default function App() {
               className="text-2xl font-bold tracking-tighter text-primary font-headline cursor-pointer"
               onClick={() => navigate('overview')}
             >
-              group - AI
+              Academic Curator
             </div>
 
             <div className="hidden md:flex items-center gap-8 font-headline tracking-tight">
@@ -93,10 +93,10 @@ export default function App() {
             </div>
 
           <div className="flex items-center gap-4">
-            <button className="p-2 rounded-full hover:bg-primary/5 transition-all duration-200 cursor-pointer">
+            <button className="p-2 hover:bg-primary/5 transition-all duration-200 cursor-pointer">
               <BookOpen className="text-primary w-6 h-6" />
             </button>
-            <button className="md:hidden p-2 rounded-full hover:bg-primary/5 transition-all duration-200 cursor-pointer">
+            <button className="md:hidden p-2 hover:bg-primary/5 transition-all duration-200 cursor-pointer">
               <Menu className="text-primary w-6 h-6" />
             </button>
           </div>
@@ -109,7 +109,7 @@ export default function App() {
               onClick={() => navigate('overview')}
               className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer flex items-center gap-1"
             >
-              group - AI
+              Academic Curator
             </button>
 
             {currentPage !== 'overview' && (
@@ -145,7 +145,7 @@ export default function App() {
           <div className="text-center md:text-left">
             <div className="text-lg font-bold text-primary font-headline mb-2">Programming for AI & Data Science (CO3135)</div>
             <div className="text-sm text-on-surface-variant">HCMUT – VNU-HCM | 2026</div>
-            <div className="text-xs text-on-surface-variant/60 mt-4">© 2026 group - AI. All rights reserved.</div>
+            <div className="text-xs text-on-surface-variant/60 mt-4">© 2026 Academic Curator. All rights reserved.</div>
           </div>
 
           <div className="flex flex-wrap justify-center gap-8 text-sm">
