@@ -108,13 +108,15 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               <FileText size={20} />
               Report (PDF)
             </a>
-            <button 
-              onClick={() => alert('Video presentation is being finalized and will be available soon!')}
-              className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer"
+            <a 
+              href="https://youtu.be/XjtqkoDtTiw" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-white text-on-surface px-8 py-3 rounded font-bold hover:bg-surface-container-high transition-all cursor-pointer no-underline"
             >
               <PlayCircle size={20} />
               Video Presentation
-            </button>
+            </a>
             <a 
               href="https://github.com/nguyendangcole/assignment-P4AI?tab=readme-ov-file" 
               target="_blank" 

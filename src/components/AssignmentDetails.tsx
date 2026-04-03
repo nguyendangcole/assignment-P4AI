@@ -100,8 +100,8 @@ export default function AssignmentDetails() {
             <div className="space-y-4">
               {[
                 { title: "GitHub Landing Page", icon: <Layout size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600" },
-                { title: "Video Presentation (10-15m)", icon: <Video size={18}/>, status: "IN PROGRESS", statusIcon: <Clock size={14} />, color: "text-amber-600" },
-                { title: "Slide-style PDF Report", icon: <FileText size={18}/>, status: "EDITING", statusIcon: <Info size={14} />, color: "text-primary" }
+                { title: "Video Presentation (10-15m)", icon: <Video size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600" },
+                { title: "Slide-style PDF Report", icon: <FileText size={18}/>, status: "READY", statusIcon: <CheckCircle size={14} />, color: "text-emerald-600" }
               ].map((item, idx) => (
                 <div key={idx} className="group flex items-center justify-between p-5 bg-white rounded-2xl border border-on-surface-variant/10 hover:bg-surface-container-low transition-all cursor-pointer">
                   <div className="flex items-center gap-4">
