@@ -25,7 +25,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           >
             <div className="flex items-center gap-3 text-primary font-bold tracking-widest text-[10px] uppercase mb-6">
               <span className="w-10 h-px bg-primary/30"></span>
-              Programming for AI & Data Science (CO3135)
+              Programming for AI & Data Science (CO3135) | Instructor: Dr. Thanh-Sach LE
             </div>
             
             <h1 className="text-6xl md:text-7xl font-headline font-extrabold text-on-surface tracking-tighter mb-8 leading-[1.05]">
