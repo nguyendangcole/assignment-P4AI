@@ -69,7 +69,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
               </code>
             </div>
             <div className="flex gap-3 mt-auto">
-              <a 
+              <a
                 href="https://www.kaggle.com/datasets/jsphyg/weather-dataset-rattle-package?select=weatherAUS.csv"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -78,25 +78,25 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
                 <ExternalLink size={14} />
                 Kaggle
               </a>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => onNavigate?.('tabular-eda', '', 'eda')}
-                className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
-              >
-                <BarChart3 size={12} />
-                EDA
-              </button>
-              <button
-                onClick={() => onNavigate?.('tabular-eda', '', 'ml')}
-                className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
-              >
-                <Brain size={12} />
-                ML
-              </button>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => onNavigate?.('tabular-eda', '', 'eda')}
+                  className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
+                >
+                  <BarChart3 size={12} />
+                  EDA
+                </button>
+                <button
+                  onClick={() => onNavigate?.('tabular-eda', '', 'ml')}
+                  className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+                >
+                  <Brain size={12} />
+                  ML
+                </button>
+              </div>
             </div>
-          </div>
             <div className="flex gap-3 mt-4">
-              <a 
+              <a
                 href="https://colab.research.google.com/drive/143sQz3NqiTBltcTjpuzkPa0QnDxy1I3j?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -146,7 +146,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
               </code>
             </div>
             <div className="flex gap-3 mt-auto">
-              <a 
+              <a
                 href="https://www.kaggle.com/datasets/kritanjalijain/amazon-reviews"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -155,25 +155,25 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
                 <ExternalLink size={14} />
                 Kaggle
               </a>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => onNavigate?.('text-eda', '', 'eda')}
-                className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
-              >
-                <BarChart3 size={12} />
-                EDA
-              </button>
-              <button
-                onClick={() => onNavigate?.('text-eda', '', 'ml')}
-                className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
-              >
-                <Brain size={12} />
-                ML
-              </button>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => onNavigate?.('text-eda', '', 'eda')}
+                  className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
+                >
+                  <BarChart3 size={12} />
+                  EDA
+                </button>
+                <button
+                  onClick={() => onNavigate?.('text-eda', '', 'ml')}
+                  className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+                >
+                  <Brain size={12} />
+                  ML
+                </button>
+              </div>
             </div>
-          </div>
             <div className="flex gap-3 mt-4">
-              <a 
+              <a
                 href="https://colab.research.google.com/drive/1_qlntq1BikI3WcP0dR4mwlS4rkibTaII?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -223,7 +223,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
               </code>
             </div>
             <div className="flex gap-3 mt-auto">
-              <a 
+              <a
                 href="https://www.kaggle.com/datasets/faldoae/padangfood"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -232,25 +232,25 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
                 <ExternalLink size={14} />
                 Kaggle
               </a>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => onNavigate?.('image-eda', '', 'eda')}
-                className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
-              >
-                <BarChart3 size={12} />
-                EDA
-              </button>
-              <button
-                onClick={() => onNavigate?.('image-eda', '', 'ml')}
-                className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
-              >
-                <Brain size={12} />
-                ML
-              </button>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => onNavigate?.('image-eda', '', 'eda')}
+                  className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
+                >
+                  <BarChart3 size={12} />
+                  EDA
+                </button>
+                <button
+                  onClick={() => onNavigate?.('image-eda', '', 'ml')}
+                  className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+                >
+                  <Brain size={12} />
+                  ML
+                </button>
+              </div>
             </div>
-          </div>
             <div className="flex gap-3 mt-4">
-              <a 
+              <a
                 href="https://colab.research.google.com/drive/1gJlZcRzuRz0I-2ZRfJQZ4I0dlNgbSzKl?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -300,7 +300,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
               </code>
             </div>
             <div className="flex gap-3 mt-auto">
-              <a 
+              <a
                 href="https://www.kaggle.com/datasets/rollas/artemis-dataset-including-10k-images"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -309,25 +309,25 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
                 <ExternalLink size={14} />
                 Kaggle
               </a>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => onNavigate?.('multimodal-eda', 'Artemis', 'eda')}
-                className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
-              >
-                <BarChart3 size={12} />
-                EDA
-              </button>
-              <button
-                onClick={() => onNavigate?.('multimodal-eda', 'Artemis', 'ml')}
-                className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
-              >
-                <Brain size={12} />
-                ML
-              </button>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => onNavigate?.('multimodal-eda', 'Artemis', 'eda')}
+                  className="py-2.5 bg-surface-container-high text-on-surface text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-all cursor-pointer"
+                >
+                  <BarChart3 size={12} />
+                  EDA
+                </button>
+                <button
+                  onClick={() => onNavigate?.('multimodal-eda', 'Artemis', 'ml')}
+                  className="py-2.5 academic-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all cursor-pointer"
+                >
+                  <Brain size={12} />
+                  ML
+                </button>
+              </div>
             </div>
-          </div>
             <div className="flex gap-3 mt-4">
-              <a 
+              <a
                 href="https://drive.google.com/file/d/1qrMlQ-wtkwoIZ7SkJfS_XmRtzAb590GX/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
