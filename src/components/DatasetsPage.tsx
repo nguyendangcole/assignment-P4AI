@@ -174,7 +174,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
           </div>
             <div className="flex gap-3 mt-4">
               <a 
-                href="#"
+                href="https://colab.research.google.com/drive/1_qlntq1BikI3WcP0dR4mwlS4rkibTaII?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all no-underline cursor-pointer"
