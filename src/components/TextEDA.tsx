@@ -2007,7 +2007,7 @@
 // }
 
 import React, { useState, useEffect } from "react";
-import heroTextImage from "../assets/images/image/text.jpg";
+import heroTextImage from "../assets/images/image/amazon_reviews.png";
 import { motion, AnimatePresence } from "motion/react";
 import Plot from "react-plotly.js";
 import {

@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Table, FileText, ImageIcon, ExternalLink, Download, CloudDownload, Eraser, Share2, ShieldCheck, ArrowRight, Info, History, Layers, BarChart3, Brain } from "lucide-react";
 import tabularHero from "../assets/images/image/ảnh.jpg";
-import textHero from "../assets/images/image/text.jpg";
+import textHero from "../assets/images/image/amazon_reviews.png";
 import imageHero from "../assets/images/image/padang_food.png";
 import multimodalHero from "../assets/images/image/artemis_multimodal.png";
 
@@ -127,27 +127,27 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
               />
             </div>
-            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Trending Topics 2026</h3>
-            <p className="text-xs text-on-surface-variant mb-6">Multi-source synthetic dataset of trending news topics and categories for Feb 2026.</p>
+            <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Amazon reviews</h3>
+            <p className="text-xs text-on-surface-variant mb-6">A large-scale dataset of Amazon product reviews, including ratings, text, and metadata for sentiment analysis.</p>
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Source</span>
-                <span className="text-on-surface font-medium">Kaggle Synthetic Archive</span>
+                <span className="text-on-surface font-medium">Amazon Customer Reviews</span>
               </div>
               <div className="flex justify-between text-[10px] py-1 border-b border-on-surface-variant/10">
                 <span className="text-on-surface-variant/60">Size</span>
-                <span className="text-on-surface font-medium">2.5k docs / 1.2MB</span>
+                <span className="text-on-surface font-medium">34.6M reviews / ~10GB</span>
               </div>
             </div>
             <div className="bg-surface-container-low rounded-lg p-4 mb-8 overflow-hidden">
               <span className="text-[9px] uppercase font-bold text-secondary mb-2 block">Structure Preview</span>
               <code className="text-[10px] font-mono text-on-surface-variant leading-tight block">
-                {`{ article_id: str, short_text: longtext, topic_category: enum }`}
+                {`{ rating: int, rev_title: str, rev_text: longtext, label: enum }`}
               </code>
             </div>
             <div className="flex gap-3 mt-auto">
               <a 
-                href="https://www.kaggle.com/datasets/mmuneeb5522/crossplatform-trending-topics-2026multilanguage"
+                href="https://www.kaggle.com/datasets/kritanjalijain/amazon-reviews"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all no-underline cursor-pointer"
