@@ -102,7 +102,7 @@ export default function MultimodalML() {
                     </p>
                     <div className="flex flex-wrap gap-4">
                         <a
-                            href="https://colab.research.google.com/drive/1SauFyRlbIxI9QwYu9cdxvY3N6N6kVUAX"
+                            href="https://drive.google.com/file/d/1qrMlQ-wtkwoIZ7SkJfS_XmRtzAb590GX/view?usp=sharing"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 px-6 py-3 bg-on-surface text-white rounded-2xl font-bold text-xs hover:bg-primary transition-all shadow-lg hover:shadow-primary/20 group"

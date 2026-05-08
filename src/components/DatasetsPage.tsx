@@ -328,7 +328,7 @@ export default function DatasetsPage({ onNavigate }: DatasetsPageProps) {
           </div>
             <div className="flex gap-3 mt-4">
               <a 
-                href="#"
+                href="https://drive.google.com/file/d/1qrMlQ-wtkwoIZ7SkJfS_XmRtzAb590GX/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all no-underline cursor-pointer"
